@@ -1,14 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Domæne.SagModul;
 
-/**
- *
- * @author Daniel
- */
+import java.util.List;
+
 public class SagsBehandler {
 
+    private String name;
+    private int id;
+    private List<Sag> cases;
+
+    public SagsBehandler() {
+
+    }
+
+    public String createCase(String caseType) {
+        return null;
+
+    }
+
+    public void transferCase(SagsBehandler socialWorker) {
+
+    }
 }

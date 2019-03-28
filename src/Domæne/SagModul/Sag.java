@@ -1,14 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Domæne.SagModul;
 
-/**
- *
- * @author jens
- */
+import java.io.File;
+import java.util.Date;
+import java.util.List;
+
 public class Sag {
-    
+
+    private Date date;
+    private String description;
+    private String caseType;
+    private List<File> attachedFiles;
+
+    public Sag() {
+        this.date = new Date();
+    }
+
+    public String deleteCase() {
+        return null;
+    }
+
+    public String editCase() {
+        return null;
+    }
+
+    public String attachFile(File file) {
+        return null;
+    }
 }
