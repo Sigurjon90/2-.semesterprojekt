@@ -1,14 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Domæne.DagbogModul;
 
-/**
- *
- * @author jens
- */
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+
+
 public class Dagbog {
+    
+    
+List <Indlæg> list = new ArrayList<>();
+
+   
+
+    public Dagbog() {
+      
+    }
+    
+   public void deleteEntry(Indlæg entry){
+   list.remove(entry);
+   }
+    
+  
+    
+    
+  public List<Indlæg> getList() {
+        return list;
+    }
+    
     
 }

@@ -5,10 +5,17 @@
  */
 package Domæne;
 
+import Domæne.DagbogModul.Dagbog;
+import Domæne.DagbogModul.Indlæg;
+
 /**
  *
  * @author jens
  */
 public class Start {
+    public static void main(String[] args) {
+      
+    
+    }
     
 }
