@@ -9,6 +9,6 @@ package Domæne.DagbogModul;
  *
  * @author jens
  */
-public class Aktivitet {
+public class Indlæg {
     
 }

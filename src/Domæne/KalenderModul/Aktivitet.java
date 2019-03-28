@@ -9,6 +9,6 @@ package Domæne.KalenderModul;
  *
  * @author jens
  */
-public class Indlæg {
+public class Aktivitet {
     
 }
