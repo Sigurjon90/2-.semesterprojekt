@@ -11,12 +11,18 @@ public class Indlæg {
     String description;
     List<Integer> accessType;
     List<File> files;
+    int id;
+    static int idCounter = 1; 
+
+    
 
     public Indlæg(Date date, String description, List<Integer> accessType, List<File> files) {
+        this.id = idCounter;
         this.date = date;
         this.description = description;
         this.accessType = accessType;
         this.files = files;
+        idCounter++;
     }
 
     public Indlæg() {
@@ -48,6 +54,9 @@ public class Indlæg {
     @Override
     public String toString(){
         return description;
+    }
+     public int getId() {
+        return id;
     }
 
 }
