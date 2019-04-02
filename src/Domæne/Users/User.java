@@ -3,19 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Domæne;
-
-import Domæne.DagbogModul.Dagbog;
-import Domæne.DagbogModul.Indlæg;
+package Domæne.Users;
 
 /**
  *
  * @author jens
  */
-public class Start {
-    public static void main(String[] args) {
-      
-    
-    }
-    
+public class User {
+
 }
