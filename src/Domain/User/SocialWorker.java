@@ -1,18 +1,19 @@
-package Domæne.SagModul;
+package Domain.User;
 
+import Domain.CaseModule.Case;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SagsBehandler {
+public class SocialWorker {
 
     private static int numberOfSocialWorkers = 0;
     private String name;
     private int socialWorkerID;
-    private Map<Integer, Sag> cases;
+    private Map<Integer, Case> cases;
 
-    public SagsBehandler(String name) {
+    public SocialWorker(String name) {
         this.name = name;
         this.numberOfSocialWorkers++;
         this.socialWorkerID = numberOfSocialWorkers;
@@ -20,34 +21,34 @@ public class SagsBehandler {
     }
 
     public String createCase(String caseType, String description) {
-        Sag newCase = new Sag(description, caseType);
+        Case newCase = new Case(description, caseType);
         cases.put(newCase.getCaseID(), newCase);
         return "A case with the ID: " + newCase.getCaseID() + " has been successfully created \n";
 
     }
 
     public String createCase(String caseType, String description, List<File> attachedFiles) {
-        Sag newCase = new Sag(description, caseType, attachedFiles);
+        Case newCase = new Case(description, caseType, attachedFiles);
         cases.put(newCase.getCaseID(), newCase);
         return "A case with the ID: " + newCase.getCaseID() + " has been successfully created \n";
     }
 
-    public void deleteCase(Sag caseToDelete) {
+    public void deleteCase(Case caseToDelete) {
         int caseID = caseToDelete.getCaseID();
         caseToDelete.decrementCases();
         cases.remove(caseID);
         System.out.println("The Case with ID: " + caseID + " has been successfully deleted \n");
     }
 
-    public void transferCaseTo(SagsBehandler socialWorker, int caseID) {
-        Sag caseToTransfer = this.cases.get(caseID);
+    public void transferCaseTo(SocialWorker socialWorker, int caseID) {
+        Case caseToTransfer = this.cases.get(caseID);
         socialWorker.getCases().put(caseID, caseToTransfer);
         this.cases.remove(caseID);
         System.out.println("Case with ID: " + caseID + " has been successfullt trasnfered from " + this.name + " to " + socialWorker.getName() + "\n");
 
     }
 
-    public Map<Integer, Sag> getCases() {
+    public Map<Integer, Case> getCases() {
         return this.cases;
     }
 

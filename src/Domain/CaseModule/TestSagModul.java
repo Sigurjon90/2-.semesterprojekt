@@ -1,11 +1,13 @@
-package Domæne.SagModul;
+package Domain.CaseModule;
+
+import Domain.User.SocialWorker;
 
 public class TestSagModul {
 
     public static void main(String[] args) {
 
-        SagsBehandler s1 = new SagsBehandler("Alex");
-        SagsBehandler s2 = new SagsBehandler("Daniel");
+        SocialWorker s1 = new SocialWorker("Alex");
+        SocialWorker s2 = new SocialWorker("Daniel");
 
         System.out.println(s1.toString());
         System.out.println(s2.toString());

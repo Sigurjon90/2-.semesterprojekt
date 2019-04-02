@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Domæne;
+package Domain;
 
-import Domæne.DagbogModul.Dagbog;
-import Domæne.DagbogModul.Indlæg;
+import Domain.DiaryModule.Diary;
+import Domain.DiaryModule.Entry;
 
 /**
  *

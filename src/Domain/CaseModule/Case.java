@@ -1,11 +1,11 @@
-package Domæne.SagModul;
+package Domain.CaseModule;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Sag {
+public class Case {
 
     private static int numberOfCases = 0;
     private int caseID;
@@ -14,7 +14,7 @@ public class Sag {
     private String caseType;
     private List<File> attachedFiles;
 
-    public Sag(String description, String caseType) {
+    public Case(String description, String caseType) {
         this.date = new Date();
         this.description = description;
         this.caseType = caseType;
@@ -23,7 +23,7 @@ public class Sag {
         this.caseID = numberOfCases;
     }
 
-    public Sag(String description, String caseType, List<File> attachedFiles) {
+    public Case(String description, String caseType, List<File> attachedFiles) {
         this.date = new Date();
         this.description = description;
         this.caseType = caseType;

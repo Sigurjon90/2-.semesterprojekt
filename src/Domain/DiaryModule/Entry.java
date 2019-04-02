@@ -1,10 +1,10 @@
-package Domæne.DagbogModul;
+package Domain.DiaryModule;
 
 import java.io.File;
 import java.util.Date;
 import java.util.List;
 
-public class Indlæg {
+public class Entry {
 
     Date date;
     //todo Bruger creator;
@@ -16,7 +16,7 @@ public class Indlæg {
 
     
 
-    public Indlæg(Date date, String description, List<Integer> accessType, List<File> files) {
+    public Entry(Date date, String description, List<Integer> accessType, List<File> files) {
         this.id = idCounter;
         this.date = date;
         this.description = description;
@@ -25,11 +25,11 @@ public class Indlæg {
         idCounter++;
     }
 
-    public Indlæg() {
+    public Entry() {
 
     }
 
-    public Indlæg(String description) {
+    public Entry(String description) {
         this.description = description;
     }
 
