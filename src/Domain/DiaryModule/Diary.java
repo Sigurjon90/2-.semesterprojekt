@@ -27,5 +27,8 @@ public class Diary {
         Entry entry = new Entry(date, description, accessType, files);
         entryMap.put(entry.id, entry);
     }
-
+    
+    public Entry getEntry(int key){
+        return entryMap.get(key);
+    }
 }
