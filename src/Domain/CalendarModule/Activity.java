@@ -9,14 +9,14 @@ public class Activity {
     private String place;
     private String description;
     private String type;
-    private Image pictogram;
+    private Image pictogram = null;
     private Date endDate;
     private Date startDate;
     private Boolean shared;
-//waiting for Bruger implemtation
     private User creator;
+    private static int idCounter = 1;
+    private int id;
 
-//Waiting for Bruger implemtation
     public Activity(User creator, String place, Date startDate, Date endDate, String description, String type, Image pictogram, Boolean shared) {
         this.creator = creator;
         this.place = place;
@@ -26,10 +26,24 @@ public class Activity {
         this.type = type;
         this.pictogram = pictogram;
         this.shared = shared;
+        this.id = idCounter;
+        idCounter++;
     }
 
-    public Activity getActivity() {
-        return null;
+    public Activity(User creator, String place, Date startDate, Date endDate, String description, String type, Boolean shared) {
+        this.creator = creator;
+        this.place = place;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.description = description;
+        this.type = type;
+        this.shared = shared;
+        this.id = idCounter;
+        idCounter++;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void updateActivity(User creator, String place, Date startDate, Date endDate, String description, String type, Image pictogram, Boolean shared) {
