@@ -44,7 +44,7 @@ public class SocialWorker {
         Case caseToTransfer = this.cases.get(caseID);
         socialWorker.getCases().put(caseID, caseToTransfer);
         this.cases.remove(caseID);
-        System.out.println("Case with ID: " + caseID + " has been successfullt trasnfered from " + this.name + " to " + socialWorker.getName() + "\n");
+        System.out.println("Case with ID: " + caseID + " has been successfully transfered from " + this.name + " to " + socialWorker.getName() + "\n");
 
     }
 

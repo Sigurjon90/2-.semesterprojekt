@@ -13,6 +13,7 @@ public class Case {
     private String description;
     private String caseType;
     private List<File> attachedFiles;
+    private boolean closed = false;
 
     public Case(String description, String caseType) {
         this.date = new Date();
@@ -32,20 +33,37 @@ public class Case {
         this.caseID = numberOfCases;
     }
 
-    public int getCaseID() {
-        return this.caseID;
-    }
-
     public String editCase() {
-        return "The Case with ID: " + getCaseID() + " has been successfully edited \n";
+        if (!this.closed) {
+            
+            return "The Case with ID: " + getCaseID() + " has been successfully edited \n";
+        }
+        return "The case is closed and cannot be edited";
     }
 
     public String attachFile(File file) {
-        return "The File has been successfully attached to the case with the ID: " + getCaseID() + "\n";
+        if (!this.closed) {
+            attachedFiles.add(file);
+            return "The File has been successfully attached to the case with the ID: " + getCaseID() + "\n";
+        }
+        return "The case is close and cannot attach new files";
     }
 
     public static void decrementCases() {
         numberOfCases--;
+    }
+
+    public void closeCase(boolean closed, String argument) {
+        this.description = description + "\n Closing argument: \n" + argument;
+        this.closed = closed;
+    }
+
+    public boolean isClosed(){
+        return this.closed;
+    }
+    
+    public int getCaseID() {
+        return this.caseID;
     }
 
     public Date getDate() {
@@ -56,23 +74,21 @@ public class Case {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    private void setDescription(String description) {
+        if (!this.closed) {
+            this.description = description;
+        }
     }
 
     public String getCaseType() {
         return caseType;
     }
 
-    public void setCaseType(String caseType) {
-        this.caseType = caseType;
-    }
-
     public List<File> getAttachedFiles() {
         return attachedFiles;
     }
 
-    public void setAttachedFiles(List<File> attachedFiles) {
+    private void setAttachedFiles(List<File> attachedFiles) {
         this.attachedFiles = attachedFiles;
     }
 
