@@ -14,10 +14,12 @@ public class Activity {
     private Date startDate;
     private Boolean shared;
     private User creator;
+    private String title;
     private static int idCounter = 1;
     private int id;
 
-    public Activity(User creator, String place, Date startDate, Date endDate, String description, String type, Image pictogram, Boolean shared) {
+    public Activity(String title, User creator, String place, Date startDate, Date endDate, String description, String type, Image pictogram, Boolean shared) {
+        this.title = title;
         this.creator = creator;
         this.place = place;
         this.startDate = startDate;
@@ -30,7 +32,8 @@ public class Activity {
         idCounter++;
     }
 
-    public Activity(User creator, String place, Date startDate, Date endDate, String description, String type, Boolean shared) {
+    public Activity(String titel, User creator, String place, Date startDate, Date endDate, String description, String type, Boolean shared) {
+        this.title = title;
         this.creator = creator;
         this.place = place;
         this.startDate = startDate;

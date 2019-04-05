@@ -14,13 +14,17 @@ public class Calendar {
         calender.remove(activity.getId(), activity);
     }
 
-    public void createActivity(User creator, String place, Date startDate, Date endDate, String description, String type, Image pictogram, Boolean shared) {
-        Activity activity = new Activity(creator, place, startDate, endDate, description, type, pictogram, shared);
+    public void createActivity(String title, User creator, String place, Date startDate, Date endDate, String description, String type, Image pictogram, Boolean shared) {
+        Activity activity = new Activity(title, creator, place, startDate, endDate, description, type, pictogram, shared);
         calender.put(activity.getId(), activity);
     }
 
     public Map<Integer, Activity> getCalender() {
         return calender;
+    }
+
+    public Activity getActivity(int key) {
+        return calender.get(key);
     }
 
     //sort the activities by time and date.
