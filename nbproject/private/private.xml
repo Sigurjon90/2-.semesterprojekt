@@ -2,16 +2,18 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
         <group>
-            <file>file:/C:/Users/jens/Documents/GitHub/2-,semesterprojekt/src/Domæne/KalenderModul/Aktivitet.java</file>
-            <file>file:/C:/Users/jens/Documents/GitHub/2-,semesterprojekt/src/Domæne/KalenderModul/Kalender.java</file>
-            <file>file:/C:/Users/jens/Documents/GitHub/2-,semesterprojekt/src/Domæne/DagbogModul/Indlæg.java</file>
-            <file>file:/C:/Users/jens/Documents/GitHub/2-,semesterprojekt/src/Domæne/DagbogModul/Dagbog.java</file>
-            <file>file:/C:/Users/jens/Documents/GitHub/2-,semesterprojekt/src/Domæne/Start.java</file>
+            <file>file:/C:/Users/Daniel/Documents/GitHub/2-.semesterprojekt/src/UI/FXMLDocumentController.java</file>
+            <file>file:/C:/Users/Daniel/Documents/GitHub/2-.semesterprojekt/src/UI/Vault.java</file>
         </group>
-=======
-        <group/>
->>>>>>> Sagsudredning
+        <group name="2-.semesterprojekt">
+            <file>file:/C:/Users/alext/Documents/NetBeansProjects/Project%20Vault/2-.semesterprojekt/src/Domain/CaseModule/Case.java</file>
+            <file>file:/C:/Users/alext/Documents/NetBeansProjects/Project%20Vault/2-.semesterprojekt/src/Domain/CaseModule/TestSagModul.java</file>
+            <file>file:/C:/Users/alext/Documents/NetBeansProjects/Project%20Vault/2-.semesterprojekt/src/Domain/User/SocialWorker.java</file>
+            <file>file:/C:/Users/alext/Documents/NetBeansProjects/Project%20Vault/2-.semesterprojekt/src/Domain/User/Resident.java</file>
+            <file>file:/C:/Users/alext/Documents/NetBeansProjects/Project%20Vault/2-.semesterprojekt/src/Domain/DiaryModule/Diary.java</file>
+            <file>file:/C:/Users/alext/Documents/NetBeansProjects/Project%20Vault/2-.semesterprojekt/src/Domain/User/User.java</file>
+            <file>file:/C:/Users/alext/Documents/NetBeansProjects/Project%20Vault/2-.semesterprojekt/src/Domain/CaseModule/CaseTypes.java</file>
+        </group>
     </open-files>
 </project-private>

@@ -6,8 +6,8 @@ public class TestSagModul {
 
     public static void main(String[] args) {
 
-        SocialWorker s1 = new SocialWorker("Alex");
-        SocialWorker s2 = new SocialWorker("Daniel");
+        SocialWorker s1 = new SocialWorker("Alex", "Tholle", "altho18", "1234");
+        SocialWorker s2 = new SocialWorker("Daniel", "Szenczi", "dasze18", "5678");
 
         System.out.println(s1.toString());
         System.out.println(s2.toString());
@@ -29,6 +29,14 @@ public class TestSagModul {
 
         System.out.println(s1.getCases());
         System.out.println(s2.getCases());
+        
+        System.out.println("-----------------------TEST closeCase:-------------------------");
+        System.out.println(s2.getCases().get(2).getDescription());
+        s2.getCases().get(2).setDescription("Test Edit");
+        System.out.println(s2.getCases().get(2).getDescription());
+        s2.getCases().get(2).closeCase(true, "test lukning");
+        s2.getCases().get(2).setDescription("Jalla");
+        System.out.println(s2.getCases().get(2).getDescription());
 
     }
 

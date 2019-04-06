@@ -1,5 +1,6 @@
 package Domain.CaseModule;
 
+import Domain.User.Resident;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,12 +15,24 @@ public class Case {
     private String caseType;
     private List<File> attachedFiles;
     private boolean closed = false;
+    private Resident caseResident;
 
     public Case(String description, String caseType) {
         this.date = new Date();
         this.description = description;
         this.caseType = caseType;
         attachedFiles = new ArrayList<>();
+        this.caseResident = new Resident();
+        numberOfCases++;
+        this.caseID = numberOfCases;
+    }
+    
+    public Case(String description, String caseType, Resident resident) {
+        this.date = new Date();
+        this.description = description;
+        this.caseType = caseType;
+        attachedFiles = new ArrayList<>();
+        this.caseResident = resident;
         numberOfCases++;
         this.caseID = numberOfCases;
     }
@@ -29,6 +42,17 @@ public class Case {
         this.description = description;
         this.caseType = caseType;
         this.attachedFiles = attachedFiles;
+        this.caseResident = new Resident();
+        numberOfCases++;
+        this.caseID = numberOfCases;
+    }
+
+    public Case(String description, String caseType, List<File> attachedFiles, Resident resident) {
+        this.date = new Date();
+        this.description = description;
+        this.caseType = caseType;
+        this.attachedFiles = attachedFiles;
+        this.caseResident = resident;
         numberOfCases++;
         this.caseID = numberOfCases;
     }
@@ -53,8 +77,8 @@ public class Case {
         numberOfCases--;
     }
 
-    public void closeCase(boolean closed, String argument) {
-        this.description = description + "\n Closing argument: \n" + argument;
+    public void closeCase(boolean closed, String reason) {
+        this.description = description + "\nReason for closing: \n" + reason;
         this.closed = closed;
     }
 
@@ -74,9 +98,11 @@ public class Case {
         return description;
     }
 
-    private void setDescription(String description) {
+    public void setDescription(String description) {
         if (!this.closed) {
             this.description = description;
+        } else {
+            System.out.println("Case is close. \"" + description + "\" cannot be set as description");
         }
     }
 
