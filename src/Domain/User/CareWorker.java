@@ -6,4 +6,7 @@ package Domain.User;
  */
 public class CareWorker extends User {
 
+    public CareWorker() {
+
+    }
 }

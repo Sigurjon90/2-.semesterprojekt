@@ -17,8 +17,10 @@ public class Activity {
     private String title;
     private static int idCounter = 1;
     private int id;
+    private String endDate2;
+    private String startDate2;
 
-    public Activity(String title, User creator, String place, Date startDate, Date endDate, String description, String type, Image pictogram, Boolean shared) {
+    public Activity(String title, User creator, String place, Date startDate, Date endDate, String description, String type, Boolean shared) {
         this.title = title;
         this.creator = creator;
         this.place = place;
@@ -26,18 +28,18 @@ public class Activity {
         this.endDate = endDate;
         this.description = description;
         this.type = type;
-        this.pictogram = pictogram;
         this.shared = shared;
         this.id = idCounter;
         idCounter++;
     }
 
-    public Activity(String titel, User creator, String place, Date startDate, Date endDate, String description, String type, Boolean shared) {
+    // Testmetode
+    public Activity(String title, User creator, String place, String startDate, String endDate, String description, String type, Boolean shared) {
         this.title = title;
         this.creator = creator;
         this.place = place;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startDate2 = startDate;
+        this.endDate2 = endDate;
         this.description = description;
         this.type = type;
         this.shared = shared;
