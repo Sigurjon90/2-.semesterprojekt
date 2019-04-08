@@ -54,7 +54,6 @@ public class FXMLCalenderController implements Initializable {
 
     @FXML
     public void deleteActivity(ActionEvent event) throws IOException {
-
     }
 
     @Override
@@ -64,7 +63,6 @@ public class FXMLCalenderController implements Initializable {
             planBtn.setDisable(false);
             editBtn.setDisable(false);
             deleteBtn.setDisable(false);
-
         }
     }
 
