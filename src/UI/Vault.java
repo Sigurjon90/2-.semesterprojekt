@@ -10,26 +10,24 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Vault extends Application {
+
     public static Stage stage;
-    public static User currentLoggedOn = new CareWorker();
+    public static User currentLoggedOn = new CareWorker("care", "carer");
     public static Calendar testCalendar = new Calendar();
-    
+
     @Override
     public void start(Stage stage) throws Exception {
         //Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         Parent root = FXMLLoader.load(getClass().getResource("FXMLCalender.fxml"));
         Scene scene = new Scene(root);
-        
+
         stage.setScene(scene);
         stage.show();
-         this.stage = stage;
+        this.stage = stage;
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
