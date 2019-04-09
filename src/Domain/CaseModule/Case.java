@@ -1,5 +1,6 @@
 package Domain.CaseModule;
 
+import Domain.User.Resident;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,12 +14,25 @@ public class Case {
     private String description;
     private String caseType;
     private List<File> attachedFiles;
+    private boolean closed = false;
+    private Resident caseResident;
 
     public Case(String description, String caseType) {
         this.date = new Date();
         this.description = description;
         this.caseType = caseType;
         attachedFiles = new ArrayList<>();
+        this.caseResident = new Resident();
+        numberOfCases++;
+        this.caseID = numberOfCases;
+    }
+    
+    public Case(String description, String caseType, Resident resident) {
+        this.date = new Date();
+        this.description = description;
+        this.caseType = caseType;
+        attachedFiles = new ArrayList<>();
+        this.caseResident = resident;
         numberOfCases++;
         this.caseID = numberOfCases;
     }
@@ -28,24 +42,52 @@ public class Case {
         this.description = description;
         this.caseType = caseType;
         this.attachedFiles = attachedFiles;
+        this.caseResident = new Resident();
         numberOfCases++;
         this.caseID = numberOfCases;
     }
 
-    public int getCaseID() {
-        return this.caseID;
+    public Case(String description, String caseType, List<File> attachedFiles, Resident resident) {
+        this.date = new Date();
+        this.description = description;
+        this.caseType = caseType;
+        this.attachedFiles = attachedFiles;
+        this.caseResident = resident;
+        numberOfCases++;
+        this.caseID = numberOfCases;
     }
 
     public String editCase() {
-        return "The Case with ID: " + getCaseID() + " has been successfully edited \n";
+        if (!this.closed) {
+            
+            return "The Case with ID: " + getCaseID() + " has been successfully edited \n";
+        }
+        return "The case is closed and cannot be edited";
     }
 
     public String attachFile(File file) {
-        return "The File has been successfully attached to the case with the ID: " + getCaseID() + "\n";
+        if (!this.closed) {
+            attachedFiles.add(file);
+            return "The File has been successfully attached to the case with the ID: " + getCaseID() + "\n";
+        }
+        return "The case is close and cannot attach new files";
     }
 
     public static void decrementCases() {
         numberOfCases--;
+    }
+
+    public void closeCase(boolean closed, String reason) {
+        this.description = description + "\nReason for closing: \n" + reason;
+        this.closed = closed;
+    }
+
+    public boolean isClosed(){
+        return this.closed;
+    }
+    
+    public int getCaseID() {
+        return this.caseID;
     }
 
     public Date getDate() {
@@ -57,22 +99,22 @@ public class Case {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        if (!this.closed) {
+            this.description = description;
+        } else {
+            System.out.println("Case is close. \"" + description + "\" cannot be set as description");
+        }
     }
 
     public String getCaseType() {
         return caseType;
     }
 
-    public void setCaseType(String caseType) {
-        this.caseType = caseType;
-    }
-
     public List<File> getAttachedFiles() {
         return attachedFiles;
     }
 
-    public void setAttachedFiles(List<File> attachedFiles) {
+    private void setAttachedFiles(List<File> attachedFiles) {
         this.attachedFiles = attachedFiles;
     }
 

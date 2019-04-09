@@ -6,15 +6,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SocialWorker {
+public class SocialWorker extends User{
 
     private static int numberOfSocialWorkers = 0;
-    private String name;
-    private int socialWorkerID;
-    private Map<Integer, Case> cases;
+    private final int socialWorkerID;
+    private final Map<Integer, Case> cases;
 
-    public SocialWorker(String name) {
-        this.name = name;
+    public SocialWorker(String firstName, String lastName, String username, String password) {
+        super.setFirstName(firstName);
+        super.setLastName(lastName);
+        super.setUsername(username);
+        super.setPassword(password);
         this.numberOfSocialWorkers++;
         this.socialWorkerID = numberOfSocialWorkers;
         cases = new HashMap<>();
@@ -44,7 +46,7 @@ public class SocialWorker {
         Case caseToTransfer = this.cases.get(caseID);
         socialWorker.getCases().put(caseID, caseToTransfer);
         this.cases.remove(caseID);
-        System.out.println("Case with ID: " + caseID + " has been successfullt trasnfered from " + this.name + " to " + socialWorker.getName() + "\n");
+        System.out.println("Case with ID: " + caseID + " has been successfully transfered from "  + this.getName() + " to " + socialWorker.getName() + "\n");
 
     }
 
@@ -53,11 +55,11 @@ public class SocialWorker {
     }
 
     public String getName() {
-        return this.name;
+        return super.getFirstName() + " " + super.getLastName();
     }
 
     @Override
     public String toString() {
-        return this.name + " ID: " + this.socialWorkerID;
+        return this.getName() + " ID: " + this.socialWorkerID;
     }
 }

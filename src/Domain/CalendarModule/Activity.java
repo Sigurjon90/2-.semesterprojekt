@@ -9,27 +9,46 @@ public class Activity {
     private String place;
     private String description;
     private String type;
-    private Image pictogram;
+    private Image pictogram = null;
     private Date endDate;
     private Date startDate;
     private Boolean shared;
-//waiting for Bruger implemtation
     private User creator;
+    private String title;
+    private static int idCounter = 1;
+    private int id;
+    private String endDate2;
+    private String startDate2;
 
-//Waiting for Bruger implemtation
-    public Activity(User creator, String place, Date startDate, Date endDate, String description, String type, Image pictogram, Boolean shared) {
+    public Activity(String title, User creator, String place, Date startDate, Date endDate, String description, String type, Boolean shared) {
+        this.title = title;
         this.creator = creator;
         this.place = place;
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
         this.type = type;
-        this.pictogram = pictogram;
         this.shared = shared;
+        this.id = idCounter;
+        idCounter++;
     }
 
-    public Activity getActivity() {
-        return null;
+    // Testmetode
+    public Activity(String title, User creator, String place, String startDate, String endDate, String description, String type, Boolean shared) {
+        this.title = title;
+        this.creator = creator;
+        this.place = place;
+        this.startDate2 = startDate;
+        this.endDate2 = endDate;
+        this.description = description;
+        this.type = type;
+        this.shared = shared;
+        this.id = idCounter;
+        idCounter++;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void updateActivity(User creator, String place, Date startDate, Date endDate, String description, String type, Image pictogram, Boolean shared) {
