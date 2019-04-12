@@ -26,7 +26,7 @@ public class Case {
         numberOfCases++;
         this.caseID = numberOfCases;
     }
-    
+
     public Case(String description, String caseType, Resident resident) {
         this.date = new Date();
         this.description = description;
@@ -59,7 +59,7 @@ public class Case {
 
     public String editCase() {
         if (!this.closed) {
-            
+
             return "The Case with ID: " + getCaseID() + " has been successfully edited \n";
         }
         return "The case is closed and cannot be edited";
@@ -82,10 +82,10 @@ public class Case {
         this.closed = closed;
     }
 
-    public boolean isClosed(){
+    public boolean isClosed() {
         return this.closed;
     }
-    
+
     public int getCaseID() {
         return this.caseID;
     }
@@ -120,7 +120,12 @@ public class Case {
 
     @Override
     public String toString() {
-        return "ID: " + this.caseID + " with type " + this.caseType + " created on: " + this.date + "\n";
+        return "Sag ID: " + this.caseID + "\n";
+    }
+
+    public String showInformation() {
+        return "Sagen er oprettet :" + this.getDate() + "\n" + "Sag ID: " + this.caseID + "\n" + "Sagen omhandler: " + "\n" + this.getDescription();
+
     }
 
 }
