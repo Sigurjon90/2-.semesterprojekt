@@ -31,4 +31,7 @@ public class Diary {
     public Entry getEntry(int key){
         return entryMap.get(key);
     }
+    
+    
+    
 }

@@ -12,9 +12,7 @@ public class Entry {
     List<Integer> accessType;
     List<File> files;
     int id;
-    static int idCounter = 1; 
-
-    
+    static int idCounter = 1;
 
     public Entry(Date date, String description, List<Integer> accessType, List<File> files) {
         this.id = idCounter;
@@ -31,6 +29,12 @@ public class Entry {
 
     public Entry(String description) {
         this.description = description;
+    }
+
+    public Entry(Date date, String description) {
+        this.date = date;
+        this.description = description;
+
     }
 
     public void editEntry(String description, List<Integer> accessType, List<File> files) {
@@ -50,12 +54,21 @@ public class Entry {
     public void editFiles(List<File> files) {
         this.files = files;
     }
-    
+
     @Override
-    public String toString(){
-        return description;
+    public String toString() {
+        return date.toString();
     }
-     public int getId() {
+    
+    public void deleteEntry(){
+        
+    }
+   
+    public String getEntryDescription() {
+        return date.toString() + "\n\n" + description;
+    }
+
+    public int getId() {
         return id;
     }
 
