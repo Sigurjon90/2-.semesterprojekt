@@ -1,5 +1,6 @@
 package UI;
 
+import Domain.CalendarModule.Activity;
 import Domain.CalendarModule.Calendar;
 import Domain.User.CareWorker;
 import Domain.User.User;
@@ -14,11 +15,12 @@ public class Vault extends Application {
     public static Stage stage;
     public static User currentLoggedOn = new CareWorker("care", "carer");
     public static Calendar testCalendar = new Calendar();
+    public static Activity currentActivity;
 
     @Override
     public void start(Stage stage) throws Exception {
         //Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLCalender.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/UI/CalendarModul/FXMLCalender.fxml"));
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
