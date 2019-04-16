@@ -91,11 +91,15 @@ public class Case {
     }
 
     public Date getDate() {
-        return date;
+        return this.date;
+    }
+    
+    public Resident getResident() {
+        return this.caseResident;
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public void setDescription(String description) {
@@ -124,8 +128,12 @@ public class Case {
     }
 
     public String showInformation() {
-        return "Sagen er oprettet :" + this.getDate() + "\n" + "Sag ID: " + this.caseID + "\n" + "Sagen omhandler: " + "\n" + this.getDescription();
-
+        return "Sagen er oprettet :" + this.getDate() + 
+                "\n" + "Sag ID: " + this.caseID + 
+                "\n" + "Tilknyttet beboer: " + this.caseResident.getFirstName() 
+                + " " + this.caseResident.getLastName() + 
+                "\n" + "Sagen omhandler: " + 
+                "\n" + this.getDescription();
     }
 
 }

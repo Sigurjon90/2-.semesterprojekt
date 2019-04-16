@@ -1,6 +1,7 @@
 package UI.CaseModul;
 
 import Domain.CaseModule.Case;
+import Domain.User.Resident;
 import Domain.User.SocialWorker;
 import Domain.User.User;
 import static UI.Vault.stage;
@@ -31,6 +32,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class FXMLCaseController implements Initializable {
 
@@ -63,6 +65,9 @@ public class FXMLCaseController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         currentLoggedOn = new SocialWorker("Daniel", "Szenczi", "Dan", "1234");
+        Resident r1 = new Resident("Alex", "Tholle", "altho18", "123");
+        Resident r2 = new Resident("Jens", "Vitus", "jevit18", "456");
+        Resident r3 = new Resident("Morten", "Breum", "monoe17", "789");
         currentLoggedOn.createCase("Alkohol problem", "Alkoholproblemer kan have forskellige sværhedsgrader.\n"
                 + "\n"
                 + "Et stort alkoholforbrug (storforbrug) vil sige et forbrug over 14 genstande per uge for kvinder og mere end 21 genstande per uge for mænd.\n"
@@ -77,12 +82,14 @@ public class FXMLCaseController implements Initializable {
                 + "\n"
                 + "Alle mennesker kan udvikle alkoholafhængighed, hvis alkoholforbruget er stort og varer i længere tid.\n"
                 + "\n"
-                + "Hvor meget og hvor lang tid man skal drikke, før man bliver afhængig varierer fra person til person. Arvelighed spiller ind på, hvor hurtigt man udvikler afhængighed og måske også på, hvor svært afhængig, man bliver. ");
-        currentLoggedOn.createCase("Stoffer", "problem2");
-        currentLoggedOn.createCase("Sex", "problem3?");
+                + "Hvor meget og hvor lang tid man skal drikke, før man bliver afhængig varierer fra person til person. Arvelighed spiller ind på, hvor hurtigt man udvikler afhængighed og måske også på, hvor svært afhængig, man bliver. ", r3);
+        currentLoggedOn.createCase("Stoffer", "problem2", r1);
+        currentLoggedOn.createCase("Sex", "problem3?", r2);
 
         obsCaseList = FXCollections.observableArrayList();
         caseList.setItems(obsCaseList);
+        
+        editCaseBtn.setDisable(true);
 
         update();
 
@@ -105,12 +112,13 @@ public class FXMLCaseController implements Initializable {
     }
 
     @FXML
-    void editCaseAction(ActionEvent event) throws IOException {
-
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLCaseEditor.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-
+    private void editCaseAction(ActionEvent event) throws IOException {
+//        FXMLLoader createScene = new FXMLLoader(getClass().getResource("FXMLCaseEditor.fxml"));
+//        Parent createRoot = (Parent) createScene.load();
+//        Stage createStage = new Stage();
+//        createStage.setScene(new Scene(createRoot));
+//        createStage.initStyle(StageStyle.UNDECORATED);
+//        createStage.show();
     }
 
     @FXML
@@ -121,11 +129,12 @@ public class FXMLCaseController implements Initializable {
 
     @FXML
     private void createCaseAction(ActionEvent event) throws IOException {
-
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLCaseEditor.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-
+        FXMLLoader createScene = new FXMLLoader(getClass().getResource("FXMLCaseEditor.fxml"));
+        Parent createRoot = (Parent) createScene.load();
+        Stage createStage = new Stage();
+        createStage.setScene(new Scene(createRoot));
+        createStage.initStyle(StageStyle.UNDECORATED);
+        createStage.show();
     }
 
     @FXML

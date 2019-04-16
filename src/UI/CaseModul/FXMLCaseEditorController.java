@@ -22,11 +22,13 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import static UI.Vault.stage;
 import java.io.IOException;
+import java.util.Map;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public class FXMLCaseEditorController implements Initializable {
 
@@ -78,6 +80,7 @@ public class FXMLCaseEditorController implements Initializable {
         typestatus.add("Mobilitet");
         typestatus.add("Kommunikation");
         test.setItems(typestatus);
+
     }
 
     private void typeSetup(String type) {
@@ -109,19 +112,34 @@ public class FXMLCaseEditorController implements Initializable {
 
     @FXML
     private void createCase(ActionEvent event) throws IOException {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Bekræftigelse");
-        alert.setHeaderText(null);
-        alert.setContentText("Er du sikker på du vil oprette en ny sag?");
-        Optional<ButtonType> action = alert.showAndWait();
+        if (titleField.getText() != null || residentNameField.getText() != null || descriptionArea.getText() != null) {
+            Case createdCase = null;
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Bekræftigelse");
+            alert.setHeaderText(null);
+            alert.setContentText("Er du sikker på du vil oprette en ny sag?");
+            Optional<ButtonType> action = alert.showAndWait();
 
-        if (action.get() == ButtonType.OK) {
+            if (action.get() == ButtonType.OK) {
 
-            Case createdCase = new Case(descriptionArea.getText(), test.getSelectionModel().getSelectedItem(), new Resident(residentNameField.getText(), "sdsds", "sdsada", "12312312"));
-            FXMLCaseController.getSocialWorker().getCases().put(createdCase.getCaseID(), createdCase);
-            Parent root = FXMLLoader.load(getClass().getResource("FXMLCase.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+                for (Map.Entry<Integer, Case> entry : FXMLCaseController.getSocialWorker().getCases().entrySet()) {
+                    Resident caseResident = entry.getValue().getResident();
+                    if (caseResident.getFirstName().equals(residentNameField.getText())) {
+                        createdCase = new Case(descriptionArea.getText(), test.getSelectionModel().getSelectedItem(), caseResident);
+                    }
+                }
+
+                if (createdCase == null) {
+                    createdCase = new Case(descriptionArea.getText(), test.getSelectionModel().getSelectedItem(), new Resident(residentNameField.getText(), "sdsds", "sdsada", "12312312"));
+                }
+
+                FXMLCaseController.getSocialWorker().getCases().put(createdCase.getCaseID(), createdCase);
+                final Node source = (Node) event.getSource();
+                final Stage stage = (Stage) source.getScene().getWindow();
+                stage.close();
+            }
+        } else {
+            System.out.println("UDFYLD DE NØDVENDIGE FELTER, tak");
         }
     }
 

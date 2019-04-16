@@ -26,11 +26,22 @@ public class SocialWorker extends User{
         Case newCase = new Case(description, caseType);
         cases.put(newCase.getCaseID(), newCase);
         return "A case with the ID: " + newCase.getCaseID() + " has been successfully created \n";
-
+    }
+    
+    public String createCase(String caseType, String description, Resident resident) {
+        Case newCase = new Case(description, caseType, resident);
+        cases.put(newCase.getCaseID(), newCase);
+        return "A case with the ID: " + newCase.getCaseID() + " has been successfully created \n";
     }
 
     public String createCase(String caseType, String description, List<File> attachedFiles) {
         Case newCase = new Case(description, caseType, attachedFiles);
+        cases.put(newCase.getCaseID(), newCase);
+        return "A case with the ID: " + newCase.getCaseID() + " has been successfully created \n";
+    }
+    
+    public String createCase(String caseType, String description, List<File> attachedFiles, Resident resident) {
+        Case newCase = new Case(description, caseType, attachedFiles, resident);
         cases.put(newCase.getCaseID(), newCase);
         return "A case with the ID: " + newCase.getCaseID() + " has been successfully created \n";
     }
