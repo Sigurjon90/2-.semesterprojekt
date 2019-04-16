@@ -5,14 +5,14 @@
  */
 package UI.DiaryModul;
 
-import static UI.DiaryModul.Starter.stage;
 import Domain.DiaryModule.Entry;
+import static UI.DiaryModul.Starter.stage;
+import UI.Vault;
 import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +26,7 @@ import javafx.scene.control.TextArea;
 /**
  * FXML Controller class
  *
- * @author jens
+ * @author A
  */
 public class FXMLEntryEditorController implements Initializable {
 
@@ -48,22 +48,30 @@ public class FXMLEntryEditorController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
+        dp_date.setValue(FXMLDiaryController.selectedEntryForEdit.getDate());
+
+        textarea_des.setText(FXMLDiaryController.selectedEntryForEdit.getEntryDescription());
     }
 
     @FXML
-    void saveNewEntry(ActionEvent event) throws IOException {
-        //  Date date = new Date(dp_date.getPromptText());
-        Date date = new Date();
-        Entry entry = new Entry(date, textarea_des.getText());
-     
-       
+    void saveEntryHandler(ActionEvent event) throws IOException {
+
+        //Entry entry = new Entry(dp_date.getValue(), textarea_des.getText());
+
+        //Vault.resident.getResidentDiary().getList().put(FXMLDiaryController.selectedEntryForEdit.getId(), entry);
+        
+//        if(textarea_des.getText().equals(FXMLDiaryController.selectedEntryForEdit.getEntryDescription())){
+//            
+//        }
+//        else if(!textarea_des.getText().equals(FXMLDiaryController.selectedEntryForEdit.getEntryDescription())){
+//            FXMLDiaryController.selectedEntryForEdit.editDescription(textarea);
+//        }
+
+        FXMLDiaryController.selectedEntryForEdit.editDateAndDescription(textarea_des.getText(), dp_date.getValue());
+
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDiary.fxml"));
-
         Scene scene = new Scene(root);
-
         stage.setScene(scene);
-        stage.show();
     }
-
 }

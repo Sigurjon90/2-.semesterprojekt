@@ -8,6 +8,7 @@ package UI.DiaryModul;
 import Domain.DiaryModule.Entry;
 import Domain.User.Resident;
 import static UI.DiaryModul.Starter.stage;
+import UI.Vault;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
@@ -80,6 +81,7 @@ public class FXMLDiaryController implements Initializable {
     @FXML
     private JFXButton btn_newEntry;
 
+    public static Entry selectedEntryForEdit;
     public ObservableList<Entry> list;
     private ListProperty<Entry> listProperty = new SimpleListProperty<>();
 
@@ -89,66 +91,77 @@ public class FXMLDiaryController implements Initializable {
         this.list = list;
     }
 
+    public Resident getResident() {
+        return resident;
+    }
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        resident.getResidentDiary().getList().put(2, new Entry(new Date(), "hej med dig Mathias"));
-        resident.getResidentDiary().getList().put(3, new Entry(new Date(), "hej  dig Mathias"));
-        resident.getResidentDiary().getList().put(1, new Entry(new Date(), "hej med Mathias"));
-
+        //Vault.resident.getResidentDiary().getList().put(2, new Entry(new Date(), "hej med dig Mathias"));
+        //Vault.resident.getResidentDiary().getList().put(3, new Entry(new Date(), "hej  dig Mathias"));
+        //Vault.resident.getResidentDiary().getList().put(1, new Entry(new Date(), "hej med Mathias"));
         list = FXCollections.observableArrayList();
         list_entrys.itemsProperty().bind(listProperty);
         listProperty.set(list);
-        
-        updateList();
-        
 
-        //list.add(new Entry(new Date(), "hej med dig Mathias"));
-        // list.add(new Entry(new Date(), "hej med dig Mathias"));
-        //list.add(new Entry(new Date(), "hej med dig Mathias"));
+        updateList();
     }
 
     public ObservableList<Entry> getList() {
         return list;
     }
-    
-    public void updateList(){
-           list.clear();
-        for (int i = 1; i <= resident.getResidentDiary().getList().size(); i++) {
-            list.add(resident.getResidentDiary().getList().get(i));
+
+    public void updateList() {
+        list.clear();
+        for (int i = 1; i <= Vault.resident.getResidentDiary().getList().size(); i++) {
+            list.add(Vault.resident.getResidentDiary().getList().get(i));
         }
     }
+
     @FXML
     void showEntry(MouseEvent event) {
-     
+
         String entryText = list_entrys.getSelectionModel().getSelectedItem().getEntryDescription();
         textarea_entry.setText(entryText);
 
     }
 
     @FXML
-    void displayEditorWithedit(ActionEvent event) {
+    void displayEntryEditor(ActionEvent event) throws IOException {
 
-    }
-
-    @FXML
-    void deleteEntry(ActionEvent event) {
-
-        resident.getResidentDiary().getList().remove(list_entrys.getSelectionModel().getSelectedIndex());
-
-        
-        updateList();
-
-        //list_entrys.getItems().remove(list_entrys.getSelectionModel().getSelectedIndex());
-    }
-
-    @FXML
-    void displayEditor(ActionEvent event) throws IOException {
+        selectedEntryForEdit = list_entrys.getSelectionModel().getSelectedItem();
 
         Parent root = FXMLLoader.load(getClass().getResource("FXMLEntryEditor.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+
+    }
+
+    public void updateMap() {
+        Vault.resident.getResidentDiary().getList().clear();
+
+        for (int i = 0; i < list.size(); i++) {
+            Vault.resident.getResidentDiary().getList().put(i, list.get(i));
+        }
+    }
+
+    @FXML
+    void deleteEntry(ActionEvent event
+    ) {
+
+        list.remove(list_entrys.getSelectionModel().getSelectedIndex());
+        updateMap();
+
+    }
+
+    @FXML
+    void displayEntryCreator(ActionEvent event) throws IOException {
+
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLEntryCreator.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
