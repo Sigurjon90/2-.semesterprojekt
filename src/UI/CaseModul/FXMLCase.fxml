@@ -28,7 +28,7 @@
       <JFXButton fx:id="editCaseBtn" buttonType="RAISED" layoutX="815.0" layoutY="567.0" onAction="#editCaseAction" style="-fx-background-color: #3a7077;" text="Rediger Sag" textFill="WHITE" />
       <JFXButton fx:id="searchCaseBtn" buttonType="RAISED" layoutX="855.0" layoutY="82.0" onAction="#searchCaseAction" style="-fx-background-color: #2d2d2d;" text="Søg Sag" textFill="WHITE" />
       <JFXTextField fx:id="searchIDField" focusColor="#3a7077" layoutX="669.0" layoutY="78.0" prefHeight="25.0" prefWidth="175.0" promptText="Sag ID:" />
-      <Polygon fill="#2d2d2d" layoutX="64.0" layoutY="74.0" points="-64.0, 39.0, 199.0, -74.0, -64.0, -74.0" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fill="#2d2d2d" layoutX="64.0" layoutY="74.0" points="-64.0, 39.0, 199.0, -74.0, -64.0, -74.0" stroke="#2d2d2d" strokeType="INSIDE" />
       <ImageView fitHeight="53.0" fitWidth="60.0" layoutX="14.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../icons/logo.png" />
@@ -40,16 +40,11 @@
             <Image url="@../../icons/loop.png" />
          </image>
       </ImageView>
-      <JFXButton fx:id="resetBtn" layoutX="598.0" layoutY="61.0" onAction="#resetListAction" text="X" />
+      <JFXButton fx:id="resetBtn" layoutX="638.0" layoutY="82.0" onAction="#resetListAction" text="X" />
       <Label fx:id="warningLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="684.0" layoutY="63.0" opacity="0.0" prefHeight="17.0" prefWidth="188.0" text="Ilegal søgeord" textFill="RED">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Label>
-      <ImageView fitHeight="25.0" fitWidth="32.0" layoutX="399.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../icons/reset.png" />
-         </image>
-      </ImageView>
       <JFXListView fx:id="caseList" editable="true" layoutX="671.0" layoutY="113.0" onMouseClicked="#showCaseInformation" prefHeight="441.0" prefWidth="244.0" styleClass="jfx-list-view" stylesheets="@CaseUI.css" verticalGap="10.0" />
       <JFXTextArea fx:id="casePreviewField" editable="false" focusColor="#3a7077" layoutX="28.0" layoutY="113.0" prefHeight="441.0" prefWidth="584.0" />
       <Line endX="478.0" layoutX="132.0" layoutY="117.0" startX="-100.0" />

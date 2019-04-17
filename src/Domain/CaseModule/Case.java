@@ -16,8 +16,10 @@ public class Case {
     private List<File> attachedFiles;
     private boolean closed = false;
     private Resident caseResident;
+    private String title;
 
-    public Case(String description, String caseType) {
+    public Case(String title, String description, String caseType) {
+        this.title = title;
         this.date = new Date();
         this.description = description;
         this.caseType = caseType;
@@ -27,7 +29,8 @@ public class Case {
         this.caseID = numberOfCases;
     }
 
-    public Case(String description, String caseType, Resident resident) {
+    public Case(String title, String description, String caseType, Resident resident) {
+        this.title = title;
         this.date = new Date();
         this.description = description;
         this.caseType = caseType;
@@ -37,7 +40,8 @@ public class Case {
         this.caseID = numberOfCases;
     }
 
-    public Case(String description, String caseType, List<File> attachedFiles) {
+    public Case(String title, String description, String caseType, List<File> attachedFiles) {
+        this.title = title;
         this.date = new Date();
         this.description = description;
         this.caseType = caseType;
@@ -47,7 +51,8 @@ public class Case {
         this.caseID = numberOfCases;
     }
 
-    public Case(String description, String caseType, List<File> attachedFiles, Resident resident) {
+    public Case(String title, String description, String caseType, List<File> attachedFiles, Resident resident) {
+        this.title = title;
         this.date = new Date();
         this.description = description;
         this.caseType = caseType;
@@ -78,7 +83,7 @@ public class Case {
     }
 
     public void closeCase(boolean closed, String reason) {
-        this.description = description + "\nReason for closing: \n" + reason;
+        this.description = description + "\nLukke grundlag: \n" + reason;
         this.closed = closed;
     }
 
@@ -93,7 +98,7 @@ public class Case {
     public Date getDate() {
         return this.date;
     }
-    
+
     public Resident getResident() {
         return this.caseResident;
     }
@@ -110,6 +115,10 @@ public class Case {
         }
     }
 
+    public String getTitle() {
+        return this.title;
+    }
+
     public String getCaseType() {
         return caseType;
     }
@@ -118,7 +127,7 @@ public class Case {
         return attachedFiles;
     }
 
-    private void setAttachedFiles(List<File> attachedFiles) {
+    public void setAttachedFiles(List<File> attachedFiles) {
         this.attachedFiles = attachedFiles;
     }
 
@@ -128,12 +137,21 @@ public class Case {
     }
 
     public String showInformation() {
-        return "Sagen er oprettet :" + this.getDate() + 
-                "\n" + "Sag ID: " + this.caseID + 
-                "\n" + "Tilknyttet beboer: " + this.caseResident.getFirstName() 
-                + " " + this.caseResident.getLastName() + 
-                "\n" + "Sagen omhandler: " + 
-                "\n" + this.getDescription();
+        return "Sagen er oprettet :" + this.getDate()
+                + "\n" + "Titel: " + this.title
+                + "\n" + "Sag ID: " + this.caseID
+                + "\n" + "Vedhæftet filer: " + fileNames()
+                + "\n" + "Tilknyttet beboer: " + this.caseResident.getFirstName()
+                + " " + this.caseResident.getLastName()
+                + "\n" + "Sagen omhandler: "
+                + "\n" + this.getDescription();
     }
 
+    private String fileNames() {
+        String result = "";
+        for (File f : this.attachedFiles) {
+            result += f.getName() + ", ";
+        }
+        return result;
+    }
 }

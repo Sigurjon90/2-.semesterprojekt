@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SocialWorker extends User{
+public class SocialWorker extends User {
 
     private static int numberOfSocialWorkers = 0;
     private final int socialWorkerID;
@@ -22,26 +22,26 @@ public class SocialWorker extends User{
         cases = new HashMap<>();
     }
 
-    public String createCase(String caseType, String description) {
-        Case newCase = new Case(description, caseType);
-        cases.put(newCase.getCaseID(), newCase);
-        return "A case with the ID: " + newCase.getCaseID() + " has been successfully created \n";
-    }
-    
-    public String createCase(String caseType, String description, Resident resident) {
-        Case newCase = new Case(description, caseType, resident);
+    public String createCase(String title, String caseType, String description) {
+        Case newCase = new Case(title, description, caseType);
         cases.put(newCase.getCaseID(), newCase);
         return "A case with the ID: " + newCase.getCaseID() + " has been successfully created \n";
     }
 
-    public String createCase(String caseType, String description, List<File> attachedFiles) {
-        Case newCase = new Case(description, caseType, attachedFiles);
+    public String createCase(String title, String caseType, String description, Resident resident) {
+        Case newCase = new Case(title, description, caseType, resident);
         cases.put(newCase.getCaseID(), newCase);
         return "A case with the ID: " + newCase.getCaseID() + " has been successfully created \n";
     }
-    
-    public String createCase(String caseType, String description, List<File> attachedFiles, Resident resident) {
-        Case newCase = new Case(description, caseType, attachedFiles, resident);
+
+    public String createCase(String title, String caseType, String description, List<File> attachedFiles) {
+        Case newCase = new Case(title, description, caseType, attachedFiles);
+        cases.put(newCase.getCaseID(), newCase);
+        return "A case with the ID: " + newCase.getCaseID() + " has been successfully created \n";
+    }
+
+    public String createCase(String title, String caseType, String description, List<File> attachedFiles, Resident resident) {
+        Case newCase = new Case(title, description, caseType, attachedFiles, resident);
         cases.put(newCase.getCaseID(), newCase);
         return "A case with the ID: " + newCase.getCaseID() + " has been successfully created \n";
     }
@@ -57,7 +57,7 @@ public class SocialWorker extends User{
         Case caseToTransfer = this.cases.get(caseID);
         socialWorker.getCases().put(caseID, caseToTransfer);
         this.cases.remove(caseID);
-        System.out.println("Case with ID: " + caseID + " has been successfully transfered from "  + this.getName() + " to " + socialWorker.getName() + "\n");
+        System.out.println("Case with ID: " + caseID + " has been successfully transfered from " + this.getName() + " to " + socialWorker.getName() + "\n");
 
     }
 

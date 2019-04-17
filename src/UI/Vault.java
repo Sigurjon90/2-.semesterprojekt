@@ -1,6 +1,7 @@
 package UI;
 
 import Domain.CalendarModule.Calendar;
+import Domain.CaseModule.Case;
 import Domain.User.CareWorker;
 import Domain.User.User;
 import javafx.application.Application;
@@ -15,6 +16,7 @@ public class Vault extends Application {
     public static Stage stage;
     public static User currentLoggedOn = new CareWorker("care", "carer");
     public static Calendar testCalendar = new Calendar();
+    public static Case currentCase;
 
     @Override
     public void start(Stage stage) throws Exception {
