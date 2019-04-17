@@ -61,12 +61,13 @@ public class FXMLEntryEditorController implements Initializable {
 
         //Vault.resident.getResidentDiary().getList().put(FXMLDiaryController.selectedEntryForEdit.getId(), entry);
         
-//        if(textarea_des.getText().equals(FXMLDiaryController.selectedEntryForEdit.getEntryDescription())){
-//            
-//        }
-//        else if(!textarea_des.getText().equals(FXMLDiaryController.selectedEntryForEdit.getEntryDescription())){
-//            FXMLDiaryController.selectedEntryForEdit.editDescription(textarea);
-//        }
+        if(textarea_des.getText().equals(FXMLDiaryController.selectedEntryForEdit.getEntryDescription())){
+            
+        }
+        else if(!textarea_des.getText().equals(FXMLDiaryController.selectedEntryForEdit.getEntryDescription())){
+          
+            Vault.resident.getResidentDiary().getList().get(FXMLDiaryController.selectedEntryForEdit.getId()).editDescription(textarea_des.getText());
+        }
 
         FXMLDiaryController.selectedEntryForEdit.editDateAndDescription(textarea_des.getText(), dp_date.getValue());
 

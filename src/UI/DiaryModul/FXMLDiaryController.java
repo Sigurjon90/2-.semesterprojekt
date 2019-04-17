@@ -124,10 +124,10 @@ public class FXMLDiaryController implements Initializable {
 
     @FXML
     void showEntry(MouseEvent event) {
-
-        String entryText = list_entrys.getSelectionModel().getSelectedItem().getEntryDescription();
-        textarea_entry.setText(entryText);
-
+        if (!list.isEmpty()) {
+            String entryText = list_entrys.getSelectionModel().getSelectedItem().getEntryDescription();
+            textarea_entry.setText(entryText);
+        }
     }
 
     @FXML
@@ -145,8 +145,9 @@ public class FXMLDiaryController implements Initializable {
         Vault.resident.getResidentDiary().getList().clear();
 
         for (int i = 0; i < list.size(); i++) {
-            Vault.resident.getResidentDiary().getList().put(i, list.get(i));
+            Vault.resident.getResidentDiary().getList().put(list.get(i).getId(), list.get(i));
         }
+        
     }
 
     @FXML

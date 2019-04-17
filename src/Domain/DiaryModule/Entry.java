@@ -77,7 +77,7 @@ public class Entry {
     }
 
     public String getEntryDescription() {
-        return date.toString() + "\n\n" + description;
+        return description;
     }
 
     public int getId() {

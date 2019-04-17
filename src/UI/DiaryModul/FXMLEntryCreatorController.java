@@ -56,11 +56,9 @@ public class FXMLEntryCreatorController implements Initializable {
     @FXML
     void saveNewEntryHandler(ActionEvent event) throws IOException {
 
-        
         Entry entry = new Entry(dp_date.getValue(), textarea_des.getText());
-        
         Vault.resident.getResidentDiary().getList().put(entry.getId(), entry);
-       
+        System.out.println(Vault.resident.getResidentDiary().getList().get(entry.getId()).getEntryDescription());
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDiary.fxml"));
 
         Scene scene = new Scene(root);
