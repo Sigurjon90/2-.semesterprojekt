@@ -5,7 +5,7 @@
  */
 package UI.DiaryModul;
 
-import static UI.DiaryModul.Starter.stage;
+import static UI.Vault.stage;
 import Domain.DiaryModule.Entry;
 import UI.Vault;
 import com.jfoenix.controls.JFXButton;

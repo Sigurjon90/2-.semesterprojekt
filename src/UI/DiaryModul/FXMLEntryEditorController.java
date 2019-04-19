@@ -6,7 +6,7 @@
 package UI.DiaryModul;
 
 import Domain.DiaryModule.Entry;
-import static UI.DiaryModul.Starter.stage;
+import static UI.Vault.stage;
 import UI.Vault;
 import com.jfoenix.controls.JFXButton;
 import java.io.IOException;

@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.FXMLVaultController">
-    
+
+<AnchorPane id="AnchorPane" prefHeight="510.0" prefWidth="697.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="UI.FXMLVaultController">
+   <children>
+      <Button fx:id="btn_diary" mnemonicParsing="false" onAction="#diaryHandler" prefHeight="136.0" prefWidth="278.0" text="Dagbog" />
+      <Button fx:id="btn_calendar" layoutY="136.0" mnemonicParsing="false" onAction="#calendarHandler" prefHeight="136.0" prefWidth="278.0" text="Kalender" />
+      <Button fx:id="btn_case" layoutY="272.0" mnemonicParsing="false" onAction="#caseHandler" prefHeight="136.0" prefWidth="278.0" text="Sag" />
+      <JFXListView fx:id="listview_residents" layoutX="470.0" layoutY="23.0" />
+      <Label fx:id="lb_residents" layoutX="470.0" layoutY="6.0" prefHeight="17.0" prefWidth="67.0" text="Beboere" />
+   </children>
 </AnchorPane>
