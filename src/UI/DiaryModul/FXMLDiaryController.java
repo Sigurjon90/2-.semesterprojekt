@@ -128,8 +128,12 @@ public class FXMLDiaryController implements Initializable {
     @FXML
     void showEntry(MouseEvent event) {
         if (!list.isEmpty()) {
-            String entryText = list_entrys.getSelectionModel().getSelectedItem().getEntryDescription();
-            textarea_entry.setText(entryText);
+            try {
+                String entryText = list_entrys.getSelectionModel().getSelectedItem().getEntryDescriptionAndFile();
+                textarea_entry.setText(entryText);
+            } catch (NullPointerException ex) {
+            }
+
         }
     }
 

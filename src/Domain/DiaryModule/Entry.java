@@ -44,6 +44,14 @@ public class Entry {
 
     }
 
+    public Entry(LocalDate date, String description, List<File> files) {
+        this.files = files;
+        this.id = idCounter;
+        this.date = date;
+        this.description = description;
+        idCounter++;
+    }
+
     public void editEntry(String description, List<Integer> accessType, List<File> files) {
         this.description = description;
         this.accessType = accessType;
@@ -80,11 +88,28 @@ public class Entry {
         return description;
     }
 
+    public String getEntryDescriptionAndFile() {
+        return description + "\n" + fileNames();
+    }
+
+    public String fileNames() {
+        String result = "";
+
+        for (File file : files) {
+            result += file.getName() + ", ";
+        }
+        return result;
+    }
+
     public int getId() {
         return id;
     }
 
     public LocalDate getDate() {
         return date;
+    }
+
+    public List<File> getFiles() {
+        return files;
     }
 }

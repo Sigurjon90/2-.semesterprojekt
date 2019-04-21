@@ -9,10 +9,13 @@ import static UI.Vault.stage;
 import Domain.DiaryModule.Entry;
 import UI.Vault;
 import com.jfoenix.controls.JFXButton;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,6 +27,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -45,18 +50,38 @@ public class FXMLEntryCreatorController implements Initializable {
     @FXML
     private JFXButton btn_cancel;
 
+    private File file = null;
+    private FileChooser chooser = new FileChooser();
+    private List<File> fileList;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
+        fileList = new ArrayList<>();
+        chooser.setInitialDirectory(new File("."));
+    }
+
+    @FXML
+    void saveFile(ActionEvent event) {
+        chooser.setTitle("Vedhæft fil");
+        file = chooser.showOpenDialog(new Stage());
+        fileList.add(file);
     }
 
     @FXML
     void saveNewEntryHandler(ActionEvent event) throws IOException {
 
-        Entry entry = new Entry(dp_date.getValue(), textarea_des.getText());
+        Entry entry = null;
+        if (fileList == null) {
+            entry = new Entry(dp_date.getValue(), textarea_des.getText());
+        } else {
+
+            entry = new Entry(dp_date.getValue(), textarea_des.getText(), fileList);
+        }
+
         Vault.resident.getResidentDiary().getList().put(entry.getId(), entry);
         System.out.println(Vault.resident.getResidentDiary().getList().get(entry.getId()).getEntryDescription());
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDiary.fxml"));
