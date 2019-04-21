@@ -27,8 +27,8 @@
             <TextField fx:id="descriptionTextField" alignment="TOP_LEFT" layoutX="20.0" layoutY="327.0" prefHeight="194.0" prefWidth="414.0" />
             <RadioButton fx:id="sharedYes" layoutX="20.0" layoutY="167.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="64.0" text="ja" />
             <RadioButton fx:id="entryYes" layoutX="20.0" layoutY="208.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="64.0" text="ja" />
-            <ComboBox fx:id="typeComboBox" layoutX="20.0" layoutY="247.0" prefWidth="150.0" />
-            <ImageView fitHeight="150.0" fitWidth="260.0" layoutX="170.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true" />
+            <ComboBox fx:id="typeComboBox" onAction= "#comboAction" layoutX="20.0" layoutY="247.0" prefWidth="150.0" />
+            <ImageView fx:id="pictoView" fitHeight="150.0" fitWidth="150.0" layoutX="200.0" layoutY="158.0" pickOnBounds="false" preserveRatio="false" />
             <Button fx:id="saveActivityBtn" layoutX="321.0" layoutY="521.0" mnemonicParsing="false" onAction="#saveActivity" text="Gem" />
             <Button fx:id="cancelActivity" layoutX="373.0" layoutY="521.0" mnemonicParsing="false" onAction="#annullerActivity" text="Annuller" />
             <JFXTimePicker fx:id="endTimeField" layoutX="214.0" layoutY="125.0" />

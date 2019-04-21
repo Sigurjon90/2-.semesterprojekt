@@ -5,7 +5,6 @@ import UI.Vault;
 import static UI.Vault.stage;
 import static UI.Vault.testCalendar;
 import com.jfoenix.controls.JFXTimePicker;
-import java.awt.Image;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -29,10 +28,12 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
 public class FXMLActivityEditorController implements Initializable {
 
-    ObservableList<String> typestatus = FXCollections.observableArrayList("Medicin", "udendørsaktivitet", "indendørsaktivitet");
+    ObservableList<String> typestatus = FXCollections.observableArrayList("Medicin", "Udendørsaktivitet", "Indendørsaktivitet");
     ObservableList<String> typeComboBoxList = FXCollections.observableArrayList();
     private boolean newActivity;
 
@@ -53,6 +54,10 @@ public class FXMLActivityEditorController implements Initializable {
     @FXML
     private ComboBox<String> typeComboBox;
     @FXML
+    private ImageView pictoView;
+    @FXML
+    private ImageView testView;
+    @FXML
     private Button saveActivityBtn;
     @FXML
     private Button updateActivityBtn;
@@ -62,6 +67,13 @@ public class FXMLActivityEditorController implements Initializable {
     private JFXTimePicker endTimeField;
     @FXML
     private JFXTimePicker startTimeField;
+    
+    @FXML
+    public void comboAction (ActionEvent event){
+        String imageToGet = typeComboBox.getValue();
+        System.out.println(imageToGet);
+        pictoView.setImage(new Image ("/UI/CalendarModul/"+ imageToGet +".png"));
+    }
 
     @FXML
     public void saveActivity(ActionEvent event) throws IOException {
