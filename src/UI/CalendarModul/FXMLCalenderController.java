@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.ListProperty;
@@ -128,7 +129,13 @@ public class FXMLCalenderController implements Initializable {
         listProperty.set(obList);
         mondayList.refresh();
         hide();
-
+        updateListView("Monday");
+        updateListView("Tuesday");
+        updateListView("Wednesday");
+        updateListView("Thursday");
+        updateListView("Friday");
+        updateListView("Saturday");
+        updateListView("Sunday");
     }
 
     @FXML
@@ -158,11 +165,13 @@ public class FXMLCalenderController implements Initializable {
 
     public void updateListView(String day) {
         obList = FXCollections.observableArrayList(new ArrayList<>());
+        Set<Integer> keyList = testCalendar.getKeySet();
+
         switch (day) {
             case "Monday":
                 mondayList.itemsProperty().bind(listProperty);
                 listProperty.set(obList);
-                for (int i = 1; i <= testCalendar.getCalender().size(); i++) {
+                for (Integer i : keyList) {
                     if (testCalendar.getActivity(i).getDay() == 1) {
                         obList.add(testCalendar.getActivity(i));
                     }
@@ -171,7 +180,7 @@ public class FXMLCalenderController implements Initializable {
             case "Tuesday":
                 tuesdayList.itemsProperty().bind(listProperty);
                 listProperty.set(obList);
-                for (int i = 1; i <= testCalendar.getCalender().size(); i++) {
+                for (Integer i : keyList) {
                     if (testCalendar.getActivity(i).getDay() == 2) {
                         obList.add(testCalendar.getActivity(i));
                     }
@@ -181,7 +190,7 @@ public class FXMLCalenderController implements Initializable {
             case "Wednesday":
                 wednesdayList.itemsProperty().bind(listProperty);
                 listProperty.set(obList);
-                for (int i = 1; i <= testCalendar.getCalender().size(); i++) {
+                for (Integer i : keyList) {
                     if (testCalendar.getActivity(i).getDay() == 3) {
                         obList.add(testCalendar.getActivity(i));
                     }
@@ -191,7 +200,7 @@ public class FXMLCalenderController implements Initializable {
             case "Thursday":
                 thursdayList.itemsProperty().bind(listProperty);
                 listProperty.set(obList);
-                for (int i = 1; i <= testCalendar.getCalender().size(); i++) {
+                for (Integer i : keyList) {
                     if (testCalendar.getActivity(i).getDay() == 4) {
                         obList.add(testCalendar.getActivity(i));
                     }
@@ -201,7 +210,7 @@ public class FXMLCalenderController implements Initializable {
             case "Friday":
                 fridayList.itemsProperty().bind(listProperty);
                 listProperty.set(obList);
-                for (int i = 1; i <= testCalendar.getCalender().size(); i++) {
+                for (Integer i : keyList) {
                     if (testCalendar.getActivity(i).getDay() == 5) {
                         obList.add(testCalendar.getActivity(i));
                     }
@@ -211,7 +220,7 @@ public class FXMLCalenderController implements Initializable {
             case "Saturday":
                 saturdayList.itemsProperty().bind(listProperty);
                 listProperty.set(obList);
-                for (int i = 1; i <= testCalendar.getCalender().size(); i++) {
+                for (Integer i : keyList) {
                     if (testCalendar.getActivity(i).getDay() == 6) {
                         obList.add(testCalendar.getActivity(i));
                     }
@@ -221,17 +230,17 @@ public class FXMLCalenderController implements Initializable {
             case "Sunday":
                 sundayList.itemsProperty().bind(listProperty);
                 listProperty.set(obList);
-                for (int i = 1; i <= testCalendar.getCalender().size(); i++) {
+                for (Integer i : keyList) {
                     if (testCalendar.getActivity(i).getDay() == 7) {
                         obList.add(testCalendar.getActivity(i));
                     }
-                    break;
                 }
+                break;
         }
     }
 
-    @FXML
-    public void openActivity(MouseEvent event) throws IOException {
+@FXML
+        public void openActivity(MouseEvent event) throws IOException {
         ListView myList;
         Activity myActivity;
 
@@ -246,9 +255,12 @@ public class FXMLCalenderController implements Initializable {
                     Scene scene = new Scene(currentParent);
                     stage.setScene(scene);
 
-                } catch (IOException ex) {
+                
+
+} catch (IOException ex) {
                     Logger.getLogger(FXMLCalenderController.class
-                            .getName()).log(Level.SEVERE, null, ex);
+
+.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (event.getClickCount() == 1) {
@@ -346,7 +358,7 @@ public class FXMLCalenderController implements Initializable {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb
+        public void initialize(URL url, ResourceBundle rb
     ) {
         hide();
 //        User is the person logged into the system

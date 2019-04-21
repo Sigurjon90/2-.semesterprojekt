@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import javafx.scene.control.Toggle;
 
 public class Calendar {
@@ -32,6 +33,10 @@ public class Calendar {
 
     public Activity getActivity(int key) {
         return calender.get(key);
+    }
+
+    public Set<Integer> getKeySet() {
+        return calender.keySet();
     }
 
     //sort the activities by time and date.
