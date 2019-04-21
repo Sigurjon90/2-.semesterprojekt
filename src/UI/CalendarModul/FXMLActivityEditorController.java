@@ -60,7 +60,6 @@ public class FXMLActivityEditorController implements Initializable {
     private Button cancelActivity;
     @FXML
     private JFXTimePicker endTimeField;
-
     @FXML
     private JFXTimePicker startTimeField;
 

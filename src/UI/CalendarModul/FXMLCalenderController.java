@@ -7,6 +7,7 @@ import UI.Vault;
 import static UI.Vault.stage;
 import static UI.Vault.testCalendar;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTimePicker;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -33,8 +34,10 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -44,6 +47,8 @@ public class FXMLCalenderController implements Initializable {
 
     private ObservableList<Activity> obList;
     private ListProperty<Activity> listProperty = new SimpleListProperty<>();
+    ObservableList<String> typestatus = FXCollections.observableArrayList("Medicin", "udendørsaktivitet", "indendørsaktivitet");
+    private boolean newActivity;
 
     @FXML
     private AnchorPane parent;
@@ -52,29 +57,51 @@ public class FXMLCalenderController implements Initializable {
     @FXML
     private Button planBtn;
     @FXML
-    private Button editBtn;
-    @FXML
     private Button deleteBtn;
     @FXML
     private TextField descriptionTextField;
     @FXML
-    private Label titleLabel;
-    @FXML
-    private Label startLabel;
-    @FXML
-    private Label typeLabel;
-    @FXML
-    private ComboBox<?> sharedComboBox;
-    @FXML
-    private Label endLabel;
-    @FXML
-    private Label userLabel;
-    @FXML
     private ListView<Activity> mondayList, tuesdayList, wednesdayList, thursdayList, fridayList, saturdayList, sundayList;
+    @FXML
+    private TextField titleTextField;
+    @FXML
+    private DatePicker startTextField;
+    @FXML
+    private TextField placeTextField;
+    @FXML
+    private RadioButton sharedYes;
+    @FXML
+    private RadioButton entryYes;
+    @FXML
+    private TextField typeComboBox;
+    @FXML
+    private Button saveActivityBtn;
+    @FXML
+    private Button updateActivityBtn;
+    @FXML
+    private JFXTimePicker endTimeField;
+    @FXML
+    private JFXTimePicker startTimeField;
     @FXML
     private JFXDatePicker endTextField;
     @FXML
     private JFXDatePicker StartTextField;
+    @FXML
+    private Label titleLabel;
+    @FXML
+    private Label slutLabel;
+    @FXML
+    private Label startLabel;
+    @FXML
+    private Label sharedLabel;
+    @FXML
+    private Label typeLabel;
+    @FXML
+    private Label entryLabel;
+    @FXML
+    private Label placeLabel;
+    @FXML
+    private Label descriptionLabel;
 
     @FXML
     public void planAction(ActionEvent event) throws IOException {
@@ -100,6 +127,7 @@ public class FXMLCalenderController implements Initializable {
         mondayList.itemsProperty().bind(listProperty);
         listProperty.set(obList);
         mondayList.refresh();
+        hide();
 
     }
 
@@ -224,11 +252,48 @@ public class FXMLCalenderController implements Initializable {
                 }
             }
             if (event.getClickCount() == 1) {
+                show();
                 myList = (ListView) event.getSource();
                 myActivity = (Activity) myList.getSelectionModel().getSelectedItem();
                 Vault.currentActivity = myActivity;
                 if (myList.getSelectionModel().getSelectedItem() != null) {
                     deleteBtn.setDisable(false);
+                    typeComboBox.setText(Vault.currentActivity.getType());
+                    newActivity = false;
+                    titleTextField.setText(Vault.currentActivity.getTitle());
+                    startTextField.setValue(Vault.currentActivity.getStartDate());
+                    endTextField.setValue(Vault.currentActivity.getEndDate());
+                    startTimeField.setValue(Vault.currentActivity.getStartTime());
+                    endTimeField.setValue(Vault.currentActivity.getEndTime());
+                    placeTextField.setText(Vault.currentActivity.getPlace());
+                    sharedYes.setSelected(Vault.currentActivity.getShared());
+                    entryYes.setSelected(Vault.currentActivity.getEntry());
+                    descriptionTextField.setText(Vault.currentActivity.getDescription());
+                    startTextField.setEditable(false);
+                    startTextField.setOnMouseClicked(e -> {
+                        if (!startTextField.isEditable()) {
+                            startTextField.hide();
+                        }
+                    });
+                    endTextField.setEditable(false);
+                    endTextField.setOnMouseClicked(e -> {
+                        if (!endTextField.isEditable()) {
+                            endTextField.hide();
+                        }
+                    });
+                    startTimeField.setEditable(false);
+                    startTimeField.setOnMouseClicked(e -> {
+                        if (!startTimeField.isEditable()) {
+                            startTimeField.hide();
+                        }
+                    });
+                    endTimeField.setEditable(false);
+                    endTimeField.setOnMouseClicked(e -> {
+                        if (!endTimeField.isEditable()) {
+                            endTimeField.hide();
+                        }
+                    });
+
                 }
 
             }
@@ -236,11 +301,55 @@ public class FXMLCalenderController implements Initializable {
 
     }
 
+    public void show() {
+        titleTextField.setOpacity(1);
+        startTextField.setOpacity(1);
+        endTextField.setOpacity(1);
+        startTimeField.setOpacity(1);
+        endTimeField.setOpacity(1);
+        placeTextField.setOpacity(1);
+        sharedYes.setOpacity(1);
+        entryYes.setOpacity(1);
+        descriptionTextField.setOpacity(1);
+        typeComboBox.setOpacity(1);
+        titleLabel.setOpacity(1);
+        slutLabel.setOpacity(1);
+        startLabel.setOpacity(1);
+        sharedLabel.setOpacity(1);
+        typeLabel.setOpacity(1);
+        entryLabel.setOpacity(1);
+        placeLabel.setOpacity(1);
+        descriptionLabel.setOpacity(1);
+
+    }
+
+    public void hide() {
+        titleTextField.setOpacity(0);
+        startTextField.setOpacity(0);
+        endTextField.setOpacity(0);
+        startTimeField.setOpacity(0);
+        endTimeField.setOpacity(0);
+        placeTextField.setOpacity(0);
+        sharedYes.setOpacity(0);
+        entryYes.setOpacity(0);
+        descriptionTextField.setOpacity(0);
+        typeComboBox.setOpacity(0);
+        titleLabel.setOpacity(0);
+        slutLabel.setOpacity(0);
+        startLabel.setOpacity(0);
+        sharedLabel.setOpacity(0);
+        typeLabel.setOpacity(0);
+        entryLabel.setOpacity(0);
+        placeLabel.setOpacity(0);
+        descriptionLabel.setOpacity(0);
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb
     ) {
-
-        //User is the person logged into the system
+        hide();
+//        User is the person logged into the system
 //        if (Vault.currentLoggedOn instanceof CareWorker) {
         planBtn.setDisable(false);
         deleteBtn.setDisable(true);
