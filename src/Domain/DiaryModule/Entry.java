@@ -14,7 +14,7 @@ public class Entry {
     List<Integer> accessType;
     List<File> files;
     int id;
-    static int idCounter = 1;
+    public static int idCounter = 1;
 
     public Entry(LocalDate date, String description, List<Integer> accessType, List<File> files) {
         this.id = idCounter;

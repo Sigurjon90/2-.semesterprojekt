@@ -10,6 +10,7 @@ import Domain.DiaryModule.Entry;
 import Domain.User.Resident;
 import static UI.Vault.stage;
 import UI.Vault;
+import Domain.DiaryModule.Entry;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
@@ -118,6 +119,7 @@ public class FXMLDiaryController implements Initializable {
 
     public void updateList() {
         list.clear();
+
         for (int i = 1; i <= Vault.resident.getResidentDiary().getList().size(); i++) {
             list.add(Vault.resident.getResidentDiary().getList().get(i));
         }
@@ -144,19 +146,19 @@ public class FXMLDiaryController implements Initializable {
 
     public void updateMap() {
         Vault.resident.getResidentDiary().getList().clear();
-
+        System.out.println(Vault.resident.getResidentDiary().getList());
         for (int i = 0; i < list.size(); i++) {
             Vault.resident.getResidentDiary().getList().put(list.get(i).getId(), list.get(i));
         }
-        
+
     }
 
     @FXML
-    void deleteEntry(ActionEvent event
-    ) {
+    void deleteEntry(ActionEvent event) {
 
-        list.remove(list_entrys.getSelectionModel().getSelectedIndex());
-        updateMap();
+        Vault.resident.getResidentDiary().getList().remove(list_entrys.getSelectionModel().getSelectedItem().getId());
+        Entry.idCounter -= 1;
+        updateList();
 
     }
 
