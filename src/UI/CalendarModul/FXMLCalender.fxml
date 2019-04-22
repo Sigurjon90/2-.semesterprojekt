@@ -1,86 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.FXMLCalenderController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.CalendarModul.FXMLCalenderController">
    <children>
       <Button fx:id="planBtn" disable="true" layoutX="685.0" layoutY="53.0" mnemonicParsing="false" onAction="#planAction" text="Planlæg Aktivitet" />
       <SplitPane dividerPositions="0.3872113676731794" layoutY="1.0" prefHeight="601.0" prefWidth="677.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="457.0" prefWidth="139.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="628.0" prefWidth="257.0">
                <children>
-                  <ScrollBar layoutX="-1.0" layoutY="-3.0" orientation="VERTICAL" prefHeight="465.0" prefWidth="14.0" />
-                  <Accordion layoutX="13.0" prefHeight="463.0" prefWidth="246.0">
+                  <Accordion fx:id="accordionPane" layoutX="13.0" layoutY="-2.0" prefHeight="465.0" prefWidth="225.0">
                     <panes>
-                      <TitledPane animated="false">
+                      <TitledPane animated="false" onMouseClicked="#clickDay" text="Mandag">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <ListView layoutX="10.0" layoutY="10.0" prefHeight="287.0" prefWidth="236.0" />
+                                    <ListView fx:id="mondayList" layoutX="10.0" layoutY="10.0" onMouseClicked="#openActivity" prefHeight="287.0" prefWidth="236.0" />
                                  </children>
                               </AnchorPane>
                         </content>
                       </TitledPane>
-                      <TitledPane animated="false">
+                      <TitledPane animated="false" onMouseClicked="#clickDay" text="Tirsdag">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <ListView prefHeight="287.0" prefWidth="246.0" />
+                                    <ListView fx:id="tuesdayList" onMouseClicked="#openActivity" prefHeight="287.0" prefWidth="246.0" />
                                  </children>
                               </AnchorPane>
                         </content>
                       </TitledPane>
-                      <TitledPane animated="false">
+                      <TitledPane animated="false" onMouseClicked="#clickDay" text="Onsdag">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <ListView prefHeight="287.0" prefWidth="246.0" />
+                                    <ListView fx:id="wednesdayList" onMouseClicked="#openActivity" prefHeight="287.0" prefWidth="246.0" />
                                  </children>
                               </AnchorPane>
                         </content>
                       </TitledPane>
-                        <TitledPane animated="false">
+                        <TitledPane animated="false" onMouseClicked="#clickDay" text="Torsdag">
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <ListView prefHeight="287.0" prefWidth="246.0" />
+                                    <ListView fx:id="thursdayList" onMouseClicked="#openActivity" prefHeight="287.0" prefWidth="246.0" />
                                  </children>
                               </AnchorPane>
                            </content>
                         </TitledPane>
-                        <TitledPane animated="false">
+                        <TitledPane animated="false" onMouseClicked="#clickDay" text="Fredag">
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <ListView prefHeight="287.0" prefWidth="246.0" />
+                                    <ListView fx:id="fridayList" onMouseClicked="#openActivity" prefHeight="287.0" prefWidth="246.0" />
                                  </children>
                               </AnchorPane>
                            </content>
                         </TitledPane>
-                        <TitledPane animated="false">
+                        <TitledPane animated="false" onMouseClicked="#clickDay" text="Lørdag">
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <ListView prefHeight="287.0" prefWidth="246.0" />
+                                    <ListView fx:id="saturdayList" onMouseClicked="#openActivity" prefHeight="287.0" prefWidth="246.0" />
                                  </children>
                               </AnchorPane>
                            </content>
                         </TitledPane>
-                        <TitledPane animated="false" prefHeight="313.0" prefWidth="243.0">
+                        <TitledPane animated="false" onMouseClicked="#clickDay" prefHeight="315.0" prefWidth="238.0" text="Søndag">
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <ListView prefHeight="292.0" prefWidth="244.0" />
+                                    <ListView fx:id="sundayList" onMouseClicked="#openActivity" prefHeight="292.0" prefWidth="244.0" />
                                  </children>
                               </AnchorPane>
                            </content>
@@ -89,21 +89,32 @@
                   </Accordion>
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="598.0" prefWidth="428.0">
+            <AnchorPane prefHeight="600.0" prefWidth="415.0">
                <children>
-                  <Button fx:id="editBtn" disable="true" layoutX="33.0" layoutY="527.0" mnemonicParsing="false" text="Ret aktivitet" />
-                  <Button fx:id="deleteBtn" disable="true" layoutX="124.0" layoutY="527.0" mnemonicParsing="false" text="Slet aktivitet" />
-                  <TextField fx:id="descriptionTextField" editable="false" layoutX="14.0" layoutY="311.0" prefHeight="183.0" prefWidth="373.0" promptText="Beskrivelse" />
-                  <Label fx:id="titleLabel" alignment="CENTER" layoutX="117.0" layoutY="21.0" prefHeight="33.0" prefWidth="191.0" text="Titel" textAlignment="CENTER" />
-                  <Label fx:id="startLabel" alignment="CENTER" layoutX="29.0" layoutY="85.0" prefHeight="33.0" prefWidth="91.0" text="Start" textAlignment="CENTER" />
-                  <Label fx:id="typeLabel" alignment="CENTER" layoutX="29.0" layoutY="144.0" prefHeight="33.0" prefWidth="191.0" text="type" textAlignment="CENTER" />
-                  <ComboBox fx:id="sharedComboBox" layoutX="35.0" layoutY="224.0" prefWidth="150.0" promptText="Fællesaktivitet" />
-                  <Label fx:id="endLabel" alignment="CENTER" layoutX="119.0" layoutY="85.0" prefHeight="33.0" prefWidth="91.0" text="slut" textAlignment="CENTER" />
-                  <ImageView fitHeight="136.0" fitWidth="157.0" layoutX="230.0" layoutY="156.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="titleLabel" layoutX="20.0" layoutY="30.0" prefHeight="17.0" prefWidth="87.0" text="Titel" />
+                  <Label fx:id="slutLabel" layoutX="20.0" layoutY="110.0" prefHeight="17.0" prefWidth="87.0" text="Slut" />
+                  <Label fx:id="startLabel" layoutX="20.0" layoutY="70.0" prefHeight="17.0" prefWidth="87.0" text="Start" />
+                  <TextField fx:id="titleTextField" editable="false" layoutX="20.0" layoutY="45.0" />
+                  <Label fx:id="sharedLabel" layoutX="20.0" layoutY="150.0" prefHeight="17.0" prefWidth="87.0" text="Fælles" />
+                  <Label fx:id="typeLabel" layoutX="20.0" layoutY="230.0" prefHeight="17.0" prefWidth="87.0" text="Type" />
+                  <Label fx:id="entryLabel" layoutX="20.0" layoutY="190.0" prefHeight="17.0" prefWidth="87.0" text="Lav indlæg" />
+                  <Label fx:id="placeLabel" layoutX="20.0" layoutY="270.0" prefHeight="17.0" prefWidth="87.0" text="Sted" />
+                  <Label fx:id="descriptionLabel" layoutX="20.0" layoutY="310.0" prefHeight="17.0" prefWidth="87.0" text="Beskrivelse" />
+                  <TextField fx:id="placeTextField" editable="false" layoutX="20.0" layoutY="285.0" />
+                  <TextField fx:id="descriptionTextField" alignment="TOP_LEFT" editable="false" layoutX="20.0" layoutY="327.0" prefHeight="194.0" prefWidth="414.0" />
+                  <RadioButton fx:id="sharedYes" disable="true" layoutX="20.0" layoutY="167.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="64.0" text="ja" />
+                  <RadioButton fx:id="entryYes" disable="true" layoutX="20.0" layoutY="208.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="64.0" text="ja" />
+                  <ImageView fitHeight="150.0" fitWidth="260.0" layoutX="170.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true" />
+                  <TextField fx:id="typeComboBox" editable="false" layoutX="20.0" layoutY="247.0" />
+                  <JFXDatePicker fx:id="startTextField" layoutX="22.0" layoutY="85.0" />
+                  <JFXDatePicker fx:id="endTextField" layoutX="22.0" layoutY="124.0" />
+                  <JFXTimePicker fx:id="endTimeField" layoutX="193.0" layoutY="124.0" />
+                  <JFXTimePicker fx:id="startTimeField" layoutX="193.0" layoutY="85.0" />
                </children>
             </AnchorPane>
         </items>
       </SplitPane>
       <Label fx:id="userLabel" alignment="CENTER" layoutX="685.0" layoutY="7.0" prefHeight="33.0" prefWidth="91.0" text="User" textAlignment="CENTER" />
+      <Button fx:id="deleteBtn" disable="true" layoutX="685.0" layoutY="96.0" mnemonicParsing="false" onAction="#deleteActivity" prefHeight="25.0" prefWidth="106.0" text="Slet aktivitet" />
    </children>
 </AnchorPane>
