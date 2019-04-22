@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.shape.Polygon?>
+<?import com.jfoenix.controls.JFXButton?>
 
 <AnchorPane id="AnchorPane" fx:id="calendarModulePane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.CalendarModule.FXMLActivityEditorController">
     <children>
@@ -31,13 +32,13 @@
                 <RadioButton fx:id="entryYes" layoutX="20.0" layoutY="208.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="64.0" text="ja" />
                 <ComboBox fx:id="typeComboBox" onAction= "#comboAction" layoutX="20.0" layoutY="247.0" prefWidth="150.0" />
                 <ImageView fx:id="pictoView" fitHeight="150.0" fitWidth="150.0" layoutX="200.0" layoutY="158.0" pickOnBounds="false" preserveRatio="false" />
-                <Button fx:id="saveActivityBtn" layoutX="321.0" layoutY="521.0" mnemonicParsing="false" onAction="#saveActivity" text="Gem" />
-                <Button fx:id="cancelActivity" layoutX="373.0" layoutY="521.0" mnemonicParsing="false" onAction="#annullerActivity" text="Annuller" />
+                <JFXButton fx:id="saveActivityBtn" buttonType="RAISED" style="-fx-background-color: #3a7077;" textFill="WHITE" layoutX="321.0" layoutY="521.0" mnemonicParsing="false" onAction="#saveActivity" text="Gem" />
+                <JFXButton fx:id="cancelActivity" buttonType="RAISED" style="-fx-background-color: #3a7077;" textFill="WHITE" layoutX="373.0" layoutY="521.0" mnemonicParsing="false" onAction="#annullerActivity" text="Annuller" />
                 <JFXTimePicker fx:id="endTimeField" layoutX="214.0" layoutY="125.0" />
                 <JFXTimePicker fx:id="startTimeField" layoutX="214.0" layoutY="86.0" />
                 <JFXDatePicker fx:id="endTextField" layoutX="22.0" layoutY="125.0" />
                 <JFXDatePicker fx:id="startTextField" layoutX="22.0" layoutY="85.0" />
-                <Button fx:id="updateActivityBtn" layoutX="321.0" layoutY="521.0" mnemonicParsing="false" onAction="#updateActivity" text="Gem" />
+                <JFXButton fx:id="updateActivityBtn" buttonType="RAISED" style="-fx-background-color: #3a7077;" textFill="WHITE" layoutX="321.0" layoutY="521.0" mnemonicParsing="false" onAction="#updateActivity" text="Gem" />
             </children>
         </AnchorPane>
         <AnchorPane prefHeight="46.0" prefWidth="929.0" style="-fx-background-color: #2d2d2d;">

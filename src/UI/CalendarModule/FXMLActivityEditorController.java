@@ -4,6 +4,7 @@ import Domain.User.User;
 import UI.Vault;
 import static UI.Vault.stage;
 import static UI.Vault.testCalendar;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTimePicker;
 import java.io.IOException;
 import java.net.URL;
@@ -62,11 +63,11 @@ public class FXMLActivityEditorController implements Initializable {
     @FXML
     private ImageView pictoView;
     @FXML
-    private Button saveActivityBtn;
+    private JFXButton saveActivityBtn;
     @FXML
-    private Button updateActivityBtn;
+    private JFXButton updateActivityBtn;
     @FXML
-    private Button cancelActivity;
+    private JFXButton cancelActivity;
     @FXML
     private JFXTimePicker endTimeField;
     @FXML
