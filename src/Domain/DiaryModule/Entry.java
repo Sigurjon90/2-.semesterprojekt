@@ -96,7 +96,10 @@ public class Entry {
         String result = "";
 
         for (File file : files) {
-            result += file.getName() + ", ";
+            if (files.size() == 1)
+             result += file.getName();
+            else 
+             result += file.getName() + ", ";
         }
         return result;
     }

@@ -49,6 +49,8 @@ public class FXMLEntryCreatorController implements Initializable {
     private JFXButton btn_save;
     @FXML
     private JFXButton btn_cancel;
+    @FXML
+    private Label lb_error;
 
     private File file = null;
     private FileChooser chooser = new FileChooser();
@@ -68,12 +70,16 @@ public class FXMLEntryCreatorController implements Initializable {
     void saveFile(ActionEvent event) {
         chooser.setTitle("Vedhæft fil");
         file = chooser.showOpenDialog(new Stage());
-        fileList.add(file);
+        
     }
 
     @FXML
     void saveNewEntryHandler(ActionEvent event) throws IOException {
-
+        if(dp_date.getValue()==null){
+            lb_error.setText("Indsæt venligst en dato!");
+        }
+        else{
+        fileList.add(file);
         Entry entry = null;
         if (fileList == null) {
             entry = new Entry(dp_date.getValue(), textarea_des.getText());
@@ -90,6 +96,14 @@ public class FXMLEntryCreatorController implements Initializable {
 
         stage.setScene(scene);
         stage.show();
+    }
+    }
+
+    @FXML
+    void showDiaryDisplay(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/UI/DiaryModul/FXMLDiary.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
     }
 
 }

@@ -127,10 +127,18 @@ public class FXMLDiaryController implements Initializable {
 
     @FXML
     void showEntry(MouseEvent event) {
+
         if (!list.isEmpty()) {
             try {
-                String entryText = list_entrys.getSelectionModel().getSelectedItem().getEntryDescriptionAndFile();
-                textarea_entry.setText(entryText);
+                if (list_entrys.getSelectionModel().getSelectedItem().fileNames() != null) {
+                    textarea_entry.setText(list_entrys.getSelectionModel().getSelectedItem().getEntryDescription());
+                    lb_file.setText(list_entrys.getSelectionModel().getSelectedItem().fileNames());
+                }
+                else {
+                    textarea_entry.setText(list_entrys.getSelectionModel().getSelectedItem().getEntryDescription());
+                }
+
+                //lb_file.setText(filenames);
             } catch (NullPointerException ex) {
             }
 
@@ -139,13 +147,13 @@ public class FXMLDiaryController implements Initializable {
 
     @FXML
     void displayEntryEditor(ActionEvent event) throws IOException {
-
+        if (selectedEntryForEdit != null) {
         selectedEntryForEdit = list_entrys.getSelectionModel().getSelectedItem();
 
         Parent root = FXMLLoader.load(getClass().getResource("FXMLEntryEditor.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
-
+        }
     }
 
     public void updateMap() {
@@ -159,11 +167,11 @@ public class FXMLDiaryController implements Initializable {
 
     @FXML
     void deleteEntry(ActionEvent event) {
-
+        if (selectedEntryForEdit != null) {
         Vault.resident.getResidentDiary().getList().remove(list_entrys.getSelectionModel().getSelectedItem().getId());
         Entry.idCounter -= 1;
         updateList();
-
+        }
     }
 
     @FXML

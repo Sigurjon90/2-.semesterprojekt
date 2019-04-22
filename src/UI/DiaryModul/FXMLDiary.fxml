@@ -12,14 +12,14 @@
    <children>
       <JFXListView fx:id="list_entrys" layoutX="577.0" layoutY="100.0" onMouseClicked="#showEntry" />
       <JFXTextField fx:id="textfiels_search" layoutX="610.0" layoutY="59.0" />
-      <Label fx:id="lb_file" layoutX="110.0" layoutY="76.0" prefHeight="17.0" prefWidth="423.0" text="Filer" />
-      <JFXTextArea fx:id="textarea_entry" layoutX="81.0" layoutY="100.0" prefHeight="400.0" prefWidth="451.0" />
-      <JFXButton fx:id="btn_edit" layoutX="671.0" layoutY="500.0" onAction="#displayEntryEditor" text="Redigere indlæg" />
-      <JFXButton fx:id="btn_delete" layoutX="584.0" layoutY="500.0" onAction="#deleteEntry" text="Slet indlæg" />
-      <JFXButton fx:id="btn_back" layoutX="719.0" layoutY="553.0" text="Tilbage" />
+      <Label fx:id="lb_file" layoutX="81.0" layoutY="65.0" prefHeight="17.0" prefWidth="423.0" style="-fx-background-color: #ffffff;" text="Vedhæftede filer: " />
+      <JFXButton fx:id="btn_edit" layoutX="671.0" layoutY="500.0" onAction="#displayEntryEditor" style="-fx-background-color: #b5c0d1;" text="Redigere indlæg" />
+      <JFXButton fx:id="btn_delete" layoutX="584.0" layoutY="500.0" onAction="#deleteEntry" style="-fx-background-color: #b5c0d1;" text="Slet indlæg" />
+      <JFXButton fx:id="btn_back" layoutX="719.0" layoutY="553.0" style="-fx-background-color: #b5c0d1;" text="Tilbage" />
+      <JFXTextArea fx:id="textarea_entry" layoutX="81.0" layoutY="100.0" prefHeight="400.0" prefWidth="451.0" style="-fx-background-color: #ffffff;" />
       
       <ImageView fx:id="image_file" fitHeight="25.0" fitWidth="29.0" layoutX="81.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true" />
       <Label fx:id="lb_search" layoutX="657.0" layoutY="42.0" text="Søg" />
-      <JFXButton fx:id="btn_newEntry" layoutX="630.0" layoutY="525.0" onAction="#displayEntryCreator" text="Nyt indlæg" />
+      <JFXButton fx:id="btn_newEntry" layoutX="630.0" layoutY="525.0" onAction="#displayEntryCreator" style="-fx-background-color: #b5c0d1;" text="Nyt indlæg" />
    </children>
 </AnchorPane>

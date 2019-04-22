@@ -9,6 +9,7 @@ import Domain.DiaryModule.Entry;
 import static UI.Vault.stage;
 import UI.Vault;
 import com.jfoenix.controls.JFXButton;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -22,6 +23,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -43,6 +46,9 @@ public class FXMLEntryEditorController implements Initializable {
     @FXML
     private JFXButton btn_cancel;
 
+    private File file = null;
+    private FileChooser chooser = new FileChooser();
+
     /**
      * Initializes the controller class.
      */
@@ -57,21 +63,32 @@ public class FXMLEntryEditorController implements Initializable {
     @FXML
     void saveEntryHandler(ActionEvent event) throws IOException {
 
-        //Entry entry = new Entry(dp_date.getValue(), textarea_des.getText());
 
-        //Vault.resident.getResidentDiary().getList().put(FXMLDiaryController.selectedEntryForEdit.getId(), entry);
-        
-        if(textarea_des.getText().equals(FXMLDiaryController.selectedEntryForEdit.getEntryDescription())){
-            
-        }
-        else if(!textarea_des.getText().equals(FXMLDiaryController.selectedEntryForEdit.getEntryDescription())){
-          
+        Vault.resident.getResidentDiary().getList().get(FXMLDiaryController.selectedEntryForEdit.getId()).getFiles().add(file);
+        if (textarea_des.getText().equals(FXMLDiaryController.selectedEntryForEdit.getEntryDescription())) {
+
+        } else if (!textarea_des.getText().equals(FXMLDiaryController.selectedEntryForEdit.getEntryDescription())) {
+
             Vault.resident.getResidentDiary().getList().get(FXMLDiaryController.selectedEntryForEdit.getId()).editDescription(textarea_des.getText());
         }
 
         FXMLDiaryController.selectedEntryForEdit.editDateAndDescription(textarea_des.getText(), dp_date.getValue());
 
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDiary.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+    }
+
+    @FXML
+    void saveFile(ActionEvent event) {
+        chooser.setTitle("Vedhæft fil");
+        file = chooser.showOpenDialog(new Stage());
+
+    }
+
+    @FXML
+    void showDiaryDisplay(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/UI/DiaryModul/FXMLDiary.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
