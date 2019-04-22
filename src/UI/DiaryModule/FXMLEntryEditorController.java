@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package UI.DiaryModul;
+package UI.DiaryModule;
 
 import Domain.DiaryModule.Entry;
 import static UI.Vault.stage;

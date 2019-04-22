@@ -1,4 +1,4 @@
-package UI.CaseModul;
+package UI.CaseModule;
 
 import UI.Vault;
 import com.jfoenix.controls.JFXButton;

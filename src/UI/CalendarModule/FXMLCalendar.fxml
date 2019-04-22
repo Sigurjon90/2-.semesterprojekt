@@ -13,7 +13,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.CalendarModul.FXMLCalenderController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.CalendarModule.FXMLCalendarController">
    <children>
       <Button fx:id="planBtn" disable="true" layoutX="685.0" layoutY="53.0" mnemonicParsing="false" onAction="#planAction" text="Planlæg Aktivitet" />
       <SplitPane dividerPositions="0.3872113676731794" layoutY="1.0" prefHeight="601.0" prefWidth="677.0">

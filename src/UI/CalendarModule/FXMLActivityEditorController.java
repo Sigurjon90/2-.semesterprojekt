@@ -1,4 +1,4 @@
-package UI.CalendarModul;
+package UI.CalendarModule;
 
 import Domain.User.User;
 import UI.Vault;
@@ -72,7 +72,7 @@ public class FXMLActivityEditorController implements Initializable {
     public void comboAction (ActionEvent event){
         String imageToGet = typeComboBox.getValue();
         System.out.println(imageToGet);
-        pictoView.setImage(new Image ("/UI/CalendarModul/"+ imageToGet +".png"));
+        pictoView.setImage(new Image ("/UI/CalendarModule/"+ imageToGet +".png"));
     }
 
     @FXML
@@ -91,7 +91,7 @@ public class FXMLActivityEditorController implements Initializable {
             endDate = startTextField.getValue().atTime(endTimeField.getValue());
 
             testCalendar.createActivity(titleTextField.getText(), Vault.currentLoggedOn, placeTextField.getText(), startDate, endDate, descriptionTextField.getText(), typeComboBox.getValue(), sharedYes.isSelected(), entryYes.isSelected());
-            Parent root = FXMLLoader.load(getClass().getResource("FXMLCalender.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("FXMLCalendar.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
         }
@@ -113,7 +113,7 @@ public class FXMLActivityEditorController implements Initializable {
 
             Vault.currentActivity.updateActivity(titleTextField.getText(), Vault.currentLoggedOn, placeTextField.getText(), startDate, endDate, descriptionTextField.getText(), typeComboBox.getValue(), sharedYes.isSelected(), entryYes.isSelected());
             testCalendar.getCalender().replace(Vault.currentActivity.getId(), Vault.currentActivity);
-            Parent root = FXMLLoader.load(getClass().getResource("FXMLCalender.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("FXMLCalendar.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
         }
@@ -129,7 +129,7 @@ public class FXMLActivityEditorController implements Initializable {
         Optional<ButtonType> action = alert.showAndWait();
 
         if (action.get() == ButtonType.OK) {
-            Parent root = FXMLLoader.load(getClass().getResource("FXMLCalender.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("FXMLCalendar.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
         }

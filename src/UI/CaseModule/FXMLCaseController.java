@@ -1,4 +1,4 @@
-package UI.CaseModul;
+package UI.CaseModule;
 
 import Domain.CaseModule.Case;
 import Domain.User.Resident;

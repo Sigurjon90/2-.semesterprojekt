@@ -1,4 +1,4 @@
-package UI.CalendarModul;
+package UI.CalendarModule;
 
 import Domain.CalendarModule.Activity;
 import Domain.User.CareWorker;
@@ -44,7 +44,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-public class FXMLCalenderController implements Initializable {
+public class FXMLCalendarController implements Initializable {
 
     private ObservableList<Activity> obList;
     private ListProperty<Activity> listProperty = new SimpleListProperty<>();
@@ -258,7 +258,7 @@ public class FXMLCalenderController implements Initializable {
                 
 
 } catch (IOException ex) {
-                    Logger.getLogger(FXMLCalenderController.class
+                    Logger.getLogger(FXMLCalendarController.class
 
 .getName()).log(Level.SEVERE, null, ex);
                 }
