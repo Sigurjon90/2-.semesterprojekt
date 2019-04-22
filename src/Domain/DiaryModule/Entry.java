@@ -15,6 +15,11 @@ public class Entry {
     List<File> files;
     int id;
     public static int idCounter = 1;
+    private boolean visible=true;
+
+
+
+
 
     public Entry(LocalDate date, String description, List<Integer> accessType, List<File> files) {
         this.id = idCounter;
@@ -62,6 +67,11 @@ public class Entry {
         this.description = description;
         this.date = date;
     }
+        public void editEntry(String description, LocalDate date, List<File> files) {
+        this.description = description;
+        this.date = date;
+        this.files=files;
+    }
 
     public void editDescription(String description) {
         this.description = description;
@@ -73,6 +83,13 @@ public class Entry {
 
     public void editFiles(List<File> files) {
         this.files = files;
+    }
+        public boolean isVisible() {
+        return visible;
+    }
+    
+        public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     @Override
