@@ -1,6 +1,8 @@
 package Domain.DiaryModule;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -23,7 +25,7 @@ public class Diary {
         return entryMap;
     }
     
-    public void createEntry(Date date, String description, List<Integer> accessType, List<File> files){
+    public void createEntry(LocalDate date, String description, List<Integer> accessType, List<File> files){
         Entry entry = new Entry(date, description, accessType, files);
         entryMap.put(entry.id, entry);
     }
@@ -31,4 +33,7 @@ public class Diary {
     public Entry getEntry(int key){
         return entryMap.get(key);
     }
+    
+    
+    
 }

@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.FXMLLoginController">
-    
+
+<AnchorPane id="AnchorPane" prefHeight="465.0" prefWidth="691.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="UI.FXMLLoginController">
+   <children>
+      <Label fx:id="lb_username" layoutX="239.0" layoutY="111.0" prefHeight="17.0" prefWidth="213.0" text="Brugernavn" />
+      <JFXTextField fx:id="text_username" layoutX="239.0" layoutY="128.0" prefHeight="25.0" prefWidth="213.0" />
+      <JFXTextField fx:id="text_password" layoutX="239.0" layoutY="208.0" prefHeight="25.0" prefWidth="213.0" />
+      <Label fx:id="lb_password" layoutX="239.0" layoutY="191.0" prefHeight="17.0" prefWidth="213.0" text="Password" />
+      <JFXButton fx:id="btn_login" layoutX="239.0" layoutY="274.0" onAction="#loginHandler" text="Log in" />
+      <JFXButton fx:id="btn_cancel" layoutX="403.0" layoutY="274.0" onAction="#cancelHandler" text="Anullere" />
+   </children>
 </AnchorPane>
