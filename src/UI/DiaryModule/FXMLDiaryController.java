@@ -168,11 +168,11 @@ public class FXMLDiaryController implements Initializable {
 
     @FXML
     void deleteEntry(ActionEvent event) {
-        if (selectedEntryForEdit != null) {
+        //if (selectedEntryForEdit != null) {
         Vault.resident.getResidentDiary().getList().remove(list_entrys.getSelectionModel().getSelectedItem().getId());
         Entry.idCounter -= 1;
         updateList();
-        }
+        //}
     }
 
     @FXML

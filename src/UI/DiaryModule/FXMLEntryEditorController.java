@@ -88,7 +88,7 @@ public class FXMLEntryEditorController implements Initializable {
 
     @FXML
     void showDiaryDisplay(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/UI/DiaryModul/FXMLDiary.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/UI/DiaryModule/FXMLDiary.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
