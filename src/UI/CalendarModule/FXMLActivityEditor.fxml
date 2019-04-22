@@ -35,7 +35,7 @@
             <JFXTextField fx:id="titleTextField" layoutX="17.0" layoutY="44.0" />
             <JFXComboBox fx:id="typeComboBox" layoutX="20.0" layoutY="246.0" onAction="#comboAction" prefHeight="25.0" prefWidth="135.0" />
             <JFXTextField fx:id="placeTextField" layoutX="19.0" layoutY="290.0" />
-            <JFXTextField fx:id="titleTextField11" layoutX="17.0" layoutY="339.0" prefHeight="182.0" prefWidth="400.0" />
+            <JFXTextField fx:id="descriptionTextField" alignment="TOP_LEFT" layoutX="17.0" layoutY="339.0" prefHeight="182.0" prefWidth="400.0" />
             <JFXRadioButton fx:id="sharedYes" layoutX="20.0" layoutY="167.0" text="Ja" />
             <JFXRadioButton fx:id="entryYes" layoutX="20.0" layoutY="211.0" text="Ja" />
             </children>
