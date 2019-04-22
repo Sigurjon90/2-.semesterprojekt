@@ -56,8 +56,6 @@ public class FXMLActivityEditorController implements Initializable {
     @FXML
     private ImageView pictoView;
     @FXML
-    private ImageView testView;
-    @FXML
     private Button saveActivityBtn;
     @FXML
     private Button updateActivityBtn;
