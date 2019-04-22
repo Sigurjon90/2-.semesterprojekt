@@ -8,6 +8,11 @@ import static UI.Vault.stage;
 import static UI.Vault.testCalendar;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -40,9 +45,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+
 
 public class FXMLCalendarController implements Initializable {
 
@@ -54,11 +63,13 @@ public class FXMLCalendarController implements Initializable {
     @FXML
     private AnchorPane parent;
     @FXML
+    private AnchorPane calendarModulePane;
+    @FXML
     private Accordion accordionPane;
     @FXML
-    private Button planBtn;
+    private JFXButton planBtn;
     @FXML
-    private Button deleteBtn;
+    private JFXButton deleteBtn;
     @FXML
     private TextField descriptionTextField;
     @FXML
@@ -76,9 +87,9 @@ public class FXMLCalendarController implements Initializable {
     @FXML
     private TextField typeComboBox;
     @FXML
-    private Button saveActivityBtn;
+    private JFXButton saveActivityBtn;
     @FXML
-    private Button updateActivityBtn;
+    private JFXButton updateActivityBtn;
     @FXML
     private JFXTimePicker endTimeField;
     @FXML
@@ -103,6 +114,8 @@ public class FXMLCalendarController implements Initializable {
     private Label placeLabel;
     @FXML
     private Label descriptionLabel;
+    @FXML
+    private ImageView pictoView;
 
     @FXML
     public void planAction(ActionEvent event) throws IOException {
@@ -278,6 +291,11 @@ public class FXMLCalendarController implements Initializable {
                     sharedYes.setSelected(Vault.currentActivity.getShared());
                     entryYes.setSelected(Vault.currentActivity.getEntry());
                     descriptionTextField.setText(Vault.currentActivity.getDescription());
+                    if (Vault.currentActivity.getType() != null) {
+                        String imageToGet = Vault.currentActivity.getType();
+                        System.out.println(imageToGet);
+                        pictoView.setImage(new Image("/UI/CalendarModule/" + imageToGet + ".png"));
+                    }
                     startTextField.setEditable(false);
                     startTextField.setOnMouseClicked(e -> {
                         if (!startTextField.isEditable()) {
@@ -329,6 +347,7 @@ public class FXMLCalendarController implements Initializable {
         entryLabel.setOpacity(1);
         placeLabel.setOpacity(1);
         descriptionLabel.setOpacity(1);
+        pictoView.setOpacity(1);
 
     }
 
@@ -351,6 +370,7 @@ public class FXMLCalendarController implements Initializable {
         entryLabel.setOpacity(0);
         placeLabel.setOpacity(0);
         descriptionLabel.setOpacity(0);
+        pictoView.setOpacity(0);
 
     }
 
@@ -369,5 +389,16 @@ public class FXMLCalendarController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("/UI/FXMLVault.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+    }
+
+    @FXML
+    private void exitAction(MouseEvent event) {
+        System.exit(1);
+    }
+
+    @FXML
+    private void minimizeAction(MouseEvent event) {
+        Stage stage = (Stage) calendarModulePane.getScene().getWindow();
+        stage.setIconified(true);
     }
 }
