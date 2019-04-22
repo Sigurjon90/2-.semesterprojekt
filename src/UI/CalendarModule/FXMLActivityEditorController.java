@@ -30,6 +30,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class FXMLActivityEditorController implements Initializable {
 
@@ -37,6 +40,9 @@ public class FXMLActivityEditorController implements Initializable {
     ObservableList<String> typeComboBoxList = FXCollections.observableArrayList();
     private boolean newActivity;
 
+    
+    @FXML
+    private AnchorPane calendarModulePane;
     @FXML
     private TextField titleTextField;
     @FXML
@@ -157,6 +163,17 @@ public class FXMLActivityEditorController implements Initializable {
             updateActivityBtn.setDisable(true);
         }
 
+    }
+    
+    @FXML
+    private void exitAction(MouseEvent event) {
+        System.exit(1);
+    }
+
+    @FXML
+    private void minimizeAction(MouseEvent event) {
+        Stage stage = (Stage) calendarModulePane.getScene().getWindow();
+        stage.setIconified(true);
     }
 
 }
