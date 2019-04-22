@@ -10,7 +10,9 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -106,6 +108,7 @@ public class FXMLCalendarController implements Initializable {
 
     @FXML
     public void planAction(ActionEvent event) throws IOException {
+        Vault.newAction = true;
         Parent currentParent = FXMLLoader.load(getClass().getResource("FXMLActivityEditor.fxml"));
         Scene scene = new Scene(currentParent);
         stage.setScene(scene);
@@ -124,10 +127,7 @@ public class FXMLCalendarController implements Initializable {
         }
         Vault.currentActivity = null;
         deleteBtn.setDisable(true);
-        obList = FXCollections.observableArrayList(new ArrayList<>());
-        mondayList.itemsProperty().bind(listProperty);
-        listProperty.set(obList);
-        mondayList.refresh();
+        clearAllFields();
         hide();
         updateListView("Monday");
         updateListView("Tuesday");
@@ -136,6 +136,18 @@ public class FXMLCalendarController implements Initializable {
         updateListView("Friday");
         updateListView("Saturday");
         updateListView("Sunday");
+    }
+
+    public void clearAllFields() {
+        titleTextField.setText("");
+        startTextField.setValue(LocalDate.now());
+        endTextField.setValue(LocalDate.now());
+        startTimeField.setValue(LocalTime.now());
+        endTimeField.setValue(LocalTime.now());
+        placeTextField.setText("");
+        sharedYes.setSelected(false);
+        entryYes.setSelected(false);
+        descriptionTextField.setText("");
     }
 
     @FXML
@@ -169,72 +181,72 @@ public class FXMLCalendarController implements Initializable {
 
         switch (day) {
             case "Monday":
-                mondayList.itemsProperty().bind(listProperty);
-                listProperty.set(obList);
                 for (Integer i : keyList) {
                     if (testCalendar.getActivity(i).getDay() == 1) {
                         obList.add(testCalendar.getActivity(i));
                     }
                 }
+                mondayList.setItems(obList);
+                mondayList.refresh();
                 break;
             case "Tuesday":
-                tuesdayList.itemsProperty().bind(listProperty);
-                listProperty.set(obList);
                 for (Integer i : keyList) {
                     if (testCalendar.getActivity(i).getDay() == 2) {
                         obList.add(testCalendar.getActivity(i));
                     }
                 }
+                tuesdayList.setItems(obList);
+                tuesdayList.refresh();
                 break;
 
             case "Wednesday":
-                wednesdayList.itemsProperty().bind(listProperty);
-                listProperty.set(obList);
                 for (Integer i : keyList) {
                     if (testCalendar.getActivity(i).getDay() == 3) {
                         obList.add(testCalendar.getActivity(i));
                     }
                 }
+                wednesdayList.setItems(obList);
+                wednesdayList.refresh();
                 break;
 
             case "Thursday":
-                thursdayList.itemsProperty().bind(listProperty);
-                listProperty.set(obList);
                 for (Integer i : keyList) {
                     if (testCalendar.getActivity(i).getDay() == 4) {
                         obList.add(testCalendar.getActivity(i));
                     }
                 }
+                thursdayList.setItems(obList);
+                thursdayList.refresh();
                 break;
 
             case "Friday":
-                fridayList.itemsProperty().bind(listProperty);
-                listProperty.set(obList);
                 for (Integer i : keyList) {
                     if (testCalendar.getActivity(i).getDay() == 5) {
                         obList.add(testCalendar.getActivity(i));
                     }
                 }
+                fridayList.setItems(obList);
+                fridayList.refresh();
                 break;
 
             case "Saturday":
-                saturdayList.itemsProperty().bind(listProperty);
-                listProperty.set(obList);
                 for (Integer i : keyList) {
                     if (testCalendar.getActivity(i).getDay() == 6) {
                         obList.add(testCalendar.getActivity(i));
                     }
                 }
+                saturdayList.setItems(obList);
+                saturdayList.refresh();
                 break;
 
             case "Sunday":
-                sundayList.itemsProperty().bind(listProperty);
-                listProperty.set(obList);
                 for (Integer i : keyList) {
                     if (testCalendar.getActivity(i).getDay() == 7) {
                         obList.add(testCalendar.getActivity(i));
                     }
                 }
+                sundayList.setItems(obList);
+                sundayList.refresh();
                 break;
         }
     }
@@ -244,6 +256,7 @@ public class FXMLCalendarController implements Initializable {
         ListView myList;
         Activity myActivity;
 
+        Vault.newAction = false;
         if (event.getButton().equals(MouseButton.PRIMARY)) {
             if (event.getClickCount() == 2) {
                 myList = (ListView) event.getSource();
@@ -261,11 +274,11 @@ public class FXMLCalendarController implements Initializable {
                 }
             }
             if (event.getClickCount() == 1) {
-                show();
                 myList = (ListView) event.getSource();
                 myActivity = (Activity) myList.getSelectionModel().getSelectedItem();
                 Vault.currentActivity = myActivity;
                 if (myList.getSelectionModel().getSelectedItem() != null) {
+                    show();
                     deleteBtn.setDisable(false);
                     typeComboBox.setText(Vault.currentActivity.getType());
                     newActivity = false;
