@@ -99,7 +99,7 @@ public class FXMLCaseController implements Initializable {
     private void makeStageDragable() {
         caseModulePane.setOnMousePressed((event) -> {
             xOffset = event.getSceneX();
-            xOffset = event.getSceneY();
+            yOffset = event.getSceneY();
         });
         caseModulePane.setOnMouseDragged((event) -> {
             Vault.stage.setX(event.getScreenX() - xOffset);
