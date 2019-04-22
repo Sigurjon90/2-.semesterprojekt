@@ -239,8 +239,8 @@ public class FXMLCalendarController implements Initializable {
         }
     }
 
-@FXML
-        public void openActivity(MouseEvent event) throws IOException {
+    @FXML
+    public void openActivity(MouseEvent event) throws IOException {
         ListView myList;
         Activity myActivity;
 
@@ -255,12 +255,9 @@ public class FXMLCalendarController implements Initializable {
                     Scene scene = new Scene(currentParent);
                     stage.setScene(scene);
 
-                
-
-} catch (IOException ex) {
+                } catch (IOException ex) {
                     Logger.getLogger(FXMLCalendarController.class
-
-.getName()).log(Level.SEVERE, null, ex);
+                            .getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (event.getClickCount() == 1) {
@@ -358,12 +355,19 @@ public class FXMLCalendarController implements Initializable {
     }
 
     @Override
-        public void initialize(URL url, ResourceBundle rb
+    public void initialize(URL url, ResourceBundle rb
     ) {
         hide();
 //        User is the person logged into the system
 //        if (Vault.currentLoggedOn instanceof CareWorker) {
         planBtn.setDisable(false);
         deleteBtn.setDisable(true);
+    }
+
+    @FXML
+    void backToMenu(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/UI/FXMLVault.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
     }
 }
