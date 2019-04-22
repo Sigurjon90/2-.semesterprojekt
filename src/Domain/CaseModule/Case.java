@@ -16,8 +16,10 @@ public class Case {
     private List<File> attachedFiles;
     private boolean closed = false;
     private Resident caseResident;
+    private String title;
 
-    public Case(String description, String caseType) {
+    public Case(String title, String description, String caseType) {
+        this.title = title;
         this.date = new Date();
         this.description = description;
         this.caseType = caseType;
@@ -26,8 +28,9 @@ public class Case {
         numberOfCases++;
         this.caseID = numberOfCases;
     }
-    
-    public Case(String description, String caseType, Resident resident) {
+
+    public Case(String title, String description, String caseType, Resident resident) {
+        this.title = title;
         this.date = new Date();
         this.description = description;
         this.caseType = caseType;
@@ -37,7 +40,8 @@ public class Case {
         this.caseID = numberOfCases;
     }
 
-    public Case(String description, String caseType, List<File> attachedFiles) {
+    public Case(String title, String description, String caseType, List<File> attachedFiles) {
+        this.title = title;
         this.date = new Date();
         this.description = description;
         this.caseType = caseType;
@@ -47,7 +51,8 @@ public class Case {
         this.caseID = numberOfCases;
     }
 
-    public Case(String description, String caseType, List<File> attachedFiles, Resident resident) {
+    public Case(String title, String description, String caseType, List<File> attachedFiles, Resident resident) {
+        this.title = title;
         this.date = new Date();
         this.description = description;
         this.caseType = caseType;
@@ -59,7 +64,7 @@ public class Case {
 
     public String editCase() {
         if (!this.closed) {
-            
+
             return "The Case with ID: " + getCaseID() + " has been successfully edited \n";
         }
         return "The case is closed and cannot be edited";
@@ -78,24 +83,28 @@ public class Case {
     }
 
     public void closeCase(boolean closed, String reason) {
-        this.description = description + "\nReason for closing: \n" + reason;
+        this.description = description + "\nLukke grundlag: \n" + reason;
         this.closed = closed;
     }
 
-    public boolean isClosed(){
+    public boolean isClosed() {
         return this.closed;
     }
-    
+
     public int getCaseID() {
         return this.caseID;
     }
 
     public Date getDate() {
-        return date;
+        return this.date;
+    }
+
+    public Resident getResident() {
+        return this.caseResident;
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public void setDescription(String description) {
@@ -106,6 +115,10 @@ public class Case {
         }
     }
 
+    public String getTitle() {
+        return this.title;
+    }
+
     public String getCaseType() {
         return caseType;
     }
@@ -114,13 +127,31 @@ public class Case {
         return attachedFiles;
     }
 
-    private void setAttachedFiles(List<File> attachedFiles) {
+    public void setAttachedFiles(List<File> attachedFiles) {
         this.attachedFiles = attachedFiles;
     }
 
     @Override
     public String toString() {
-        return "ID: " + this.caseID + " with type " + this.caseType + " created on: " + this.date + "\n";
+        return "Sag ID: " + this.caseID + "\n";
     }
 
+    public String showInformation() {
+        return "Sagen er oprettet :" + this.getDate()
+                + "\n" + "Titel: " + this.title
+                + "\n" + "Sag ID: " + this.caseID
+                + "\n" + "Vedhæftet filer: " + fileNames()
+                + "\n" + "Tilknyttet beboer: " + this.caseResident.getFirstName()
+                + " " + this.caseResident.getLastName()
+                + "\n" + "Sagen omhandler: "
+                + "\n" + this.getDescription();
+    }
+
+    private String fileNames() {
+        String result = "";
+        for (File f : this.attachedFiles) {
+            result += f.getName() + ", ";
+        }
+        return result;
+    }
 }

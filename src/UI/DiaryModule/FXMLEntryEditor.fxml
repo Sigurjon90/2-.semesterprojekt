@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="UI.DiaryModule.FXMLEntryEditorController">
+   <children>
+      <TextArea fx:id="textarea_des" layoutX="38.0" layoutY="74.0" prefHeight="219.0" prefWidth="334.0" />
+      <DatePicker fx:id="dp_date" layoutX="38.0" layoutY="37.0" />
+      <Label fx:id="lb_file" layoutX="38.0" layoutY="302.0" prefHeight="17.0" prefWidth="49.0" text="tilføj filer" />
+      <JFXButton fx:id="btn_file" layoutX="87.0" layoutY="298.0" text="fil" onAction="#saveFile" style="-fx-background-color: #b5c0d1;" />
+      <JFXButton fx:id="btn_save" layoutX="429.0" layoutY="352.0" onAction="#saveEntryHandler" style="-fx-background-color: #b5c0d1;" text="Gem" />
+      <JFXButton fx:id="btn_cancel" layoutX="492.0" layoutY="352.0" text="Annuller" style="-fx-background-color: #b5c0d1;" onAction="#showDiaryDisplay"/>
+   </children>
+</AnchorPane>

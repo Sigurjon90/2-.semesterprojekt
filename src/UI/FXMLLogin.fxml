@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="453.0" prefWidth="465.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.FXMLLoginController">
+   <children>
+      <JFXTextField fx:id="text_username" layoutX="126.0" layoutY="147.0" prefHeight="25.0" prefWidth="213.0" promptText="Brugernavn" />
+      <JFXTextField fx:id="text_password" layoutX="126.0" layoutY="212.0" prefHeight="25.0" prefWidth="213.0" promptText="Password" />
+      <JFXButton fx:id="btn_login" layoutX="126.0" layoutY="274.0" onAction="#loginHandler" style="-fx-background-color: #5b6a72;" text="Log in" textFill="WHITE" />
+      <JFXButton fx:id="btn_cancel" layoutX="278.0" layoutY="274.0" onAction="#cancelHandler" style="-fx-background-color: #5b6a72;" text="Annuller" textFill="WHITE" />
+      <ImageView fitHeight="480.0" fitWidth="465.0" layoutY="-8.0" mouseTransparent="true" opacity="0.23" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/logo.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

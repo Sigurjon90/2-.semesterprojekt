@@ -2,7 +2,10 @@ package Domain.CalendarModule;
 
 import Domain.User.User;
 import java.awt.Image;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class Activity {
 
@@ -10,17 +13,19 @@ public class Activity {
     private String description;
     private String type;
     private Image pictogram = null;
-    private Date endDate;
-    private Date startDate;
+    private LocalDateTime endDate;
+    private LocalDateTime startDate;
     private Boolean shared;
     private User creator;
+    private Boolean entry;
     private String title;
     private static int idCounter = 1;
     private int id;
-    private String endDate2;
-    private String startDate2;
 
-    public Activity(String title, User creator, String place, Date startDate, Date endDate, String description, String type, Boolean shared) {
+    public Activity() {
+    }
+
+    public Activity(String title, User creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry) {
         this.title = title;
         this.creator = creator;
         this.place = place;
@@ -30,36 +35,80 @@ public class Activity {
         this.type = type;
         this.shared = shared;
         this.id = idCounter;
+        this.entry = entry;
         idCounter++;
     }
 
-    // Testmetode
-    public Activity(String title, User creator, String place, String startDate, String endDate, String description, String type, Boolean shared) {
+    public void updateActivity(String title, User creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry) {
         this.title = title;
         this.creator = creator;
         this.place = place;
-        this.startDate2 = startDate;
-        this.endDate2 = endDate;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.description = description;
         this.type = type;
         this.shared = shared;
-        this.id = idCounter;
-        idCounter++;
+        this.entry = entry;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate.toLocalDate();
+    }
+
+    public LocalDate getStartDate() {
+        return startDate.toLocalDate();
+    }
+
+    public LocalTime getEndTime() {
+        return endDate.toLocalTime();
+    }
+
+    public LocalTime getStartTime() {
+        return startDate.toLocalTime();
+    }
+
+    public Boolean getShared() {
+        return shared;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public int getId() {
         return id;
     }
 
-    public void updateActivity(User creator, String place, Date startDate, Date endDate, String description, String type, Image pictogram, Boolean shared) {
-        this.creator = creator;
-        this.place = place;
-        this.startDate = startDate;
-        this.description = description;
-        this.type = type;
-        this.pictogram = pictogram;
-        this.endDate = endDate;
-        this.shared = shared;
+    public Boolean getEntry() {
+        return entry;
+    }
+
+    public int getDay() {
+        return this.startDate.getDayOfWeek().getValue();
+    }
+
+    public String getInfo() {
+
+        return String.format("%02d", startDate.getHour()) + ":" + String.format("%02d", startDate.getMinute()) + " - " + String.format("%02d", endDate.getHour()) + ":" + String.format("%02d", endDate.getMinute()) + " : " + title;
+    }
+
+    @Override
+    public String toString() {
+
+        return String.format("%02d", startDate.getHour()) + ":" + String.format("%02d", startDate.getMinute()) + " - " + String.format("%02d", endDate.getHour()) + ":" + String.format("%02d", endDate.getMinute()) + " : " + title;
+
     }
 
 }
