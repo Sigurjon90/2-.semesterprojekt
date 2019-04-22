@@ -70,16 +70,16 @@ public class FXMLEntryCreatorController implements Initializable {
     void saveFile(ActionEvent event) {
         chooser.setTitle("Vedhæft fil");
         file = chooser.showOpenDialog(new Stage());
-        
+        fileList.add(file);
     }
 
     @FXML
     void saveNewEntryHandler(ActionEvent event) throws IOException {
-        if(dp_date.getValue()==null){
-            lb_error.setText("Indsæt venligst en dato!");
-        }
-        else{
-        fileList.add(file);
+        //if(dp_date.getValue()==null){
+        //    lb_error.setText("Indsæt venligst en dato!");
+        //}
+        //else{
+        
         Entry entry = null;
         if (fileList == null) {
             entry = new Entry(dp_date.getValue(), textarea_des.getText());
@@ -96,12 +96,12 @@ public class FXMLEntryCreatorController implements Initializable {
 
         stage.setScene(scene);
         stage.show();
-    }
+    //}
     }
 
     @FXML
     void showDiaryDisplay(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/UI/DiaryModul/FXMLDiary.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/UI/DiaryModule/FXMLDiary.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }

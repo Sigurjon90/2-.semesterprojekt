@@ -52,6 +52,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
@@ -75,6 +76,8 @@ public class FXMLDiaryController implements Initializable {
     private JFXButton btn_edit;
     @FXML
     private JFXButton btn_delete;
+    @FXML
+    private AnchorPane DiaryPane;
     @FXML
     private JFXButton btn_back;
     @FXML
@@ -122,13 +125,14 @@ public class FXMLDiaryController implements Initializable {
         list.clear();
 
         for (int i = 1; i <= Vault.resident.getResidentDiary().getList().size(); i++) {
+            if(Vault.resident.getResidentDiary().getList().get(i).isVisible())
             list.add(Vault.resident.getResidentDiary().getList().get(i));
         }
     }
 
     @FXML
     void showEntry(MouseEvent event) {
-
+        selectedEntryForEdit = list_entrys.getSelectionModel().getSelectedItem();
         if (!list.isEmpty()) {
             try {
                 if (list_entrys.getSelectionModel().getSelectedItem().fileNames() != null) {
@@ -169,8 +173,8 @@ public class FXMLDiaryController implements Initializable {
     @FXML
     void deleteEntry(ActionEvent event) {
         if (selectedEntryForEdit != null) {
-        Vault.resident.getResidentDiary().getList().remove(list_entrys.getSelectionModel().getSelectedItem().getId());
-        Entry.idCounter -= 1;
+        
+        Vault.resident.getResidentDiary().getList().get(list_entrys.getSelectionModel().getSelectedItem().getId()).setVisible(false);
         updateList();
         }
     }
@@ -189,5 +193,16 @@ public class FXMLDiaryController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
+        @FXML
+    private void exitAction(MouseEvent event) {
+        System.exit(1);
+    }
+    
+        @FXML
+    private void minimizeAction(MouseEvent event) {
+        Stage stage = (Stage) DiaryPane.getScene().getWindow();
+        stage.setIconified(true);
+    }
+
 
 }

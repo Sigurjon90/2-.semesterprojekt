@@ -19,6 +19,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -48,6 +51,9 @@ public class FXMLVaultController implements Initializable {
 
     @FXML
     private Button btn_case;
+    
+    @FXML
+    private AnchorPane vaultPane;
 
     @FXML
     void diaryHandler(ActionEvent event) throws IOException {
@@ -68,5 +74,16 @@ Parent root = FXMLLoader.load(getClass().getResource("/UI/CalendarModule/FXMLCal
 Parent root = FXMLLoader.load(getClass().getResource("/UI/CaseModule/FXMLCase.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+    }
+    
+            @FXML
+    private void exitAction(MouseEvent event) {
+        System.exit(1);
+    }
+    
+        @FXML
+    private void minimizeAction(MouseEvent event) {
+        Stage stage = (Stage) vaultPane.getScene().getWindow();
+        stage.setIconified(true);
     }
 }
