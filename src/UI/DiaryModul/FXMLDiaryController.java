@@ -46,6 +46,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -178,6 +179,13 @@ public class FXMLDiaryController implements Initializable {
     void displayEntryCreator(ActionEvent event) throws IOException {
 
         Parent root = FXMLLoader.load(getClass().getResource("FXMLEntryCreator.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+    }
+    
+    @FXML
+    void backToMenu (ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/UI/FXMLVault.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
