@@ -5,6 +5,7 @@
  */
 package UI;
 
+import Domain.User.Resident;
 import static UI.Vault.stage;
 import com.jfoenix.controls.JFXListView;
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class FXMLVaultController implements Initializable {
     private Button btn_calendar;
 
     @FXML
-    private JFXListView<?> listview_residents;
+    private JFXListView<Resident> listview_residents;
 
     @FXML
     private Button btn_diary;
@@ -50,21 +51,21 @@ public class FXMLVaultController implements Initializable {
 
     @FXML
     void diaryHandler(ActionEvent event) throws IOException {
-Parent root = FXMLLoader.load(getClass().getResource("/UI/DiaryModul/FXMLDiary.fxml"));
+Parent root = FXMLLoader.load(getClass().getResource("/UI/DiaryModule/FXMLDiary.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
 
     @FXML
     void calendarHandler(ActionEvent event) throws IOException {
-Parent root = FXMLLoader.load(getClass().getResource("/UI/CalendarModul/FXMLCalender.fxml"));
+Parent root = FXMLLoader.load(getClass().getResource("/UI/CalendarModule/FXMLCalendar.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
 
     @FXML
     void caseHandler(ActionEvent event) throws IOException {
-Parent root = FXMLLoader.load(getClass().getResource("/UI/CaseModul/FXMLCase.fxml"));
+Parent root = FXMLLoader.load(getClass().getResource("/UI/CaseModule/FXMLCase.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
