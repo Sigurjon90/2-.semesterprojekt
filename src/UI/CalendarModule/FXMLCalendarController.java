@@ -54,7 +54,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-
 public class FXMLCalendarController implements Initializable {
 
     private ObservableList<Activity> obList;
@@ -308,6 +307,8 @@ public class FXMLCalendarController implements Initializable {
                         String imageToGet = Vault.currentActivity.getType();
                         System.out.println(imageToGet);
                         pictoView.setImage(new Image("/UI/CalendarModule/" + imageToGet + ".png"));
+                    } else {
+                        pictoView.setImage(null);
                     }
                     startTextField.setEditable(false);
                     startTextField.setOnMouseClicked(e -> {
