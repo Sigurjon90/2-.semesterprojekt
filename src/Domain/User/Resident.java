@@ -13,32 +13,23 @@ import Domain.DiaryModule.Diary;
  * @author alext
  */
 public class Resident extends User {
-    
-    private String institution;
+
     private Diary residentDiary;
     private Calendar residentCalendar;
-    
-    public Resident (){
+
+    public Resident() {
         this.residentDiary = new Diary();
         this.residentCalendar = new Calendar();
     }
-    
-    public Resident (String firstName, String lastName, String username, String password, String institution){
+
+    public Resident(String firstName, String lastName, String username, String password) {
         super.setFirstName(firstName);
         super.setLastName(lastName);
         super.setUsername(username);
         super.setPassword(password);
-        this.institution = institution;
+
         this.residentDiary = new Diary();
         this.residentCalendar = new Calendar();
-    }
-
-    public String getInstitution() {
-        return institution;
-    }
-
-    public void setInstitution(String institution) {
-        this.institution = institution;
     }
 
     public Diary getResidentDiary() {
@@ -56,5 +47,5 @@ public class Resident extends User {
     public void setResidentCalendar(Calendar residentCalendar) {
         this.residentCalendar = residentCalendar;
     }
-    
+
 }
