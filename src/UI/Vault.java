@@ -21,6 +21,7 @@ public class Vault extends Application {
     public static Case currentCase;
     public static Resident resident = new Resident();
     public static Activity currentActivity;
+    public static boolean newAction;
 
     @Override
     public void start(Stage stage) throws Exception {

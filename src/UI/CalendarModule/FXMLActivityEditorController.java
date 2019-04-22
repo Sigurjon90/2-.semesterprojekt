@@ -65,12 +65,12 @@ public class FXMLActivityEditorController implements Initializable {
     private JFXTimePicker endTimeField;
     @FXML
     private JFXTimePicker startTimeField;
-    
+
     @FXML
-    public void comboAction (ActionEvent event){
+    public void comboAction(ActionEvent event) {
         String imageToGet = typeComboBox.getValue();
         System.out.println(imageToGet);
-        pictoView.setImage(new Image ("/UI/CalendarModule/"+ imageToGet +".png"));
+        pictoView.setImage(new Image("/UI/CalendarModule/" + imageToGet + ".png"));
     }
 
     @FXML
@@ -136,8 +136,10 @@ public class FXMLActivityEditorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         typeComboBox.setItems(typestatus);
-        if (Vault.currentActivity != null) {
-            newActivity = false;
+        startTimeField.set24HourView(true);
+        endTimeField.set24HourView(true);
+        if (Vault.currentActivity != null && !Vault.newAction) {
+            //newActivity = false;
             saveActivityBtn.setDisable(true);
             updateActivityBtn.setDisable(false);
             titleTextField.setText(Vault.currentActivity.getTitle());
