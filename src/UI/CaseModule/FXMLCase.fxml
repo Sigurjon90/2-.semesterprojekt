@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextArea?>
@@ -12,7 +19,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="caseModulePane" prefHeight="611.0" prefWidth="832.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.CaseModule.FXMLCaseController">
+<AnchorPane id="AnchorPane" fx:id="caseModulePane" prefHeight="611.0" prefWidth="832.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.CaseModule.FXMLCaseController">
    <children>
       <AnchorPane prefHeight="46.0" prefWidth="929.0" style="-fx-background-color: #2d2d2d;">
          <children>
@@ -48,5 +55,6 @@
       <JFXListView fx:id="caseList" editable="true" layoutX="671.0" layoutY="113.0" onMouseClicked="#showCaseInformation" prefHeight="441.0" prefWidth="244.0" styleClass="jfx-list-view" stylesheets="@CaseUI.css" verticalGap="10.0" />
       <JFXTextArea fx:id="casePreviewField" editable="false" focusColor="#3a7077" layoutX="28.0" layoutY="113.0" prefHeight="441.0" prefWidth="584.0" />
       <Line endX="478.0" layoutX="132.0" layoutY="117.0" startX="-100.0" />
+      <JFXButton fx:id="BackBtn" buttonType="RAISED" layoutX="14.0" layoutY="567.0" onAction="#backToMenuAction" style="-fx-background-color: #2d2d2d;" text="Tilbage" textFill="WHITE" />
    </children>
 </AnchorPane>

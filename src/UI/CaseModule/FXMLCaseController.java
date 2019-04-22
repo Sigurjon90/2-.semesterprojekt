@@ -211,5 +211,12 @@ public class FXMLCaseController implements Initializable {
     public static SocialWorker getSocialWorker() {
         return currentLoggedOn;
     }
+    
+     @FXML
+    private void backToMenuAction (ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/UI/FXMLVault.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+    }
 
 }
