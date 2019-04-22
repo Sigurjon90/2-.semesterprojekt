@@ -71,7 +71,8 @@ public class FXMLEntryEditorController implements Initializable {
 
     @FXML
     void saveEntryHandler(ActionEvent event) throws IOException {
-
+        
+        
         FXMLDiaryController.selectedEntryForEdit.editEntry(textarea_des.getText(), dp_date.getValue(), fileList);
 
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDiary.fxml"));
