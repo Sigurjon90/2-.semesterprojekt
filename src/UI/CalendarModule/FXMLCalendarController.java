@@ -61,6 +61,8 @@ public class FXMLCalendarController implements Initializable {
     ObservableList<String> typestatus = FXCollections.observableArrayList("Medicin", "udendørsaktivitet", "indendørsaktivitet");
     private boolean newActivity;
 
+    private double xOffset = 0;
+    private double yOffset = 0;
     @FXML
     private AnchorPane parent;
     @FXML
@@ -396,6 +398,8 @@ public class FXMLCalendarController implements Initializable {
 //        if (Vault.currentLoggedOn instanceof CareWorker) {
         planBtn.setDisable(false);
         deleteBtn.setDisable(true);
+
+        makeStageDragable();
     }
 
     @FXML
@@ -415,4 +419,23 @@ public class FXMLCalendarController implements Initializable {
         Stage stage = (Stage) calendarModulePane.getScene().getWindow();
         stage.setIconified(true);
     }
+
+    private void makeStageDragable() {
+        calendarModulePane.setOnMousePressed((event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        calendarModulePane.setOnMouseDragged((event) -> {
+            Vault.stage.setX(event.getScreenX() - xOffset);
+            Vault.stage.setY(event.getScreenY() - yOffset);
+            Vault.stage.setOpacity(0.8f);
+        });
+        calendarModulePane.setOnDragDone((event) -> {
+            Vault.stage.setOpacity(1.0f);
+        });
+        calendarModulePane.setOnMouseReleased((event) -> {
+            Vault.stage.setOpacity(1.0f);
+        });
+    }
+
 }
