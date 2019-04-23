@@ -174,10 +174,12 @@ public class FXMLCaseController implements Initializable {
     private void searchCaseAction(ActionEvent event) {
         if (!searchIDField.getText().isEmpty() && searchIDField.getText().matches("\\d+")) {
             Integer idSearch = Integer.parseInt(searchIDField.getText());
-            obsCaseList.clear();
             if (obsCaseList.contains(currentLoggedOn.getCases().get(idSearch))) {
+                obsCaseList.clear();
                 obsCaseList.add(currentLoggedOn.getCases().get(idSearch));
                 warningLabel.setOpacity(0);
+            } else {
+                obsCaseList.clear();
             }
         } else {
             warningLabel.setOpacity(1);
