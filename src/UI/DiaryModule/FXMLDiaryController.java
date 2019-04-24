@@ -6,7 +6,6 @@
  */
 package UI.DiaryModule;
 
-import Domain.DiaryModule.Entry;
 import Domain.User.Resident;
 import static UI.Vault.stage;
 import UI.Vault;
@@ -19,7 +18,6 @@ import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 ;
 import java.net.URL;
-import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -31,24 +29,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.ResourceBundle;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -64,10 +45,15 @@ import javafx.stage.Stage;
 
 public class FXMLDiaryController implements Initializable {
 
+    private double xOffset = 0;
+    private double yOffset = 0;
+
     @FXML
     private JFXListView<Entry> list_entrys;
     @FXML
-    private JFXTextField textfiels_search;
+    private JFXTextField textfield_search;
+    @FXML
+    private DatePicker dp_search;
     @FXML
     private Label lb_file;
     @FXML
@@ -89,6 +75,7 @@ public class FXMLDiaryController implements Initializable {
 
     public static Entry selectedEntryForEdit;
     public ObservableList<Entry> list;
+    public ObservableList<Entry> tempList;
     private ListProperty<Entry> listProperty = new SimpleListProperty<>();
 
     Resident resident = new Resident();
@@ -111,10 +98,13 @@ public class FXMLDiaryController implements Initializable {
         //Vault.resident.getResidentDiary().getList().put(3, new Entry(new Date(), "hej  dig Mathias"));
         //Vault.resident.getResidentDiary().getList().put(1, new Entry(new Date(), "hej med Mathias"));
         list = FXCollections.observableArrayList();
+        tempList = FXCollections.observableArrayList();
         list_entrys.itemsProperty().bind(listProperty);
         listProperty.set(list);
 
         updateList();
+
+        makeStageDragable();
     }
 
     public ObservableList<Entry> getList() {
@@ -125,8 +115,9 @@ public class FXMLDiaryController implements Initializable {
         list.clear();
 
         for (int i = 1; i <= Vault.resident.getResidentDiary().getList().size(); i++) {
-            if(Vault.resident.getResidentDiary().getList().get(i).isVisible())
-            list.add(Vault.resident.getResidentDiary().getList().get(i));
+            if (Vault.resident.getResidentDiary().getList().get(i).isVisible()) {
+                list.add(Vault.resident.getResidentDiary().getList().get(i));
+            }
         }
     }
 
@@ -138,8 +129,7 @@ public class FXMLDiaryController implements Initializable {
                 if (list_entrys.getSelectionModel().getSelectedItem().fileNames() != null) {
                     textarea_entry.setText(list_entrys.getSelectionModel().getSelectedItem().getEntryDescription());
                     lb_file.setText(list_entrys.getSelectionModel().getSelectedItem().fileNames());
-                }
-                else {
+                } else {
                     textarea_entry.setText(list_entrys.getSelectionModel().getSelectedItem().getEntryDescription());
                 }
 
@@ -153,11 +143,11 @@ public class FXMLDiaryController implements Initializable {
     @FXML
     void displayEntryEditor(ActionEvent event) throws IOException {
         if (selectedEntryForEdit != null) {
-        selectedEntryForEdit = list_entrys.getSelectionModel().getSelectedItem();
+            selectedEntryForEdit = list_entrys.getSelectionModel().getSelectedItem();
 
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLEntryEditor.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
+            Parent root = FXMLLoader.load(getClass().getResource("FXMLEntryEditor.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
         }
     }
 
@@ -173,9 +163,12 @@ public class FXMLDiaryController implements Initializable {
     @FXML
     void deleteEntry(ActionEvent event) {
         if (selectedEntryForEdit != null) {
-        
-        Vault.resident.getResidentDiary().getList().get(list_entrys.getSelectionModel().getSelectedItem().getId()).setVisible(false);
-        updateList();
+
+            Vault.resident.getResidentDiary().getList().get(list_entrys.getSelectionModel().getSelectedItem().getId()).setVisible(false);
+            updateList();
+            
+            textarea_entry.clear();
+            lb_file.setText("");
         }
     }
 
@@ -186,23 +179,58 @@ public class FXMLDiaryController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
-    
+
     @FXML
-    void backToMenu (ActionEvent event) throws IOException {
+    void backToMenu(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/UI/FXMLVault.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
-        @FXML
+
+    @FXML
     private void exitAction(MouseEvent event) {
         System.exit(1);
     }
-    
-        @FXML
+
+    @FXML
     private void minimizeAction(MouseEvent event) {
         Stage stage = (Stage) DiaryPane.getScene().getWindow();
         stage.setIconified(true);
     }
 
+    @FXML
+    void searchEntryButtonHandler(ActionEvent event) throws IOException {
+        if (dp_search.getValue() == null) {
+            listProperty.set(list);
+            tempList.clear();
+        } else if (dp_search.getValue() != null) {
+            tempList.clear();
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getDate().equals(dp_search.getValue())) {
+                    tempList.add(list.get(i));
+                    listProperty.set(tempList);
+                }
+            }
+
+        }
+    }
+
+    private void makeStageDragable() {
+        DiaryPane.setOnMousePressed((event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        DiaryPane.setOnMouseDragged((event) -> {
+            Vault.stage.setX(event.getScreenX() - xOffset);
+            Vault.stage.setY(event.getScreenY() - yOffset);
+            Vault.stage.setOpacity(0.8f);
+        });
+        DiaryPane.setOnDragDone((event) -> {
+            Vault.stage.setOpacity(1.0f);
+        });
+        DiaryPane.setOnMouseReleased((event) -> {
+            Vault.stage.setOpacity(1.0f);
+        });
+    }
 
 }
