@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package UI.DiaryModule;
 
 import static UI.Vault.stage;
@@ -12,12 +7,9 @@ import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,11 +22,6 @@ import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author jens
- */
 public class FXMLEntryCreatorController implements Initializable {
 
     @FXML
@@ -88,8 +75,8 @@ public class FXMLEntryCreatorController implements Initializable {
             entry = new Entry(dp_date.getValue(), textarea_des.getText(), fileList);
         }
 
-        Vault.resident.getResidentDiary().getList().put(entry.getId(), entry);
-        System.out.println(Vault.resident.getResidentDiary().getList().get(entry.getId()).getEntryDescription());
+        Vault.resident.getResidentDiary().getMap().put(entry.getEntryID(), entry);
+        System.out.println(Vault.resident.getResidentDiary().getMap().get(entry.getEntryID()).getEntryDescription());
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDiary.fxml"));
 
         Scene scene = new Scene(root);

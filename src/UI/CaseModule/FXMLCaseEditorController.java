@@ -16,7 +16,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -47,7 +46,6 @@ public class FXMLCaseEditorController implements Initializable {
     private JFXButton attacheFileBtn;
     @FXML
     private Label numberOfFiles;
-
     @FXML
     private JFXButton Backbtn;
     @FXML

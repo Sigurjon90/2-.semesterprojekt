@@ -22,42 +22,30 @@ public class SocialWorker extends User {
         cases = new HashMap<>();
     }
 
-    public String createCase(String title, String caseType, String description) {
+    public void createCase(String title, String caseType, String description) {
         Case newCase = new Case(title, description, caseType);
         cases.put(newCase.getCaseID(), newCase);
-        return "A case with the ID: " + newCase.getCaseID() + " has been successfully created \n";
     }
 
-    public String createCase(String title, String caseType, String description, Resident resident) {
+    public void createCase(String title, String caseType, String description, Resident resident) {
         Case newCase = new Case(title, description, caseType, resident);
         cases.put(newCase.getCaseID(), newCase);
-        return "A case with the ID: " + newCase.getCaseID() + " has been successfully created \n";
     }
 
-    public String createCase(String title, String caseType, String description, List<File> attachedFiles) {
+    public void createCase(String title, String caseType, String description, List<File> attachedFiles) {
         Case newCase = new Case(title, description, caseType, attachedFiles);
         cases.put(newCase.getCaseID(), newCase);
-        return "A case with the ID: " + newCase.getCaseID() + " has been successfully created \n";
     }
 
-    public String createCase(String title, String caseType, String description, List<File> attachedFiles, Resident resident) {
+    public void createCase(String title, String caseType, String description, List<File> attachedFiles, Resident resident) {
         Case newCase = new Case(title, description, caseType, attachedFiles, resident);
         cases.put(newCase.getCaseID(), newCase);
-        return "A case with the ID: " + newCase.getCaseID() + " has been successfully created \n";
-    }
-
-    public void deleteCase(Case caseToDelete) {
-        int caseID = caseToDelete.getCaseID();
-        caseToDelete.decrementCases();
-        cases.remove(caseID);
-        System.out.println("The Case with ID: " + caseID + " has been successfully deleted \n");
     }
 
     public void transferCaseTo(SocialWorker socialWorker, int caseID) {
         Case caseToTransfer = this.cases.get(caseID);
         socialWorker.getCases().put(caseID, caseToTransfer);
         this.cases.remove(caseID);
-        System.out.println("Case with ID: " + caseID + " has been successfully transfered from " + this.getName() + " to " + socialWorker.getName() + "\n");
 
     }
 

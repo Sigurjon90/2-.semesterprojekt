@@ -1,22 +1,15 @@
 package UI.CalendarModule;
 
 import Domain.CalendarModule.Activity;
-import Domain.User.CareWorker;
-import Domain.User.User;
 import UI.Vault;
 import static UI.Vault.stage;
 import static UI.Vault.testCalendar;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -26,11 +19,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -39,9 +30,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -137,7 +126,7 @@ public class FXMLCalendarController implements Initializable {
         Optional<ButtonType> action = alert.showAndWait();
 
         if (action.get() == ButtonType.OK) {
-            testCalendar.getCalender().remove(Vault.currentActivity.getId());
+            testCalendar.getCalendar().remove(Vault.currentActivity.getActivityID());
         }
         Vault.currentActivity = null;
         deleteBtn.setDisable(true);
@@ -308,7 +297,7 @@ public class FXMLCalendarController implements Initializable {
                     if (Vault.currentActivity.getType() != null) {
                         String imageToGet = Vault.currentActivity.getType();
                         System.out.println(imageToGet);
-                        pictoView.setImage(new Image("/UI/CalendarModule/" + imageToGet + ".png"));
+                        pictoView.setImage(new Image("/icons/" + imageToGet + ".png"));
                     } else {
                         pictoView.setImage(null);
                     }

@@ -1,22 +1,14 @@
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package UI.DiaryModule;
 
 import Domain.User.Resident;
 import static UI.Vault.stage;
 import UI.Vault;
 import Domain.DiaryModule.Entry;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
-;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.property.ListProperty;
@@ -35,13 +27,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
-/**
- * FXML Controller class
- *
- * @author jens
- */
-
 
 public class FXMLDiaryController implements Initializable {
 
@@ -94,9 +79,9 @@ public class FXMLDiaryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        //Vault.resident.getResidentDiary().getList().put(2, new Entry(new Date(), "hej med dig Mathias"));
-        //Vault.resident.getResidentDiary().getList().put(3, new Entry(new Date(), "hej  dig Mathias"));
-        //Vault.resident.getResidentDiary().getList().put(1, new Entry(new Date(), "hej med Mathias"));
+        //Vault.resident.getResidentDiary().getMap().put(2, new Entry(new Date(), "hej med dig Mathias"));
+        //Vault.resident.getResidentDiary().getMap().put(3, new Entry(new Date(), "hej  dig Mathias"));
+        //Vault.resident.getResidentDiary().getMap().put(1, new Entry(new Date(), "hej med Mathias"));
         list = FXCollections.observableArrayList();
         tempList = FXCollections.observableArrayList();
         list_entrys.itemsProperty().bind(listProperty);
@@ -114,9 +99,9 @@ public class FXMLDiaryController implements Initializable {
     public void updateList() {
         list.clear();
 
-        for (int i = 1; i <= Vault.resident.getResidentDiary().getList().size(); i++) {
-            if (Vault.resident.getResidentDiary().getList().get(i).isVisible()) {
-                list.add(Vault.resident.getResidentDiary().getList().get(i));
+        for (int i = 1; i <= Vault.resident.getResidentDiary().getMap().size(); i++) {
+            if (Vault.resident.getResidentDiary().getMap().get(i).isVisible()) {
+                list.add(Vault.resident.getResidentDiary().getMap().get(i));
             }
         }
     }
@@ -152,10 +137,10 @@ public class FXMLDiaryController implements Initializable {
     }
 
     public void updateMap() {
-        Vault.resident.getResidentDiary().getList().clear();
-        System.out.println(Vault.resident.getResidentDiary().getList());
+        Vault.resident.getResidentDiary().getMap().clear();
+        System.out.println(Vault.resident.getResidentDiary().getMap());
         for (int i = 0; i < list.size(); i++) {
-            Vault.resident.getResidentDiary().getList().put(list.get(i).getId(), list.get(i));
+            Vault.resident.getResidentDiary().getMap().put(list.get(i).getEntryID(), list.get(i));
         }
 
     }
@@ -164,9 +149,9 @@ public class FXMLDiaryController implements Initializable {
     void deleteEntry(ActionEvent event) {
         if (selectedEntryForEdit != null) {
 
-            Vault.resident.getResidentDiary().getList().get(list_entrys.getSelectionModel().getSelectedItem().getId()).setVisible(false);
+            Vault.resident.getResidentDiary().getMap().get(list_entrys.getSelectionModel().getSelectedItem().getEntryID()).setVisible(false);
             updateList();
-            
+
             textarea_entry.clear();
             lb_file.setText("");
         }
@@ -232,5 +217,4 @@ public class FXMLDiaryController implements Initializable {
             Vault.stage.setOpacity(1.0f);
         });
     }
-
 }

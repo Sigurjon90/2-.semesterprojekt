@@ -1,9 +1,5 @@
 package Domain.User;
 
-/**
- *
- * @author jens
- */
 public abstract class User {
 
     private String firstName;
