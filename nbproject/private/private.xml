@@ -1,66 +1,19 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
         <group>
-            <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/UI/DiaryModul/Starter.java</file>
-            <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/UI/DiaryModul/FXMLDiary.fxml</file>
-            <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/UI/DiaryModul/FXMLDiaryController.java</file>
+            <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/UI/FXMLLoginController.java</file>
+            <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/UI/FXMLVaultController.java</file>
+            <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/UI/CaseModule/FXMLCaseController.java</file>
             <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/UI/Vault.java</file>
-            <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/UI/DiaryModul/FXMLEntryCreatorController.java</file>
+            <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/UI/DiaryModule/FXMLDiaryController.java</file>
+            <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/UI/CalendarModule/FXMLActivityEditorController.java</file>
             <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/Domain/DiaryModule/Entry.java</file>
-            <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/UI/DiaryModul/FXMLEntryEditorController.java</file>
-            <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/UI/DiaryModul/FXMLEntryCreator.fxml</file>
+            <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/UI/CalendarModule/FXMLActivityEditor.fxml</file>
             <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/Domain/DiaryModule/Diary.java</file>
-            <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/UI/DiaryModul/FXMLEntryEditor.fxml</file>
-=======
-        <group name="2-.semesterprojekt">
-            <file>file:/C:/Users/alext/Documents/NetBeansProjects/Project%20Vault/2-.semesterprojekt/src/Domain/User/SocialWorker.java</file>
-            <file>file:/C:/Users/alext/Documents/NetBeansProjects/Project%20Vault/2-.semesterprojekt/src/UI/CaseModul/FXMLCaseEditorController.java</file>
-            <file>file:/C:/Users/alext/Documents/NetBeansProjects/Project%20Vault/2-.semesterprojekt/src/UI/CaseModul/FXMLCaseController.java</file>
-            <file>file:/C:/Users/alext/Documents/NetBeansProjects/Project%20Vault/2-.semesterprojekt/src/UI/Vault.java</file>
->>>>>>> Sagsudredning
-        </group>
-        <group/>
-    </open-files>
-</project-private>
-=======
-<<<<<<< HEAD
-<?xml version="1.0" encoding="UTF-8"?>
-<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Jonas%20Grøn/Documents/NetBeansProjects/2-.semesterprojekt/src/Domain/DiaryModule/Diary.java</file>
-            <file>file:/C:/Users/Jonas%20Grøn/Documents/NetBeansProjects/2-.semesterprojekt/src/Domain/CalendarModule/Activity.java</file>
-            <file>file:/C:/Users/Jonas%20Grøn/Documents/NetBeansProjects/2-.semesterprojekt/src/Domain/User/SocialWorker.java</file>
-            <file>file:/C:/Users/Jonas%20Grøn/Documents/NetBeansProjects/2-.semesterprojekt/src/Domain/User/User.java</file>
-            <file>file:/C:/Users/Jonas%20Grøn/Documents/NetBeansProjects/2-.semesterprojekt/src/Domain/User/CareWorker.java</file>
-            <file>file:/C:/Users/Jonas%20Grøn/Documents/NetBeansProjects/2-.semesterprojekt/src/UI/FXMLLoginController.java</file>
-            <file>file:/C:/Users/Jonas%20Grøn/Documents/NetBeansProjects/2-.semesterprojekt/src/Domain/DiaryModule/Entry.java</file>
-            <file>file:/C:/Users/Jonas%20Grøn/Documents/NetBeansProjects/2-.semesterprojekt/src/Domain/CaseModule/TestSagModul.java</file>
-            <file>file:/C:/Users/Jonas%20Grøn/Documents/NetBeansProjects/2-.semesterprojekt/src/UI/Vault.java</file>
-            <file>file:/C:/Users/Jonas%20Grøn/Documents/NetBeansProjects/2-.semesterprojekt/src/UI/FXMLVaultController.java</file>
-            <file>file:/C:/Users/Jonas%20Grøn/Documents/NetBeansProjects/2-.semesterprojekt/src/Domain/CalendarModule/TestActivity.java</file>
-            <file>file:/C:/Users/Jonas%20Grøn/Documents/NetBeansProjects/2-.semesterprojekt/src/UI/CalendarModul/FXMLCalenderController.java</file>
-            <file>file:/C:/Users/Jonas%20Grøn/Documents/NetBeansProjects/2-.semesterprojekt/nbproject/build-impl.xml</file>
-            <file>file:/C:/Users/Jonas%20Grøn/Documents/NetBeansProjects/2-.semesterprojekt/src/Domain/CalendarModule/Calendar.java</file>
-            <file>file:/C:/Users/Jonas%20Grøn/Documents/NetBeansProjects/2-.semesterprojekt/src/Domain/CaseModule/Case.java</file>
-            <file>file:/C:/Users/Jonas%20Grøn/Documents/NetBeansProjects/2-.semesterprojekt/src/UI/CalendarModul/FXMLActivityEditorController.java</file>
+            <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/UI/DiaryModule/FXMLDiary.fxml</file>
+            <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/UI/DiaryModule/FXMLEntryCreatorController.java</file>
         </group>
     </open-files>
 </project-private>
-=======
-<?xml version="1.0" encoding="UTF-8"?>
-<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/morte/OneDrive/Skrivebord/Vault/src/UI/CalendarModul/FXMLActivityEditorController.java</file>
-        </group>
-    </open-files>
-</project-private>
->>>>>>> Calendar
->>>>>>> Calendar2

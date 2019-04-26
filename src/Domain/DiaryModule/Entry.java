@@ -2,127 +2,58 @@ package Domain.DiaryModule;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 public class Entry {
 
-    LocalDate date;
-    //todo Bruger creator;
-    String description;
-    List<Integer> accessType;
-    List<File> files;
-    int id;
+    private LocalDate date;
+    //todo User creator;
+    private String description;
+    private List<Integer> accessType;
+    private List<File> files;
+    private int entryID;
     public static int idCounter = 1;
-    private boolean visible=true;
-
-
-
-
-
-    public Entry(LocalDate date, String description, List<Integer> accessType, List<File> files) {
-        this.id = idCounter;
-        this.date = date;
-        this.description = description;
-        this.accessType = accessType;
-        this.files = files;
-        idCounter++;
-    }
-
-    public Entry() {
-        this.id = idCounter;
-        idCounter++;
-    }
-
-    public Entry(String description) {
-        this.id = idCounter;
-        this.description = description;
-        idCounter++;
-    }
+    private boolean visible = true;
 
     public Entry(LocalDate date, String description) {
-        this.id = idCounter;
+        this.entryID = idCounter;
         this.date = date;
         this.description = description;
         idCounter++;
-
-    }
-
-    public Entry(LocalDate date, String description, List<File> files) {
-        this.files = files;
-        this.id = idCounter;
-        this.date = date;
-        this.description = description;
-        idCounter++;
-    }
-
-    public void editEntry(String description, List<Integer> accessType, List<File> files) {
-        this.description = description;
-        this.accessType = accessType;
-        this.files = files;
-    }
-
-    public void editDateAndDescription(String description, LocalDate date) {
-        this.description = description;
-        this.date = date;
-    }
-        public void editEntry(String description, LocalDate date, List<File> files) {
-        this.description = description;
-        this.date = date;
-        this.files=files;
-    }
-
-    public void editDescription(String description) {
-        this.description = description;
-    }
-
-    public void editAccessType(List<Integer> accessType) {
-        this.accessType = accessType;
-    }
-
-    public void editFiles(List<File> files) {
-        this.files = files;
-    }
-        public boolean isVisible() {
-        return visible;
     }
     
-        public void setVisible(boolean visible) {
+    public Entry(LocalDate date, String description, List<File> files) {
+        this.files = files;
+        this.entryID = idCounter;
+        this.date = date;
+        this.description = description;
+        idCounter++;
+    }
+
+    public void editEntry(String description, LocalDate date, List<File> files) {
+        this.description = description;
+        this.date = date;
+        this.files = files;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
         this.visible = visible;
-    }
-
-    @Override
-    public String toString() {
-        return date.toString();
-    }
-
-    public void deleteEntry() {
-
     }
 
     public String getEntryDescription() {
         return description;
     }
 
-    public String getEntryDescriptionAndFile() {
+    public String getEntryDescriptionAndFiles() {
         return description + "\n" + fileNames();
     }
 
-    public String fileNames() {
-        String result = "";
-
-        for (File file : files) {
-            if (files.size() == 1)
-             result += file.getName();
-            else 
-             result += file.getName() + ", ";
-        }
-        return result;
-    }
-
-    public int getId() {
-        return id;
+    public int getEntryID() {
+        return entryID;
     }
 
     public LocalDate getDate() {
@@ -131,5 +62,23 @@ public class Entry {
 
     public List<File> getFiles() {
         return files;
+    }
+
+    public String fileNames() {
+        String result = "";
+
+        for (File file : files) {
+            if (files.size() == 1) {
+                result += file.getName();
+            } else {
+                result += file.getName() + ", ";
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return date.toString();
     }
 }

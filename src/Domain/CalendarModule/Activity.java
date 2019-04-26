@@ -5,7 +5,6 @@ import java.awt.Image;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 public class Activity {
 
@@ -20,10 +19,7 @@ public class Activity {
     private Boolean entry;
     private String title;
     private static int idCounter = 1;
-    private int id;
-
-    public Activity() {
-    }
+    private int activityID;
 
     public Activity(String title, User creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry) {
         this.title = title;
@@ -34,7 +30,7 @@ public class Activity {
         this.description = description;
         this.type = type;
         this.shared = shared;
-        this.id = idCounter;
+        this.activityID = idCounter;
         this.entry = entry;
         idCounter++;
     }
@@ -87,8 +83,8 @@ public class Activity {
         return title;
     }
 
-    public int getId() {
-        return id;
+    public int getActivityID() {
+        return activityID;
     }
 
     public Boolean getEntry() {

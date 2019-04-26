@@ -1,18 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package UI.DiaryModule;
 
-import Domain.DiaryModule.Entry;
 import static UI.Vault.stage;
-import UI.Vault;
 import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -28,11 +20,6 @@ import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author A
- */
 public class FXMLEntryEditorController implements Initializable {
 
     @FXML

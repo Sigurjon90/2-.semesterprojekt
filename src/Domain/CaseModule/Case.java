@@ -62,29 +62,34 @@ public class Case {
         this.caseID = numberOfCases;
     }
 
-    public String editCase() {
-        if (!this.closed) {
-
-            return "The Case with ID: " + getCaseID() + " has been successfully edited \n";
-        }
-        return "The case is closed and cannot be edited";
-    }
-
-    public String attachFile(File file) {
+    public void attachFile(File file) {
         if (!this.closed) {
             attachedFiles.add(file);
-            return "The File has been successfully attached to the case with the ID: " + getCaseID() + "\n";
         }
-        return "The case is close and cannot attach new files";
-    }
-
-    public static void decrementCases() {
-        numberOfCases--;
     }
 
     public void closeCase(boolean closed, String reason) {
         this.description = description + "\nLukke grundlag: \n" + reason;
         this.closed = closed;
+    }
+    
+        public String showInformation() {
+        return "Sagen er oprettet :" + this.getDate()
+                + "\n" + "Titel: " + this.title
+                + "\n" + "Sag ID: " + this.caseID
+                + "\n" + "Vedhæftet filer: " + fileNames()
+                + "\n" + "Tilknyttet beboer: " + this.caseResident.getFirstName()
+                + " " + this.caseResident.getLastName()
+                + "\n" + "Sagen omhandler: "
+                + "\n" + this.getDescription();
+    }
+
+    private String fileNames() {
+        String result = "";
+        for (File f : this.attachedFiles) {
+            result += f.getName() + ", ";
+        }
+        return result;
     }
 
     public boolean isClosed() {
@@ -110,8 +115,6 @@ public class Case {
     public void setDescription(String description) {
         if (!this.closed) {
             this.description = description;
-        } else {
-            System.out.println("Case is close. \"" + description + "\" cannot be set as description");
         }
     }
 
@@ -134,24 +137,5 @@ public class Case {
     @Override
     public String toString() {
         return "Sag ID: " + this.caseID + "\n";
-    }
-
-    public String showInformation() {
-        return "Sagen er oprettet :" + this.getDate()
-                + "\n" + "Titel: " + this.title
-                + "\n" + "Sag ID: " + this.caseID
-                + "\n" + "Vedhæftet filer: " + fileNames()
-                + "\n" + "Tilknyttet beboer: " + this.caseResident.getFirstName()
-                + " " + this.caseResident.getLastName()
-                + "\n" + "Sagen omhandler: "
-                + "\n" + this.getDescription();
-    }
-
-    private String fileNames() {
-        String result = "";
-        for (File f : this.attachedFiles) {
-            result += f.getName() + ", ";
-        }
-        return result;
     }
 }

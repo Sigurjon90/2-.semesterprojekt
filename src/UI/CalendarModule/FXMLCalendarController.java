@@ -1,21 +1,16 @@
 package UI.CalendarModule;
 
 import Domain.CalendarModule.Activity;
-import Domain.User.CareWorker;
-import Domain.User.User;
 import UI.Vault;
 import static UI.Vault.stage;
 import static UI.Vault.testCalendar;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -24,11 +19,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -37,9 +30,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -52,7 +43,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-
 public class FXMLCalendarController implements Initializable {
 
     private ObservableList<Activity> obList;
@@ -60,6 +50,8 @@ public class FXMLCalendarController implements Initializable {
     ObservableList<String> typestatus = FXCollections.observableArrayList("Medicin", "udendørsaktivitet", "indendørsaktivitet");
     private boolean newActivity;
 
+    private double xOffset = 0;
+    private double yOffset = 0;
     @FXML
     private AnchorPane parent;
     @FXML
@@ -119,6 +111,7 @@ public class FXMLCalendarController implements Initializable {
 
     @FXML
     public void planAction(ActionEvent event) throws IOException {
+        Vault.newAction = true;
         Parent currentParent = FXMLLoader.load(getClass().getResource("FXMLActivityEditor.fxml"));
         Scene scene = new Scene(currentParent);
         stage.setScene(scene);
@@ -133,14 +126,11 @@ public class FXMLCalendarController implements Initializable {
         Optional<ButtonType> action = alert.showAndWait();
 
         if (action.get() == ButtonType.OK) {
-            testCalendar.getCalender().remove(Vault.currentActivity.getId());
+            testCalendar.getCalendar().remove(Vault.currentActivity.getActivityID());
         }
         Vault.currentActivity = null;
         deleteBtn.setDisable(true);
-        obList = FXCollections.observableArrayList(new ArrayList<>());
-        mondayList.itemsProperty().bind(listProperty);
-        listProperty.set(obList);
-        mondayList.refresh();
+        clearAllFields();
         hide();
         updateListView("Monday");
         updateListView("Tuesday");
@@ -149,6 +139,18 @@ public class FXMLCalendarController implements Initializable {
         updateListView("Friday");
         updateListView("Saturday");
         updateListView("Sunday");
+    }
+
+    public void clearAllFields() {
+        titleTextField.setText("");
+        startTextField.setValue(LocalDate.now());
+        endTextField.setValue(LocalDate.now());
+        startTimeField.setValue(LocalTime.now());
+        endTimeField.setValue(LocalTime.now());
+        placeTextField.setText("");
+        sharedYes.setSelected(false);
+        entryYes.setSelected(false);
+        descriptionTextField.setText("");
     }
 
     @FXML
@@ -182,72 +184,72 @@ public class FXMLCalendarController implements Initializable {
 
         switch (day) {
             case "Monday":
-                mondayList.itemsProperty().bind(listProperty);
-                listProperty.set(obList);
                 for (Integer i : keyList) {
                     if (testCalendar.getActivity(i).getDay() == 1) {
                         obList.add(testCalendar.getActivity(i));
                     }
                 }
+                mondayList.setItems(obList);
+                mondayList.refresh();
                 break;
             case "Tuesday":
-                tuesdayList.itemsProperty().bind(listProperty);
-                listProperty.set(obList);
                 for (Integer i : keyList) {
                     if (testCalendar.getActivity(i).getDay() == 2) {
                         obList.add(testCalendar.getActivity(i));
                     }
                 }
+                tuesdayList.setItems(obList);
+                tuesdayList.refresh();
                 break;
 
             case "Wednesday":
-                wednesdayList.itemsProperty().bind(listProperty);
-                listProperty.set(obList);
                 for (Integer i : keyList) {
                     if (testCalendar.getActivity(i).getDay() == 3) {
                         obList.add(testCalendar.getActivity(i));
                     }
                 }
+                wednesdayList.setItems(obList);
+                wednesdayList.refresh();
                 break;
 
             case "Thursday":
-                thursdayList.itemsProperty().bind(listProperty);
-                listProperty.set(obList);
                 for (Integer i : keyList) {
                     if (testCalendar.getActivity(i).getDay() == 4) {
                         obList.add(testCalendar.getActivity(i));
                     }
                 }
+                thursdayList.setItems(obList);
+                thursdayList.refresh();
                 break;
 
             case "Friday":
-                fridayList.itemsProperty().bind(listProperty);
-                listProperty.set(obList);
                 for (Integer i : keyList) {
                     if (testCalendar.getActivity(i).getDay() == 5) {
                         obList.add(testCalendar.getActivity(i));
                     }
                 }
+                fridayList.setItems(obList);
+                fridayList.refresh();
                 break;
 
             case "Saturday":
-                saturdayList.itemsProperty().bind(listProperty);
-                listProperty.set(obList);
                 for (Integer i : keyList) {
                     if (testCalendar.getActivity(i).getDay() == 6) {
                         obList.add(testCalendar.getActivity(i));
                     }
                 }
+                saturdayList.setItems(obList);
+                saturdayList.refresh();
                 break;
 
             case "Sunday":
-                sundayList.itemsProperty().bind(listProperty);
-                listProperty.set(obList);
                 for (Integer i : keyList) {
                     if (testCalendar.getActivity(i).getDay() == 7) {
                         obList.add(testCalendar.getActivity(i));
                     }
                 }
+                sundayList.setItems(obList);
+                sundayList.refresh();
                 break;
         }
     }
@@ -257,6 +259,7 @@ public class FXMLCalendarController implements Initializable {
         ListView myList;
         Activity myActivity;
 
+        Vault.newAction = false;
         if (event.getButton().equals(MouseButton.PRIMARY)) {
             if (event.getClickCount() == 2) {
                 myList = (ListView) event.getSource();
@@ -274,11 +277,11 @@ public class FXMLCalendarController implements Initializable {
                 }
             }
             if (event.getClickCount() == 1) {
-                show();
                 myList = (ListView) event.getSource();
                 myActivity = (Activity) myList.getSelectionModel().getSelectedItem();
                 Vault.currentActivity = myActivity;
                 if (myList.getSelectionModel().getSelectedItem() != null) {
+                    show();
                     deleteBtn.setDisable(false);
                     typeComboBox.setText(Vault.currentActivity.getType());
                     newActivity = false;
@@ -294,7 +297,9 @@ public class FXMLCalendarController implements Initializable {
                     if (Vault.currentActivity.getType() != null) {
                         String imageToGet = Vault.currentActivity.getType();
                         System.out.println(imageToGet);
-                        pictoView.setImage(new Image("/UI/CalendarModule/" + imageToGet + ".png"));
+                        pictoView.setImage(new Image("/icons/" + imageToGet + ".png"));
+                    } else {
+                        pictoView.setImage(null);
                     }
                     startTextField.setEditable(false);
                     startTextField.setOnMouseClicked(e -> {
@@ -382,6 +387,8 @@ public class FXMLCalendarController implements Initializable {
 //        if (Vault.currentLoggedOn instanceof CareWorker) {
         planBtn.setDisable(false);
         deleteBtn.setDisable(true);
+
+        makeStageDragable();
     }
 
     @FXML
@@ -401,4 +408,23 @@ public class FXMLCalendarController implements Initializable {
         Stage stage = (Stage) calendarModulePane.getScene().getWindow();
         stage.setIconified(true);
     }
+
+    private void makeStageDragable() {
+        calendarModulePane.setOnMousePressed((event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        calendarModulePane.setOnMouseDragged((event) -> {
+            Vault.stage.setX(event.getScreenX() - xOffset);
+            Vault.stage.setY(event.getScreenY() - yOffset);
+            Vault.stage.setOpacity(0.8f);
+        });
+        calendarModulePane.setOnDragDone((event) -> {
+            Vault.stage.setOpacity(1.0f);
+        });
+        calendarModulePane.setOnMouseReleased((event) -> {
+            Vault.stage.setOpacity(1.0f);
+        });
+    }
+
 }

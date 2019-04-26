@@ -39,7 +39,6 @@ public class FXMLCaseCreatorController implements Initializable {
 
     @FXML
     private AnchorPane caseModulePane;
-
     @FXML
     private JFXTextField serviceField;
     @FXML
@@ -49,7 +48,7 @@ public class FXMLCaseCreatorController implements Initializable {
     @FXML
     private JFXTextArea descriptionArea;
     @FXML
-    private ChoiceBox<String> test;
+    private ChoiceBox<String> serviceBox;
     @FXML
     private Label warningCreateLabel;
     @FXML
@@ -92,10 +91,12 @@ public class FXMLCaseCreatorController implements Initializable {
         serviceField.setEditable(false);
         residentNameField.setEditable(false);
         titleField.setEditable(false);
+        descriptionArea.setText("Start med at vælge ydelse i menuen til højre"
+                + " og tryk derefter på opdater knappen!");
         typestatus.add("Sundhed");
         typestatus.add("Mobilitet");
         typestatus.add("Kommunikation");
-        test.setItems(typestatus);
+        serviceBox.setItems(typestatus);
 
         obsFileList = FXCollections.observableArrayList();
         fileView.setItems(obsFileList);
@@ -123,7 +124,7 @@ public class FXMLCaseCreatorController implements Initializable {
     @FXML
     private void refreshType(MouseEvent event) {
         try {
-            typeSetup(test.getSelectionModel().getSelectedItem());
+            typeSetup(serviceBox.getSelectionModel().getSelectedItem());
         } catch (NullPointerException ex) {
             System.out.println("Ingen type valgt");
         }
@@ -145,18 +146,18 @@ public class FXMLCaseCreatorController implements Initializable {
                     Resident caseResident = entry.getValue().getResident();
                     if (caseResident.getFirstName().equals(residentNameField.getText())) {
                         if (attachedFile == null) {
-                            createdCase = new Case(titleField.getText(), descriptionArea.getText(), test.getSelectionModel().getSelectedItem(), caseResident);
+                            createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceBox.getSelectionModel().getSelectedItem(), caseResident);
                         } else {
-                            createdCase = new Case(titleField.getText(), descriptionArea.getText(), test.getSelectionModel().getSelectedItem(), attachedFiles, caseResident);
+                            createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceBox.getSelectionModel().getSelectedItem(), attachedFiles, caseResident);
                         }
                     }
                 }
 
                 if (createdCase == null) {
                     if (attachedFile == null) {
-                        createdCase = new Case(titleField.getText(), descriptionArea.getText(), test.getSelectionModel().getSelectedItem(), new Resident(residentNameField.getText(), "sdsds", "sdsada", "12312312"));
+                        createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceBox.getSelectionModel().getSelectedItem(), new Resident(residentNameField.getText(), "Last name", "Username", "Password"));
                     } else {
-                        createdCase = new Case(titleField.getText(), descriptionArea.getText(), test.getSelectionModel().getSelectedItem(), attachedFiles, new Resident(residentNameField.getText(), "sdsds", "sdsada", "12312312"));
+                        createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceBox.getSelectionModel().getSelectedItem(), attachedFiles, new Resident(residentNameField.getText(), "Last name", "Username", "Password"));
                     }
 
                 }

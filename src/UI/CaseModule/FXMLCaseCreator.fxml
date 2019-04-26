@@ -45,7 +45,7 @@
       <JFXButton layoutX="757.0" layoutY="496.0" style="-fx-background-color: #2d2d2d;" text="Gem Ændringer" textFill="WHITE" />
       <JFXButton fx:id="attacheFileBtn" layoutX="694.0" layoutY="281.0" onAction="#attachFileAction" style="-fx-background-color: #2d2d2d;" text="Vedhæft Fil" textFill="WHITE" />
       <Label fx:id="numberOfFiles" layoutX="694.0" layoutY="258.0" prefHeight="17.0" prefWidth="77.0" text="Antal filer: " />
-      <ChoiceBox fx:id="test" layoutX="696.0" layoutY="135.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="serviceBox" layoutX="696.0" layoutY="135.0" prefWidth="150.0" />
       <ImageView fx:id="refreshBtn" fitHeight="25.0" fitWidth="32.0" layoutX="857.0" layoutY="156.0" onMouseClicked="#refreshType" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../icons/refresh.png" />

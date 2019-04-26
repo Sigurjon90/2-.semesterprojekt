@@ -1,14 +1,13 @@
 package UI.CalendarModule;
 
-import Domain.User.User;
 import UI.Vault;
 import static UI.Vault.stage;
 import static UI.Vault.testCalendar;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTimePicker;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -21,15 +20,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class FXMLActivityEditorController implements Initializable {
 
@@ -37,6 +37,10 @@ public class FXMLActivityEditorController implements Initializable {
     ObservableList<String> typeComboBoxList = FXCollections.observableArrayList();
     private boolean newActivity;
 
+    private double xOffset = 0;
+    private double yOffset = 0;
+    @FXML
+    private AnchorPane calendarModulePane;
     @FXML
     private TextField titleTextField;
     @FXML
@@ -56,21 +60,20 @@ public class FXMLActivityEditorController implements Initializable {
     @FXML
     private ImageView pictoView;
     @FXML
-    private Button saveActivityBtn;
+    private JFXButton saveActivityBtn;
     @FXML
-    private Button updateActivityBtn;
+    private JFXButton updateActivityBtn;
     @FXML
-    private Button cancelActivity;
+    private JFXButton cancelActivity;
     @FXML
     private JFXTimePicker endTimeField;
     @FXML
     private JFXTimePicker startTimeField;
-    
+
     @FXML
-    public void comboAction (ActionEvent event){
+    public void comboAction(ActionEvent event) {
         String imageToGet = typeComboBox.getValue();
-        System.out.println(imageToGet);
-        pictoView.setImage(new Image ("/UI/CalendarModule/"+ imageToGet +".png"));
+        pictoView.setImage(new Image("/icons/" + imageToGet + ".png"));
     }
 
     @FXML
@@ -110,7 +113,7 @@ public class FXMLActivityEditorController implements Initializable {
             endDate = startTextField.getValue().atTime(endTimeField.getValue());
 
             Vault.currentActivity.updateActivity(titleTextField.getText(), Vault.currentLoggedOn, placeTextField.getText(), startDate, endDate, descriptionTextField.getText(), typeComboBox.getValue(), sharedYes.isSelected(), entryYes.isSelected());
-            testCalendar.getCalender().replace(Vault.currentActivity.getId(), Vault.currentActivity);
+            testCalendar.getCalendar().replace(Vault.currentActivity.getActivityID(), Vault.currentActivity);
             Parent root = FXMLLoader.load(getClass().getResource("FXMLCalendar.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -136,8 +139,10 @@ public class FXMLActivityEditorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         typeComboBox.setItems(typestatus);
-        if (Vault.currentActivity != null) {
-            newActivity = false;
+        startTimeField.set24HourView(true);
+        endTimeField.set24HourView(true);
+        if (Vault.currentActivity != null && !Vault.newAction) {
+            //newActivity = false;
             saveActivityBtn.setDisable(true);
             updateActivityBtn.setDisable(false);
             titleTextField.setText(Vault.currentActivity.getTitle());
@@ -155,6 +160,36 @@ public class FXMLActivityEditorController implements Initializable {
             updateActivityBtn.setDisable(true);
         }
 
+        makeStageDragable();
+    }
+
+    @FXML
+    private void exitAction(MouseEvent event) {
+        System.exit(1);
+    }
+
+    @FXML
+    private void minimizeAction(MouseEvent event) {
+        Stage stage = (Stage) calendarModulePane.getScene().getWindow();
+        stage.setIconified(true);
+    }
+
+    private void makeStageDragable() {
+        calendarModulePane.setOnMousePressed((event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        calendarModulePane.setOnMouseDragged((event) -> {
+            Vault.stage.setX(event.getScreenX() - xOffset);
+            Vault.stage.setY(event.getScreenY() - yOffset);
+            Vault.stage.setOpacity(0.8f);
+        });
+        calendarModulePane.setOnDragDone((event) -> {
+            Vault.stage.setOpacity(1.0f);
+        });
+        calendarModulePane.setOnMouseReleased((event) -> {
+            Vault.stage.setOpacity(1.0f);
+        });
     }
 
 }
