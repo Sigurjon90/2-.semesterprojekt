@@ -72,6 +72,25 @@ public class Case {
         this.description = description + "\nLukke grundlag: \n" + reason;
         this.closed = closed;
     }
+    
+        public String showInformation() {
+        return "Sagen er oprettet :" + this.getDate()
+                + "\n" + "Titel: " + this.title
+                + "\n" + "Sag ID: " + this.caseID
+                + "\n" + "Vedhæftet filer: " + fileNames()
+                + "\n" + "Tilknyttet beboer: " + this.caseResident.getFirstName()
+                + " " + this.caseResident.getLastName()
+                + "\n" + "Sagen omhandler: "
+                + "\n" + this.getDescription();
+    }
+
+    private String fileNames() {
+        String result = "";
+        for (File f : this.attachedFiles) {
+            result += f.getName() + ", ";
+        }
+        return result;
+    }
 
     public boolean isClosed() {
         return this.closed;
@@ -118,24 +137,5 @@ public class Case {
     @Override
     public String toString() {
         return "Sag ID: " + this.caseID + "\n";
-    }
-
-    public String showInformation() {
-        return "Sagen er oprettet :" + this.getDate()
-                + "\n" + "Titel: " + this.title
-                + "\n" + "Sag ID: " + this.caseID
-                + "\n" + "Vedhæftet filer: " + fileNames()
-                + "\n" + "Tilknyttet beboer: " + this.caseResident.getFirstName()
-                + " " + this.caseResident.getLastName()
-                + "\n" + "Sagen omhandler: "
-                + "\n" + this.getDescription();
-    }
-
-    private String fileNames() {
-        String result = "";
-        for (File f : this.attachedFiles) {
-            result += f.getName() + ", ";
-        }
-        return result;
     }
 }
