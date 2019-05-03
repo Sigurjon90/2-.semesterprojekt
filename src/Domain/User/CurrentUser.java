@@ -13,7 +13,6 @@ public class CurrentUser {
      
    public CurrentUser(){
       
-    User user = new CareWorker();
    }
   
     

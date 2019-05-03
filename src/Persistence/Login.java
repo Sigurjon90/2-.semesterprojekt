@@ -26,7 +26,7 @@ public class Login{
         String sql = "SELECT * FROM users WHERE username = ? and password = ?";
 
         try {
-            pre = Connector.con.prepareStatement(sql);
+            pre = Connector.getCon().prepareStatement(sql);
             pre.setString(1, username);
             pre.setString(2, password);
             result = pre.executeQuery();
@@ -45,7 +45,7 @@ public class Login{
         String sql = "SELECT * FROM users WHERE username = ? and password = ?";
 
         try {
-            pre = Connector.con.prepareStatement(sql);
+            pre = Connector.getCon().prepareStatement(sql);
             pre.setString(1, username);
             pre.setString(2, password);
             result = pre.executeQuery();
@@ -69,7 +69,7 @@ public class Login{
 
         try {
             //Indsætter roleID i det forrige statement
-            pre = Connector.con.prepareStatement(sql);
+            pre = Connector.getCon().prepareStatement(sql);
             String roleToString = String.valueOf(roleID);
             pre.setString(1, roleToString);
             //Query resultater hentes
