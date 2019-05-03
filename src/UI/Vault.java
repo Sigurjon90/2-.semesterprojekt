@@ -6,6 +6,7 @@ import Domain.CaseModule.Case;
 import Domain.User.CareWorker;
 import Domain.User.Resident;
 import Domain.User.User;
+import Persistence.Connector;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -35,6 +36,8 @@ public class Vault extends Application {
     }
 
     public static void main(String[] args) {
+        Connector c = new Connector();
+        c.getCon();
         launch(args);
     }
 
