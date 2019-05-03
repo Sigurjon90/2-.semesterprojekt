@@ -6,6 +6,15 @@ public abstract class User {
     private String lastName;
     private String username;
     private String password;
+    private int roleid;
+
+    public int getRoleid() {
+        return roleid;
+    }
+
+    public void setRoleid(int roleid) {
+        this.roleid = roleid;
+    }
 
     public String getFirstName() {
         return firstName;

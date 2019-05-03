@@ -5,11 +5,15 @@
  */
 package UI;
 
+import Persistence.Login;
 import static UI.Vault.stage;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,6 +43,7 @@ public class FXMLLoginController implements Initializable {
     @FXML
     private JFXButton btn_cancel;
 
+    
     /**
      * Initializes the controller class.
      */
@@ -47,8 +52,14 @@ public class FXMLLoginController implements Initializable {
         // TODO
     }
 
+    
+  
+    
     @FXML
     private void loginHandler(ActionEvent event) throws IOException {
+        Login l = new Login();
+        System.out.println(l.login("user","passa"));
+        
         Parent root = FXMLLoader.load(getClass().getResource("FXMLVault.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);

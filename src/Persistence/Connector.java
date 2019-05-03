@@ -13,23 +13,11 @@ public class Connector {
     final String pass = "0zO85qYObwO066EbP2g0PcZvwTOJ7pMR";
 
     public Connection getCon() {
-         try {
-            Class.forName("org.postgresql.Driver");
-        }
-        catch (java.lang.ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
+
         try {
-            System.out.println("a");
+
             con = DriverManager.getConnection(connect, user, pass);
-            System.out.println("12");
-            Statement state = con.createStatement();
-            ResultSet result = state.executeQuery("SELECT * FROM User LIMIT 100");
-
-            while (result.next()) {
-                System.out.println(result.getString("first_name"));
-            }
-
+            System.out.println("Connected to the PostgreSQL server successfully");
         } catch (Exception e) {
             e.printStackTrace();
         }
