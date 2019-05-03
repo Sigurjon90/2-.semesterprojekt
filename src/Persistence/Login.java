@@ -40,4 +40,26 @@ public class Login extends Connector {
         return true;
 
     }
+    
+    public int getRoleid(String username, String password){
+        
+        String sql = "SELECT * FROM users WHERE username = ? and password = ?";
+
+        try {
+            pre = con.prepareStatement(sql);
+            pre.setString(1, username);
+            pre.setString(2, password);
+            result = pre.executeQuery();
+            if (result.next()) {
+            return result.getInt("roleid");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+return 0;
+    }
+        
+    
 }

@@ -5,6 +5,10 @@
  */
 package UI;
 
+import Domain.User.CareWorker;
+import Domain.User.Resident;
+import Domain.User.SocialWorker;
+import Domain.User.User;
 import Persistence.Login;
 import static UI.Vault.stage;
 import com.jfoenix.controls.JFXButton;
@@ -43,7 +47,7 @@ public class FXMLLoginController implements Initializable {
     @FXML
     private JFXButton btn_cancel;
 
-    
+    User user;
     /**
      * Initializes the controller class.
      */
@@ -59,6 +63,18 @@ public class FXMLLoginController implements Initializable {
     private void loginHandler(ActionEvent event) throws IOException {
         Login l = new Login();
         System.out.println(l.login("user","passa"));
+        if(l.getRoleid("user", "passa") == 1) {
+            user = new CareWorker();
+        Vault.setUser(user);
+        }
+        if(l.getRoleid("user", "passa") == 2) {
+            user = new SocialWorker();
+        Vault.setUser(user);
+        }
+        if(l.getRoleid("user", "passa") == 3) {
+            user = new Resident();
+        Vault.setUser(user);
+        }
         
         Parent root = FXMLLoader.load(getClass().getResource("FXMLVault.fxml"));
         Scene scene = new Scene(root);

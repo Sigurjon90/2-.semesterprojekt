@@ -23,6 +23,14 @@ public class Vault extends Application {
     public static Resident resident = new Resident();
     public static Activity currentActivity;
     public static boolean newAction;
+    static User currentUser;
+
+    public static User getCurrentUser() {
+        return currentUser;
+    }
+    public static void setUser(User user){
+        currentUser = user;
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -37,7 +45,7 @@ public class Vault extends Application {
 
     public static void main(String[] args) {
         Connector c = new Connector();
-        c.getCon();
+    
         launch(args);
     }
 

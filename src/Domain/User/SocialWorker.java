@@ -12,6 +12,11 @@ public class SocialWorker extends User {
     private final int socialWorkerID;
     private final Map<Integer, Case> cases;
 
+    public SocialWorker(){
+         this.numberOfSocialWorkers++;
+        this.socialWorkerID = numberOfSocialWorkers;
+         cases = new HashMap<>();
+    }
     public SocialWorker(String firstName, String lastName, String username, String password) {
         super.setFirstName(firstName);
         super.setLastName(lastName);

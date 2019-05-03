@@ -2,6 +2,17 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/jens/Documents/GitHub/2-,semesterprojekt/src/UI/DiaryModule/FXMLDiaryController.java</file>
+            <file>file:/C:/Users/jens/Documents/GitHub/2-,semesterprojekt/src/Domain/User/CurrentUser.java</file>
+            <file>file:/C:/Users/jens/Documents/GitHub/2-,semesterprojekt/src/UI/FXMLVaultController.java</file>
+            <file>file:/C:/Users/jens/Documents/GitHub/2-,semesterprojekt/src/UI/FXMLLoginController.java</file>
+            <file>file:/C:/Users/jens/Documents/GitHub/2-,semesterprojekt/src/Persistence/Login.java</file>
+            <file>file:/C:/Users/jens/Documents/GitHub/2-,semesterprojekt/src/Domain/User/User.java</file>
+            <file>file:/C:/Users/jens/Documents/GitHub/2-,semesterprojekt/src/Persistence/Connector.java</file>
+            <file>file:/C:/Users/jens/Documents/GitHub/2-,semesterprojekt/src/UI/Vault.java</file>
+            <file>file:/C:/Users/jens/Documents/GitHub/2-,semesterprojekt/src/Domain/User/SocialWorker.java</file>
+            <file>file:/C:/Users/jens/Documents/GitHub/2-,semesterprojekt/src/Domain/User/CareWorker.java</file>
+        </group>
     </open-files>
 </project-private>

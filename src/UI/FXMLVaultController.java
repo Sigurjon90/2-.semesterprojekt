@@ -5,6 +5,7 @@
  */
 package UI;
 
+import Domain.User.CareWorker;
 import Domain.User.Resident;
 import static UI.Vault.stage;
 import com.jfoenix.controls.JFXListView;
@@ -36,6 +37,11 @@ public class FXMLVaultController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
+        if(Vault.getCurrentUser().getRoleid() == 1){
+        
+            btn_case.setVisible(false);
+        }
     }
     @FXML
     private Label lb_residents;
