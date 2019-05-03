@@ -45,6 +45,7 @@ public class Vault extends Application {
 
     public static void main(String[] args) {
         Connector c = new Connector();
+        c.getCon();
     
         launch(args);
     }
