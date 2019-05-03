@@ -37,11 +37,7 @@ public class FXMLVaultController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
-        if(Vault.getCurrentUser().getRoleid() == 1){
-        
-            btn_case.setVisible(false);
-        }
+
     }
     @FXML
     private Label lb_residents;
@@ -57,37 +53,37 @@ public class FXMLVaultController implements Initializable {
 
     @FXML
     private Button btn_case;
-    
+
     @FXML
     private AnchorPane vaultPane;
 
     @FXML
     void diaryHandler(ActionEvent event) throws IOException {
-Parent root = FXMLLoader.load(getClass().getResource("/UI/DiaryModule/FXMLDiary.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/UI/DiaryModule/FXMLDiary.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
 
     @FXML
     void calendarHandler(ActionEvent event) throws IOException {
-Parent root = FXMLLoader.load(getClass().getResource("/UI/CalendarModule/FXMLCalendar.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/UI/CalendarModule/FXMLCalendar.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
 
     @FXML
     void caseHandler(ActionEvent event) throws IOException {
-Parent root = FXMLLoader.load(getClass().getResource("/UI/CaseModule/FXMLCase.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/UI/CaseModule/FXMLCase.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
-    
-            @FXML
+
+    @FXML
     private void exitAction(MouseEvent event) {
         System.exit(1);
     }
-    
-        @FXML
+
+    @FXML
     private void minimizeAction(MouseEvent event) {
         Stage stage = (Stage) vaultPane.getScene().getWindow();
         stage.setIconified(true);
