@@ -56,13 +56,10 @@ public class UserManager {
 
     private static String getRoleName(int roleID) {
 
-        String sql = "SELECT * FROM role WHERE id = ?";
+        String sql = "SELECT * FROM role WHERE id = " + roleID;
 
         try {
             pre = Connector.getCon().prepareStatement(sql);
-            String roleToString = String.valueOf(roleID);
-            pre.setString(1, roleToString);
-
             result = pre.executeQuery();
             if (result.next()) {
                 return result.getString("name");
@@ -81,18 +78,16 @@ public class UserManager {
         ArrayList<Permission> permissions = new ArrayList<>();
 
         //Statement der henter de permissions der tilhører en rolle
-        String sql = "SELECT * FROM role_to_permission WHERE role_id = ?";
+        String sql = "SELECT * FROM role_to_permission WHERE role_id = " + roleID;
 
         try {
             //Indsætter roleID i det forrige statement
             pre = Connector.getCon().prepareStatement(sql);
-            String roleToString = String.valueOf(roleID);
-            pre.setString(1, roleToString);
             //Query resultater hentes
             result = pre.executeQuery();
             //Tilføjer rollens permissions til Arraylisten
             if (result.next()) {
-                int temp = result.getInt("permission_id");
+                int temp = result.getInt("permisson_id");
                 String tempInfo = getPermissionInfo(temp);
                 permissions.add(new Permission(tempInfo,temp));
 
@@ -107,14 +102,11 @@ public class UserManager {
 
     private static String getPermissionInfo(int permissionID) {
 
-        String sql = "SELECT * FROM permission where id=?";
+        String sql = "SELECT * FROM permission where id = " + permissionID;
 
         try {
             //Indsætter permissionID i det forrige statement
             pre = Connector.getCon().prepareStatement(sql);
-
-            String roleToString = String.valueOf(permissionID);
-            pre.setString(1, roleToString);
 
             //Query resultater hentes
             result = pre.executeQuery();

@@ -24,5 +24,9 @@ public class Role {
         }
         return false;
     }
+    
+    public String getRoleInfo(){
+        return roleName + ", " + roleID;
+    }
 
 }

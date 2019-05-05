@@ -15,7 +15,11 @@ public class User {
         this.password = password;
         role = new Role(roleid, roleName);
     }
-
+    
+    @Override
+    public String toString (){
+        return role.getRoleInfo() +", "+ this.firstName +", "+ this.lastName +", "+ this.username +", "+ this.password;
+    }
 //    public int getRoleid() {
 //        return roleid;
 //    }

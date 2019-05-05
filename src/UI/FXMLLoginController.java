@@ -65,6 +65,7 @@ public class FXMLLoginController implements Initializable {
         
         if(UserManager.login(text_username.getText(), text_password.getText()))
         {
+            System.out.println(UserManager.getCurrentUser().toString());
         Parent root = FXMLLoader.load(getClass().getResource("FXMLVault.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
