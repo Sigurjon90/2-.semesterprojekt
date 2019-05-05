@@ -7,6 +7,7 @@ package UI;
 
 import Domain.User.CareWorker;
 import Domain.User.Resident;
+import Persistence.UserManager;
 import static UI.Vault.stage;
 import com.jfoenix.controls.JFXListView;
 import java.io.IOException;
@@ -59,9 +60,16 @@ public class FXMLVaultController implements Initializable {
 
     @FXML
     void diaryHandler(ActionEvent event) throws IOException {
+        
+        if(UserManager.getCurrentUser().checkForPermission(1)){
         Parent root = FXMLLoader.load(getClass().getResource("/UI/DiaryModule/FXMLDiary.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        }
+        else{
+            System.out.println("suck my cockl");
+        }
+
     }
 
     @FXML

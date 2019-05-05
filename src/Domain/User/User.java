@@ -1,20 +1,28 @@
 package Domain.User;
 
-public abstract class User {
+public class User {
 
     private String firstName;
     private String lastName;
     private String username;
     private String password;
-    private int roleid;
+    private final Role role;
 
-    public int getRoleid() {
-        return roleid;
+    public User(String firstName, String lastName, String username, String password, int roleid, String roleName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        role = new Role(roleid, roleName);
     }
 
-    public void setRoleid(int roleid) {
-        this.roleid = roleid;
-    }
+//    public int getRoleid() {
+//        return roleid;
+//    }
+//
+//    public void setRoleid(int roleid) {
+//        this.roleid = roleid;
+//    }
 
     public String getFirstName() {
         return firstName;
@@ -46,5 +54,9 @@ public abstract class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    
+    public boolean checkForPermission(int permissionID){
+       return role.checkForPermission(permissionID); 
     }
 }

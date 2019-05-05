@@ -6,11 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SocialWorker extends User {
+public class SocialWorker{
 
     private static int numberOfSocialWorkers = 0;
     private final int socialWorkerID;
     private final Map<Integer, Case> cases;
+    private String firstName="SDALAS";
+    private String lastName="OPIDK";
 
     public SocialWorker(){
          this.numberOfSocialWorkers++;
@@ -18,10 +20,11 @@ public class SocialWorker extends User {
          cases = new HashMap<>();
     }
     public SocialWorker(String firstName, String lastName, String username, String password) {
-        super.setFirstName(firstName);
-        super.setLastName(lastName);
-        super.setUsername(username);
-        super.setPassword(password);
+        
+//        super.setFirstName(firstName);
+//        super.setLastName(lastName);
+//        super.setUsername(username);
+//        super.setPassword(password);
         this.numberOfSocialWorkers++;
         this.socialWorkerID = numberOfSocialWorkers;
         cases = new HashMap<>();
@@ -59,11 +62,11 @@ public class SocialWorker extends User {
     }
 
     public String getName() {
-        return super.getFirstName() + " " + super.getLastName();
+        return firstName + " " + lastName;
     }
 
-    @Override
-    public String toString() {
-        return this.getName() + " ID: " + this.socialWorkerID;
-    }
+//    @Override
+//    public String toString() {
+//        return this.getName() + " ID: " + this.socialWorkerID;
+//    }
 }

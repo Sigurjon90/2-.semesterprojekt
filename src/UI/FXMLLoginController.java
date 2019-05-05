@@ -9,7 +9,7 @@ import Domain.User.CareWorker;
 import Domain.User.Resident;
 import Domain.User.SocialWorker;
 import Domain.User.User;
-import Persistence.Login;
+import Persistence.UserManager;
 import static UI.Vault.stage;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -18,6 +18,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -60,10 +61,15 @@ public class FXMLLoginController implements Initializable {
   
     
     @FXML
-    private void loginHandler(ActionEvent event) throws IOException {
+    private void loginHandler(ActionEvent event) throws IOException, SQLException {
+        
+        if(UserManager.login(text_username.getText(), text_password.getText()))
+        {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLVault.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        }
+
     }
 
     @FXML

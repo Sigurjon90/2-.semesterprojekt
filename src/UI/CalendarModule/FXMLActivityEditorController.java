@@ -1,5 +1,6 @@
 package UI.CalendarModule;
 
+import Persistence.UserManager;
 import UI.Vault;
 import static UI.Vault.stage;
 import static UI.Vault.testCalendar;
@@ -91,7 +92,7 @@ public class FXMLActivityEditorController implements Initializable {
             startDate = startTextField.getValue().atTime(startTimeField.getValue());
             endDate = startTextField.getValue().atTime(endTimeField.getValue());
 
-            testCalendar.createActivity(titleTextField.getText(), Vault.currentLoggedOn, placeTextField.getText(), startDate, endDate, descriptionTextField.getText(), typeComboBox.getValue(), sharedYes.isSelected(), entryYes.isSelected());
+            testCalendar.createActivity(titleTextField.getText(), UserManager.getCurrentUser(), placeTextField.getText(), startDate, endDate, descriptionTextField.getText(), typeComboBox.getValue(), sharedYes.isSelected(), entryYes.isSelected());
             Parent root = FXMLLoader.load(getClass().getResource("FXMLCalendar.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -112,7 +113,7 @@ public class FXMLActivityEditorController implements Initializable {
             startDate = startTextField.getValue().atTime(startTimeField.getValue());
             endDate = startTextField.getValue().atTime(endTimeField.getValue());
 
-            Vault.currentActivity.updateActivity(titleTextField.getText(), Vault.currentLoggedOn, placeTextField.getText(), startDate, endDate, descriptionTextField.getText(), typeComboBox.getValue(), sharedYes.isSelected(), entryYes.isSelected());
+            Vault.currentActivity.updateActivity(titleTextField.getText(), UserManager.getCurrentUser(), placeTextField.getText(), startDate, endDate, descriptionTextField.getText(), typeComboBox.getValue(), sharedYes.isSelected(), entryYes.isSelected());
             testCalendar.getCalendar().replace(Vault.currentActivity.getActivityID(), Vault.currentActivity);
             Parent root = FXMLLoader.load(getClass().getResource("FXMLCalendar.fxml"));
             Scene scene = new Scene(root);
