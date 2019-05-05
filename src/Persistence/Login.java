@@ -65,7 +65,7 @@ public class Login{
         //Opretter ArrayList til at gemme permissions
         ArrayList<Integer> permissions = new ArrayList<Integer>();
         //Statement der henter de permissions der tilhører en rolle
-        String sql = "SELECT * FROM role_permissions WHERE roleID = ?";
+        String sql = "SELECT * FROM role_to_permission WHERE role_id = ?";
 
         try {
             //Indsætter roleID i det forrige statement
