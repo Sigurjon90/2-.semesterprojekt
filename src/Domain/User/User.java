@@ -61,6 +61,7 @@ public class User {
     }
     
     public boolean checkForPermission(int permissionID){
+        System.out.println("check");
        return role.checkForPermission(permissionID); 
     }
 }

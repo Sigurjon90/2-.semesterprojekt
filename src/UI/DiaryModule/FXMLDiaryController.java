@@ -4,6 +4,7 @@ import Domain.User.Resident;
 import static UI.Vault.stage;
 import UI.Vault;
 import Domain.DiaryModule.Entry;
+import Persistence.UserManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
@@ -73,9 +74,6 @@ public class FXMLDiaryController implements Initializable {
         return resident;
     }
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -127,12 +125,14 @@ public class FXMLDiaryController implements Initializable {
 
     @FXML
     void displayEntryEditor(ActionEvent event) throws IOException {
-        if (selectedEntryForEdit != null) {
-            selectedEntryForEdit = list_entrys.getSelectionModel().getSelectedItem();
+        if (UserManager.getCurrentUser().checkForPermission(4)) {
+            if (selectedEntryForEdit != null) {
+                selectedEntryForEdit = list_entrys.getSelectionModel().getSelectedItem();
 
-            Parent root = FXMLLoader.load(getClass().getResource("FXMLEntryEditor.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+                Parent root = FXMLLoader.load(getClass().getResource("FXMLEntryEditor.fxml"));
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+            }
         }
     }
 
@@ -142,27 +142,29 @@ public class FXMLDiaryController implements Initializable {
         for (int i = 0; i < list.size(); i++) {
             Vault.resident.getResidentDiary().getMap().put(list.get(i).getEntryID(), list.get(i));
         }
-
     }
 
     @FXML
     void deleteEntry(ActionEvent event) {
         if (selectedEntryForEdit != null) {
+            if (UserManager.getCurrentUser().checkForPermission(12)) {
 
-            Vault.resident.getResidentDiary().getMap().get(list_entrys.getSelectionModel().getSelectedItem().getEntryID()).setVisible(false);
-            updateList();
+                Vault.resident.getResidentDiary().getMap().get(list_entrys.getSelectionModel().getSelectedItem().getEntryID()).setVisible(false);
+                updateList();
 
-            textarea_entry.clear();
-            lb_file.setText("");
+                textarea_entry.clear();
+                lb_file.setText("");
+            }
         }
     }
 
     @FXML
     void displayEntryCreator(ActionEvent event) throws IOException {
-
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLEntryCreator.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
+        if (UserManager.getCurrentUser().checkForPermission(8)) {
+            Parent root = FXMLLoader.load(getClass().getResource("FXMLEntryCreator.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+        }
     }
 
     @FXML

@@ -1,5 +1,6 @@
 package UI.CaseModule;
 
+import Persistence.UserManager;
 import UI.Vault;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
@@ -111,7 +112,7 @@ public class FXMLCaseEditorController implements Initializable {
 
     @FXML
     private void closeCaseAction(ActionEvent event) {
-        if (!closeReasonField.getText().isEmpty()) {
+        if (!closeReasonField.getText().isEmpty() && UserManager.getCurrentUser().checkForPermission(15)) {
             Vault.currentCase.closeCase(true, closeReasonField.getText());
             final Node source = (Node) event.getSource();
             final Stage stage = (Stage) source.getScene().getWindow();

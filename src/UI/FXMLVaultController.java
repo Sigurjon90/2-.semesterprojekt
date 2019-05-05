@@ -32,12 +32,10 @@ import javafx.stage.Stage;
  */
 public class FXMLVaultController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
+ 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
 
     }
     @FXML
@@ -67,23 +65,34 @@ public class FXMLVaultController implements Initializable {
         stage.setScene(scene);
         }
         else{
-            System.out.println("suck my cockl");
+            System.out.println("You don't have permission for this action");
         }
 
     }
 
     @FXML
     void calendarHandler(ActionEvent event) throws IOException {
+        if(UserManager.getCurrentUser().checkForPermission(2)){
         Parent root = FXMLLoader.load(getClass().getResource("/UI/CalendarModule/FXMLCalendar.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        }
+        else{
+            System.out.println("You don't have permission for this action");
+        }
+        
     }
 
     @FXML
     void caseHandler(ActionEvent event) throws IOException {
+        if(UserManager.getCurrentUser().checkForPermission(3)){
         Parent root = FXMLLoader.load(getClass().getResource("/UI/CaseModule/FXMLCase.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        }
+        else{
+            System.out.println("You don't have permission for this action");
+        }
     }
 
     @FXML

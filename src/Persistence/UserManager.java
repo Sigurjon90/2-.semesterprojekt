@@ -23,7 +23,6 @@ import java.util.logging.Logger;
 public class UserManager {
 
     private static PreparedStatement pre = null;
-    private static ResultSet result = null;
 
     private static User currentUser;
 
@@ -42,15 +41,16 @@ public class UserManager {
             pre = Connector.getCon().prepareStatement(sql);
             pre.setString(1, username);
             pre.setString(2, password);
-            result = pre.executeQuery();
+            ResultSet result = pre.executeQuery();
             if (!result.next()) {
                 return false;
             }
+            currentUser = new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), result.getInt("roleid"), getRoleName(result.getInt("roleid")));
+            
 
         } catch (SQLException ex) {
             Logger.getLogger(UserManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-        currentUser = new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), result.getInt("roleid"), getRoleName(result.getInt("roleid")));
         return true;
     }
 
@@ -60,7 +60,7 @@ public class UserManager {
 
         try {
             pre = Connector.getCon().prepareStatement(sql);
-            result = pre.executeQuery();
+            ResultSet result = pre.executeQuery();
             if (result.next()) {
                 return result.getString("name");
             }
@@ -84,14 +84,16 @@ public class UserManager {
             //Indsætter roleID i det forrige statement
             pre = Connector.getCon().prepareStatement(sql);
             //Query resultater hentes
-            result = pre.executeQuery();
+            ResultSet result = pre.executeQuery();
             //Tilføjer rollens permissions til Arraylisten
-            if (result.next()) {
+            System.out.println("Start loop");
+            while (result.next()) {
+                System.out.println("ran once");
                 int temp = result.getInt("permisson_id");
                 String tempInfo = getPermissionInfo(temp);
-                permissions.add(new Permission(tempInfo,temp));
-
+                permissions.add(new Permission(tempInfo, temp));
             }
+            System.out.println("end loop");
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -109,7 +111,7 @@ public class UserManager {
             pre = Connector.getCon().prepareStatement(sql);
 
             //Query resultater hentes
-            result = pre.executeQuery();
+            ResultSet result = pre.executeQuery();
             //Tilføjer rollens permissions til Arraylisten
             if (result.next()) {
                 return result.getString("name");

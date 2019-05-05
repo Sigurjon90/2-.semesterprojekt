@@ -48,27 +48,19 @@ public class FXMLLoginController implements Initializable {
     @FXML
     private JFXButton btn_cancel;
 
-    User user;
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
     }
 
-    
-  
-    
     @FXML
     private void loginHandler(ActionEvent event) throws IOException, SQLException {
-        
-        if(UserManager.login(text_username.getText(), text_password.getText()))
-        {
+
+        if (UserManager.login(text_username.getText(), text_password.getText())) {
             System.out.println(UserManager.getCurrentUser().toString());
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLVault.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
+            Parent root = FXMLLoader.load(getClass().getResource("FXMLVault.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
         }
 
     }
