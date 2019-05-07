@@ -25,6 +25,7 @@ public class UserManager {
     private static PreparedStatement pre = null;
 
     private static User currentUser;
+    private static User currentResident;
 
     public static User getCurrentUser() {
         return currentUser;
@@ -32,6 +33,14 @@ public class UserManager {
 
     public static void setCurrentUser(User currentUser) {
         UserManager.currentUser = currentUser;
+    }
+    
+    public static void setCurrentResident(User chosenResident) {
+        UserManager.currentResident = chosenResident;
+    }
+    
+    public static User getCurrentResident(){
+        return UserManager.currentResident;
     }
 
     public static boolean login(String username, String password) throws SQLException {

@@ -56,22 +56,33 @@ public class FXMLVaultController implements Initializable {
 
     @FXML
     private AnchorPane vaultPane;
-    
+
     private ObservableList<User> residentsObs;
-    
+
     private ArrayList<User> tempResidents;
-    
+
     private ListProperty<Entry> listProperty = new SimpleListProperty<>();
-    
-    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       tempResidents = UserManager.getResidents(UserManager.getCurrentUser().getRoleID());
-       residentsObs=FXCollections.observableArrayList(tempResidents);
-       listview_residents.setItems(residentsObs);
+        if (UserManager.getCurrentUser().checkForPermission(16)) {
+            listview_residents.setVisible(true);
+            tempResidents = UserManager.getResidents(UserManager.getCurrentUser().getRoleID());
+            residentsObs = FXCollections.observableArrayList(tempResidents);
+            listview_residents.setItems(residentsObs);
+        } else {
+            listview_residents.setVisible(false);
+        }
     }
 
+    @FXML
+    void setCurrentResident() {
+        User tempUser = listview_residents.getSelectionModel().getSelectedItem();
+        UserManager.setCurrentResident(tempUser);
+        System.out.println(UserManager.getCurrentResident());
+    }
+    
+    
     @FXML
     void diaryHandler(ActionEvent event) throws IOException {
 
