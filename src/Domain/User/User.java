@@ -18,7 +18,7 @@ public class User {
     
     @Override
     public String toString (){
-        return role.getRoleInfo() +", "+ this.firstName +", "+ this.lastName +", "+ this.username +", "+ this.password;
+        return this.firstName +" "+ this.lastName;
     }
 //    public int getRoleid() {
 //        return roleid;
@@ -63,5 +63,9 @@ public class User {
     public boolean checkForPermission(int permissionID){
         System.out.println("check");
        return role.checkForPermission(permissionID); 
+    }
+    
+    public int getRoleID(){
+        return role.getRoleID();
     }
 }

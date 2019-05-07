@@ -45,8 +45,8 @@ public class UserManager {
             if (!result.next()) {
                 return false;
             }
-            currentUser = new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), result.getInt("roleid"), getRoleName(result.getInt("roleid")));
-            
+
+            currentUser = new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), result.getInt("roleid"), getRoleType(result.getInt("roleid")));
 
         } catch (SQLException ex) {
             Logger.getLogger(UserManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -54,7 +54,7 @@ public class UserManager {
         return true;
     }
 
-    private static String getRoleName(int roleID) {
+    public static String getRoleType(int roleID) {
 
         String sql = "SELECT * FROM role WHERE id = " + roleID;
 
@@ -81,7 +81,6 @@ public class UserManager {
         String sql = "SELECT * FROM role_to_permission WHERE role_id = " + roleID;
 
         try {
-            //Indsætter roleID i det forrige statement
             pre = Connector.getCon().prepareStatement(sql);
             //Query resultater hentes
             ResultSet result = pre.executeQuery();
@@ -107,21 +106,62 @@ public class UserManager {
         String sql = "SELECT * FROM permission where id = " + permissionID;
 
         try {
-            //Indsætter permissionID i det forrige statement
             pre = Connector.getCon().prepareStatement(sql);
-
             //Query resultater hentes
             ResultSet result = pre.executeQuery();
-            //Tilføjer rollens permissions til Arraylisten
             if (result.next()) {
                 return result.getString("name");
-
             }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return null;
+    }
+
+//\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+//////////////////////////////////////////////////////////////////////////////////////////////////
+    //Finder residents tilhørende det givne userID fra metodens argument
+    public static ArrayList<User> getResidents(int userID) {
+        //Opretter ArrayList til at gemme residents
+        ArrayList<User> residents = new ArrayList<>();
+
+        String sql = "SELECT * FROM residents where care_worker_id = " + userID + " or social_worker_id = " + userID;
+
+        try {
+            pre = Connector.getCon().prepareStatement(sql);
+            //Query resultater hentes
+            ResultSet result = pre.executeQuery();
+            //Tilføjer rollens permissions til Arraylisten
+            while (result.next()) {
+                System.out.println("Added User from worker");
+                residents.add(getUser(result.getInt("resident_id")));
+            }
+            return residents;
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    //Opretter en user ud fra en beboers id
+    private static User getUser(int residentID) {
+        String sql = "SELECT * FROM users WHERE id = " + residentID;
+        //Opretter User til at gemme brugerens oplysninger
+        User user = null;
+        try {
+            pre = Connector.getCon().prepareStatement(sql);
+            //Query resultater hentes
+            ResultSet result = pre.executeQuery();
+            //Tilføjer rollens permissions til Arraylisten
+            if (result.next()) {
+                user = new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), result.getInt("roleid"), getRoleType(result.getInt("roleid")));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return user;
     }
 
 }

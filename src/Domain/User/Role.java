@@ -28,5 +28,9 @@ public class Role {
     public String getRoleInfo(){
         return roleName + ", " + roleID;
     }
+    
+    public int getRoleID(){
+        return roleID;
+    }
 
 }
