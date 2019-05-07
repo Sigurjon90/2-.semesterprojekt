@@ -7,18 +7,20 @@ public class User {
     private String username;
     private String password;
     private final Role role;
+    private int id;
 
-    public User(String firstName, String lastName, String username, String password, int roleid, String roleName) {
+    public User(String firstName, String lastName, String username, String password, int roleid, String roleName, int id) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
+        this.id=id;
         role = new Role(roleid, roleName);
     }
     
     @Override
     public String toString (){
-        return this.firstName +" "+ this.lastName;
+        return this.firstName +" "+ this.lastName +" "+this.id;
     }
 //    public int getRoleid() {
 //        return roleid;
@@ -67,5 +69,13 @@ public class User {
     
     public int getRoleID(){
         return role.getRoleID();
+    }
+    
+    public int getID(){
+         return id;
+    }
+    
+    public void setID(int id){
+        this.id=id;
     }
 }

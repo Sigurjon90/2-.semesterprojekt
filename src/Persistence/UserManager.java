@@ -55,7 +55,7 @@ public class UserManager {
                 return false;
             }
 
-            currentUser = new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), result.getInt("roleid"), getRoleType(result.getInt("roleid")));
+            currentUser = new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), result.getInt("roleid"), getRoleType(result.getInt("roleid")), result.getInt("id"));
 
         } catch (SQLException ex) {
             Logger.getLogger(UserManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -165,7 +165,7 @@ public class UserManager {
             ResultSet result = pre.executeQuery();
             //Tilføjer rollens permissions til Arraylisten
             if (result.next()) {
-                user = new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), result.getInt("roleid"), getRoleType(result.getInt("roleid")));
+                user = new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), result.getInt("roleid"), getRoleType(result.getInt("roleid")), result.getInt("id"));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
