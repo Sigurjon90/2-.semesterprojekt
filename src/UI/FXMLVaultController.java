@@ -67,11 +67,12 @@ public class FXMLVaultController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         if (UserManager.getCurrentUser().checkForPermission(16)) {
             listview_residents.setVisible(true);
-            tempResidents = UserManager.getResidents(UserManager.getCurrentUser().getRoleID());
+            tempResidents = UserManager.getResidents(UserManager.getCurrentUser().getID());
             residentsObs = FXCollections.observableArrayList(tempResidents);
             listview_residents.setItems(residentsObs);
         } else {
             listview_residents.setVisible(false);
+            lb_residents.setVisible(false);
         }
     }
 
