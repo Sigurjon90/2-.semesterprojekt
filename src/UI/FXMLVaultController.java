@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package UI;
 
 import Domain.DiaryModule.Entry;
@@ -31,28 +26,18 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.collections.ObservableList;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Line;
 
-/**
- * FXML Controller class
- *
- * @author jens
- */
 public class FXMLVaultController implements Initializable {
 
+    private double xOffset = 0;
+    private double yOffset = 0;
     @FXML
     private Label lb_residents;
 
     @FXML
-    private Button btn_calendar;
-
-    @FXML
     private JFXListView<User> listview_residents;
-
-    @FXML
-    private Button btn_diary;
-
-    @FXML
-    private Button btn_case;
 
     @FXML
     private AnchorPane vaultPane;
@@ -62,14 +47,39 @@ public class FXMLVaultController implements Initializable {
     private ArrayList<User> tempResidents;
 
     private ListProperty<Entry> listProperty = new SimpleListProperty<>();
+    @FXML
+    private ImageView exitBtn;
+    @FXML
+    private ImageView minimizeBtn;
+    @FXML
+    private Button btn_diary;
+    @FXML
+    private Button btn_calendar;
+    @FXML
+    private Button btn_case;
+    @FXML
+    private Button btn_Admin;
+    @FXML
+    private Line lastLine;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        makeStageDragable();
+
         if (UserManager.getCurrentUser().checkForPermission(16)) {
             listview_residents.setVisible(true);
             tempResidents = UserManager.getResidents(UserManager.getCurrentUser().getID());
             residentsObs = FXCollections.observableArrayList(tempResidents);
             listview_residents.setItems(residentsObs);
+
+        } else if (UserManager.getCurrentUser().checkForPermission(14) || UserManager.getCurrentUser().checkForPermission(11)) {
+            btn_diary.setDisable(true);
+            btn_calendar.setDisable(true);
+            btn_case.setDisable(true);
+            btn_Admin.setVisible(true);
+            btn_Admin.setDisable(false);
+            lastLine.setVisible(true);
+
         } else {
             listview_residents.setVisible(false);
             lb_residents.setVisible(false);
@@ -82,8 +92,7 @@ public class FXMLVaultController implements Initializable {
         UserManager.setCurrentResident(tempUser);
         System.out.println(UserManager.getCurrentResident());
     }
-    
-    
+
     @FXML
     void diaryHandler(ActionEvent event) throws IOException {
 
@@ -129,5 +138,31 @@ public class FXMLVaultController implements Initializable {
     private void minimizeAction(MouseEvent event) {
         Stage stage = (Stage) vaultPane.getScene().getWindow();
         stage.setIconified(true);
+    }
+
+    @FXML
+    private void administrationAction(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLAdministration.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+
+    }
+
+    private void makeStageDragable() {
+        vaultPane.setOnMousePressed((event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        vaultPane.setOnMouseDragged((event) -> {
+            Vault.stage.setX(event.getScreenX() - xOffset);
+            Vault.stage.setY(event.getScreenY() - yOffset);
+            Vault.stage.setOpacity(0.8f);
+        });
+        vaultPane.setOnDragDone((event) -> {
+            Vault.stage.setOpacity(1.0f);
+        });
+        vaultPane.setOnMouseReleased((event) -> {
+            Vault.stage.setOpacity(1.0f);
+        });
     }
 }

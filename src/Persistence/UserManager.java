@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Persistence;
 
 import Domain.User.Permission;
@@ -16,10 +11,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author jens
- */
 public class UserManager {
 
     private static PreparedStatement pre = null;
@@ -34,12 +25,12 @@ public class UserManager {
     public static void setCurrentUser(User currentUser) {
         UserManager.currentUser = currentUser;
     }
-    
+
     public static void setCurrentResident(User chosenResident) {
         UserManager.currentResident = chosenResident;
     }
-    
-    public static User getCurrentResident(){
+
+    public static User getCurrentResident() {
         return UserManager.currentResident;
     }
 
@@ -147,7 +138,7 @@ public class UserManager {
                 residents.add(getUser(result.getInt("resident_id")));
             }
             return residents;
-            
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -171,6 +162,43 @@ public class UserManager {
             ex.printStackTrace();
         }
         return user;
+    }
+
+///////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ADMIN METHODS\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+//////////////////////////////////////////////////////////////////////////////////////////////////
+    public static ArrayList<User> getAllUsers() {
+        ArrayList<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM users";
+
+        try {
+            pre = Connector.getCon().prepareStatement(sql);
+            ResultSet result = pre.executeQuery();
+
+            while (result.next()) {
+                users.add(new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), result.getInt("roleid"), getRoleType(result.getInt("roleid")), result.getInt("id")));
+            }
+            return users;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void createUser() {
+
+    }
+
+    public static String deleteUser(int user_id) {
+        String sql = "Delete from users where id = " + user_id;
+        try {
+            pre = Connector.getCon().prepareStatement(sql);
+            pre.executeUpdate();
+            pre.close();
+        } catch (SQLException ex) {
+
+        }
+        return "Brugeren er slettet fra Vaults DataBase. Copyright(2019)";
+
     }
 
 }

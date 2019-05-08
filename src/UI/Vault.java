@@ -23,8 +23,6 @@ public class Vault extends Application {
     public static Resident resident = new Resident();
     public static Activity currentActivity;
     public static boolean newAction;
-    
-
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -40,7 +38,7 @@ public class Vault extends Application {
     public static void main(String[] args) {
         Connector connection = new Connector();
         connection.setupConnection();
-    
+
         launch(args);
     }
 
