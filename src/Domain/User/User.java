@@ -1,20 +1,34 @@
 package Domain.User;
 
-public abstract class User {
+public class User {
 
     private String firstName;
     private String lastName;
     private String username;
     private String password;
-    private int roleid;
+    private final Role role;
+    private int id;
 
-    public int getRoleid() {
-        return roleid;
+    public User(String firstName, String lastName, String username, String password, int roleid, String roleName, int id) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.id=id;
+        role = new Role(roleid, roleName);
     }
-
-    public void setRoleid(int roleid) {
-        this.roleid = roleid;
+    
+    @Override
+    public String toString (){
+        return this.firstName +" "+ this.lastName +" "+this.id;
     }
+//    public int getRoleid() {
+//        return roleid;
+//    }
+//
+//    public void setRoleid(int roleid) {
+//        this.roleid = roleid;
+//    }
 
     public String getFirstName() {
         return firstName;
@@ -46,5 +60,22 @@ public abstract class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    
+    public boolean checkForPermission(int permissionID){
+        System.out.println("check");
+       return role.checkForPermission(permissionID); 
+    }
+    
+    public int getRoleID(){
+        return role.getRoleID();
+    }
+    
+    public int getID(){
+         return id;
+    }
+    
+    public void setID(int id){
+        this.id=id;
     }
 }

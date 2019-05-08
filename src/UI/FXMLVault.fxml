@@ -10,7 +10,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="vaultPane" prefHeight="510.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.FXMLVaultController">
+<AnchorPane id="AnchorPane" fx:id="vaultPane" prefHeight="611.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.FXMLVaultController">
    <children>
       <Button fx:id="btn_diary" layoutX="48.0" layoutY="119.0" mnemonicParsing="false" onAction="#diaryHandler" prefHeight="102.0" prefWidth="278.0" style="-fx-background-color: #b8d8cd;" text="Dagbog">
          <font>
@@ -24,7 +24,7 @@
          <font>
             <Font size="23.0" />
          </font></Button>
-      <JFXListView fx:id="listview_residents" layoutX="689.0" layoutY="96.0" />
+      <JFXListView fx:id="listview_residents" layoutX="700.0" layoutY="96.0" prefHeight="400.0" prefWidth="200.0" onMouseClicked="#setCurrentResident" styleClass="jfx-list-view" stylesheets="@CaseUI.css" />
       <Label fx:id="lb_residents" layoutX="762.0" layoutY="65.0" prefHeight="17.0" prefWidth="67.0" text="Beboere" />
       <Polygon fill="#2d2d2d" layoutX="64.0" layoutY="74.0" points="-64.0, 39.0, 199.0, -74.0, -64.0, -74.0" stroke="#2d2d2d" strokeType="INSIDE" />
       <AnchorPane layoutX="5.0" prefHeight="46.0" prefWidth="929.0" style="-fx-background-color: #2d2d2d;">

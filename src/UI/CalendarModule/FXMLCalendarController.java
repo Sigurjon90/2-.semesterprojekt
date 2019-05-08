@@ -1,6 +1,7 @@
 package UI.CalendarModule;
 
 import Domain.CalendarModule.Activity;
+import Persistence.UserManager;
 import UI.Vault;
 import static UI.Vault.stage;
 import static UI.Vault.testCalendar;
@@ -111,34 +112,38 @@ public class FXMLCalendarController implements Initializable {
 
     @FXML
     public void planAction(ActionEvent event) throws IOException {
-        Vault.newAction = true;
-        Parent currentParent = FXMLLoader.load(getClass().getResource("FXMLActivityEditor.fxml"));
-        Scene scene = new Scene(currentParent);
-        stage.setScene(scene);
+        if (UserManager.getCurrentUser().checkForPermission(9)) {
+            Vault.newAction = true;
+            Parent currentParent = FXMLLoader.load(getClass().getResource("FXMLActivityEditor.fxml"));
+            Scene scene = new Scene(currentParent);
+            stage.setScene(scene);
+        }
     }
 
     @FXML
     public void deleteActivity(ActionEvent event) throws IOException {
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Bekræftigelse");
-        alert.setHeaderText(null);
-        alert.setContentText("Er du sikker på du vil slette denne aftale?");
-        Optional<ButtonType> action = alert.showAndWait();
+        if (UserManager.getCurrentUser().checkForPermission(13)) {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Bekræftigelse");
+            alert.setHeaderText(null);
+            alert.setContentText("Er du sikker på du vil slette denne aftale?");
+            Optional<ButtonType> action = alert.showAndWait();
 
-        if (action.get() == ButtonType.OK) {
-            testCalendar.getCalendar().remove(Vault.currentActivity.getActivityID());
+            if (action.get() == ButtonType.OK) {
+                testCalendar.getCalendar().remove(Vault.currentActivity.getActivityID());
+            }
+            Vault.currentActivity = null;
+            deleteBtn.setDisable(true);
+            clearAllFields();
+            hide();
+            updateListView("Monday");
+            updateListView("Tuesday");
+            updateListView("Wednesday");
+            updateListView("Thursday");
+            updateListView("Friday");
+            updateListView("Saturday");
+            updateListView("Sunday");
         }
-        Vault.currentActivity = null;
-        deleteBtn.setDisable(true);
-        clearAllFields();
-        hide();
-        updateListView("Monday");
-        updateListView("Tuesday");
-        updateListView("Wednesday");
-        updateListView("Thursday");
-        updateListView("Friday");
-        updateListView("Saturday");
-        updateListView("Sunday");
     }
 
     public void clearAllFields() {
@@ -261,7 +266,7 @@ public class FXMLCalendarController implements Initializable {
 
         Vault.newAction = false;
         if (event.getButton().equals(MouseButton.PRIMARY)) {
-            if (event.getClickCount() == 2) {
+            if (event.getClickCount() == 2 && UserManager.getCurrentUser().checkForPermission(5)) {
                 myList = (ListView) event.getSource();
                 myActivity = (Activity) myList.getSelectionModel().getSelectedItem();
                 Parent currentParent;

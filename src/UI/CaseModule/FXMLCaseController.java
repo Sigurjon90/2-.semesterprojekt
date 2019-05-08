@@ -3,6 +3,7 @@ package UI.CaseModule;
 import Domain.CaseModule.Case;
 import Domain.User.Resident;
 import Domain.User.SocialWorker;
+import Persistence.UserManager;
 import UI.Vault;
 import static UI.Vault.stage;
 import com.jfoenix.controls.JFXButton;
@@ -121,7 +122,7 @@ public class FXMLCaseController implements Initializable {
 
     @FXML
     private void editCaseAction(ActionEvent event) throws IOException {
-        if (!caseList.getSelectionModel().isEmpty()) {
+        if (!caseList.getSelectionModel().isEmpty() && UserManager.getCurrentUser().checkForPermission(6)) {
 
             Vault.currentCase = caseList.getSelectionModel().getSelectedItem();
             if (!Vault.currentCase.isClosed()) {
@@ -151,12 +152,14 @@ public class FXMLCaseController implements Initializable {
 
     @FXML
     private void createCaseAction(ActionEvent event) throws IOException {
-        FXMLLoader createScene = new FXMLLoader(getClass().getResource("FXMLCaseCreator.fxml"));
-        Parent createRoot = (Parent) createScene.load();
-        Stage createStage = new Stage();
-        createStage.setScene(new Scene(createRoot));
-        createStage.initStyle(StageStyle.UNDECORATED);
-        createStage.show();
+        if (UserManager.getCurrentUser().checkForPermission(10)) {
+            FXMLLoader createScene = new FXMLLoader(getClass().getResource("FXMLCaseCreator.fxml"));
+            Parent createRoot = (Parent) createScene.load();
+            Stage createStage = new Stage();
+            createStage.setScene(new Scene(createRoot));
+            createStage.initStyle(StageStyle.UNDECORATED);
+            createStage.show();
+        }
     }
 
     @FXML
@@ -202,9 +205,9 @@ public class FXMLCaseController implements Initializable {
     public static SocialWorker getSocialWorker() {
         return currentLoggedOn;
     }
-    
-     @FXML
-    private void backToMenuAction (ActionEvent event) throws IOException {
+
+    @FXML
+    private void backToMenuAction(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/UI/FXMLVault.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
