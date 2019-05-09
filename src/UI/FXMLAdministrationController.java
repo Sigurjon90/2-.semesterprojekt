@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,7 +26,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -39,9 +43,15 @@ public class FXMLAdministrationController implements Initializable {
 
     @FXML
     private JFXListView<User> listview_users;
+    
     private ObservableList<User> usersObs;
     private ArrayList<User> tempUsers;
+    private ObservableList<User> careworkersObs;
+    private ArrayList<User> tempCareworkers;
+    private ObservableList<User> socialworkersObs;
+    private ArrayList<User> tempSocialworkers;
     private User selectedUser = null;
+    
     @FXML
     private ImageView exitBtn;
     @FXML
@@ -74,13 +84,37 @@ public class FXMLAdministrationController implements Initializable {
     private JFXRadioButton adminRadioBtn;
     @FXML
     private Label error_Lb;
+    @FXML
+    private ChoiceBox<User> careworker_Picker;
+    @FXML
+    private ChoiceBox<User> socialworker_Picker;
+    @FXML
+    private Label careWorker_Lb;
+    @FXML
+    private Label socialWorker_Lb;
+    @FXML
+    private JFXButton NewUserBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        NewUserBtn.setVisible(true);
+        createUserBtn.setVisible(false);
+        
         makeStageDragable();
         tempUsers = UserManager.getAllUsers();
         usersObs = FXCollections.observableArrayList(tempUsers);
         listview_users.setItems(usersObs);
+        
+        //Laver en arrayliste med brugere af typen careworker og ligger den ind i listen under choiceboxen careworker_pricker
+        tempCareworkers = UserManager.getAllUsersWithRoleID(1);
+        careworkersObs = FXCollections.observableArrayList(tempCareworkers);
+        careworker_Picker.setItems(careworkersObs);
+        
+       //Laver en arrayliste med brugere af typen socialworker og ligger den ind i listen under choiceboxen socialworker_pricker
+        tempSocialworkers = UserManager.getAllUsersWithRoleID(2);
+        socialworkersObs = FXCollections.observableArrayList(tempSocialworkers);
+        socialworker_Picker.setItems(socialworkersObs);
 
     }
 
@@ -123,9 +157,14 @@ public class FXMLAdministrationController implements Initializable {
 
     @FXML
     public void setSelectedUser() {
-        selectedUser = listview_users.getSelectionModel().getSelectedItem();
-        infoFillOut();
+        //if-statement til at kontrollere at det er et element der trykkes på, og ikke bare selve listviewet, hvilket ville resultere i en NullPointer.
 
+        selectedUser = listview_users.getSelectionModel().getSelectedItem();
+        if (selectedUser != null) {
+            infoFillOut();
+            NewUserBtn.setVisible(true);
+        createUserBtn.setVisible(false);
+        }
     }
 
     public void infoFillOut() {
@@ -167,18 +206,24 @@ public class FXMLAdministrationController implements Initializable {
     @FXML
     private void deleteUserAction(ActionEvent event) {
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Bekræftigelse");
-        alert.setHeaderText(null);
-        alert.setContentText("Er du sikker på du vil slette denne bruger");
-        Optional<ButtonType> action = alert.showAndWait();
+        if (selectedUser != null) {
 
-        if (action.get() == ButtonType.OK) {
-            UserManager.deleteUser(selectedUser.getID());
-            clearFields();
-            tempUsers = UserManager.getAllUsers();
-            usersObs = FXCollections.observableArrayList(tempUsers);
-            listview_users.setItems(usersObs);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Bekræftigelse");
+            alert.setHeaderText(null);
+            alert.setContentText("Er du sikker på du vil slette denne bruger");
+            Optional<ButtonType> action = alert.showAndWait();
+
+            if (action.get() == ButtonType.OK) {
+                UserManager.deleteUserFromResidents(selectedUser.getID());
+                UserManager.deleteUserFromUsers(selectedUser.getID());
+                clearFields();
+                tempUsers = UserManager.getAllUsers();
+                usersObs = FXCollections.observableArrayList(tempUsers);
+                listview_users.setItems(usersObs);
+            }
+        } else {
+            System.out.println("Please select a user");
         }
 
     }
@@ -202,33 +247,46 @@ public class FXMLAdministrationController implements Initializable {
 
     @FXML
     private void createUserAction(ActionEvent event) throws SQLException {
-        
-        if(isAllFieldsFilledOut()){
 
-        int roleid = checkUserType();
+        if (isAllFieldsFilledOut()) {
 
-        User user = new User(firstNameField.getText(), lastNameField.getText(), userNameField.getText(), passwordField.getText(), roleid);
+            int roleid = checkUserType();
 
-        UserManager.createUserInDatabase(user);
-        clearFields();
+            User user = new User(firstNameField.getText(), lastNameField.getText(), userNameField.getText(), passwordField.getText(), roleid);
+            //Opret 
+            UserManager.createUserInUsers(user);
 
-        tempUsers = UserManager.getAllUsers();
-        usersObs = FXCollections.observableArrayList(tempUsers);
-        listview_users.setItems(usersObs);
-        }
-        else{
+            //Hvis der er tale om en beboer, skal den også oprettes i resident-table i databasen.
+            if (roleid == 4) {
+                //Hent beboerens id fra users-table i databasen og opret en resident i resident-table ud fra id'et og et id på henholdsvis socialWorker og careWorker.
+                int userID = UserManager.getUserIDByUsername(user.getUsername());
+                UserManager.createUserInResidents(socialworker_Picker.getSelectionModel().getSelectedItem().getID(), careworker_Picker.getSelectionModel().getSelectedItem().getID(), userID);
+            }
+
+            clearFields();
+
+            tempUsers = UserManager.getAllUsers();
+            usersObs = FXCollections.observableArrayList(tempUsers);
+            listview_users.setItems(usersObs);
+            
+            careworker_Picker.setVisible(false);
+            socialworker_Picker.setVisible(false);
+            careWorker_Lb.setVisible(false);
+            socialWorker_Lb.setVisible(false);
+        } else {
             error_Lb.setVisible(true);
+        }
     }
-    }
-
     @FXML
-    private void unselectUser(MouseEvent event) {
+    private void newUserButtonHandler(ActionEvent event) {
         listview_users.getSelectionModel().clearSelection();
         selectedUser = null;
         clearFields();
+        NewUserBtn.setVisible(false);
+        createUserBtn.setVisible(true);
     }
-    
-    private void clearFields(){
+
+    private void clearFields() {
 
         firstNameField.setText("");
         lastNameField.setText("");
@@ -239,19 +297,27 @@ public class FXMLAdministrationController implements Initializable {
         socialWorkerRadioBtn.setSelected(false);
         residentRadioBtn.setSelected(false);
     }
-    
-    private boolean isAllFieldsFilledOut(){
-        if(
-        firstNameField.getText().isEmpty()||
-        lastNameField.getText().isEmpty()||
-        userNameField.getText().isEmpty()||
-        passwordField.getText().isEmpty()||
-        !careWorkerRadioBtn.isSelected()||
-        !socialWorkerRadioBtn.isSelected()||
-        !residentRadioBtn.isSelected()){
+
+    private boolean isAllFieldsFilledOut() {
+        if (firstNameField.getText().isEmpty()
+                || lastNameField.getText().isEmpty()
+                || userNameField.getText().isEmpty()
+                || passwordField.getText().isEmpty()
+                || !careWorkerRadioBtn.isSelected()
+                || !socialWorkerRadioBtn.isSelected()
+                || !residentRadioBtn.isSelected()) {
             return true;
         }
-            return false;
-        }
+        return false;
+    }
+
+    @FXML
+    private void enableChoiceBoxes(ActionEvent event) {
+        careworker_Picker.setVisible(true);
+        socialworker_Picker.setVisible(true);
+        careWorker_Lb.setVisible(true);
+        socialWorker_Lb.setVisible(true);
+    }
+
 
 }

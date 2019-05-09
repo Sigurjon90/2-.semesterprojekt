@@ -20,7 +20,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="administrationPane" onMouseClicked="#unselectUser" prefHeight="611.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.FXMLAdministrationController">
+<AnchorPane id="AnchorPane" fx:id="administrationPane" prefHeight="611.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.FXMLAdministrationController">
    <children>
       <JFXListView fx:id="listview_users" layoutX="613.0" layoutY="93.0" onMouseClicked="#setSelectedUser" prefHeight="400.0" prefWidth="278.0" styleClass="jfx-list-view" stylesheets="@CaseUI.css" />
       <Polygon fill="#2d2d2d" layoutX="64.0" layoutY="74.0" points="-64.0, 39.0, 199.0, -74.0, -64.0, -74.0" stroke="#2d2d2d" strokeType="INSIDE" />
@@ -46,14 +46,14 @@
       <JFXButton fx:id="backToMenuBtn" layoutX="21.0" layoutY="561.0" onAction="#backToMenuAction" style="-fx-background-color: #2d2d2d;" text="Tilbage" textFill="WHITE" />
       <JFXButton fx:id="deleteUserBtn" layoutX="170.0" layoutY="455.0" onAction="#deleteUserAction" style="-fx-background-color: #2d2d2d;" text="Slet Bruger" textFill="WHITE" />
       <JFXButton fx:id="createUserBtn" layoutX="55.0" layoutY="455.0" onAction="#createUserAction" style="-fx-background-color: #2d2d2d;" text="Opret Bruger" textFill="WHITE" />
-      <JFXRadioButton fx:id="residentRadioBtn" layoutX="312.0" layoutY="256.0" text="Beboer">
+      <JFXRadioButton fx:id="residentRadioBtn" layoutX="312.0" layoutY="256.0" onAction="#enableChoiceBoxes" text="Beboer">
          <toggleGroup>
             <ToggleGroup fx:id="userTypeGroup" />
          </toggleGroup>
       </JFXRadioButton>
       <JFXRadioButton fx:id="careWorkerRadioBtn" layoutX="312.0" layoutY="285.0" text="Pædagog" toggleGroup="$userTypeGroup" />
       <JFXRadioButton fx:id="socialWorkerRadioBtn" layoutX="312.0" layoutY="315.0" text="Sagsudreder" toggleGroup="$userTypeGroup" />
-      <JFXRadioButton fx:id="adminRadioBtn" layoutX="436.0" layoutY="285.0" text="Admin" />
+      <JFXRadioButton fx:id="adminRadioBtn" layoutX="314.0" layoutY="378.0" text="Admin" />
       <VBox layoutX="55.0" layoutY="138.0" prefHeight="285.0" prefWidth="190.0" spacing="15.0">
          <children>
             <Label text="Fornavn">
@@ -79,5 +79,10 @@
          </children>
       </VBox>
       <Label fx:id="error_Lb" layoutX="53.0" layoutY="423.0" prefHeight="17.0" prefWidth="196.0" text="Udfyld venligst alle felter" textFill="#ff0101" visible="false" />
+      <ChoiceBox fx:id="careworker_Picker" layoutX="463.0" layoutY="213.0" prefWidth="150.0" visible="false" />
+      <ChoiceBox fx:id="socialworker_Picker" layoutX="463.0" layoutY="361.0" prefWidth="150.0" visible="false" />
+      <Label fx:id="careWorker_Lb" layoutX="463.0" layoutY="186.0" prefHeight="17.0" prefWidth="150.0" text="Vælg pædagog:" visible="false" />
+      <Label fx:id="socialWorker_Lb" layoutX="463.0" layoutY="332.0" prefHeight="17.0" prefWidth="150.0" text="Vælg sagsudreder:" visible="false" />
+      <JFXButton fx:id="NewUserBtn" layoutX="55.0" layoutY="455.0" onAction="#newUserButtonHandler" style="-fx-background-color: #2d2d2d;" text="Ny bruger" textFill="WHITE" />
    </children>
 </AnchorPane>
