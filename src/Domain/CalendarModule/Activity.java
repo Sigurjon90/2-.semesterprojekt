@@ -16,13 +16,13 @@ public class Activity {
     private LocalDateTime endDate;
     private LocalDateTime startDate;
     private Boolean shared;
-    private User creator;
+    private String creator;
     private Boolean entry;
     private String title;
     private static int idCounter = 1;
     private int activityID;
 
-    public Activity(String title, User creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry) {
+    public Activity(String title, String creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry) {
         this.title = title;
         this.creator = creator;
         this.place = place;
@@ -36,7 +36,7 @@ public class Activity {
         idCounter++;
     }
 
-    public void updateActivity(String title, User creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry) {
+    public void updateActivity(String title, String creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry) {
         this.title = title;
         this.creator = creator;
         this.place = place;
@@ -46,6 +46,10 @@ public class Activity {
         this.type = type;
         this.shared = shared;
         this.entry = entry;
+    }
+
+    public String getCreator() {
+        return creator;
     }
 
     public String getPlace() {
@@ -59,7 +63,13 @@ public class Activity {
     public String getType() {
         return type;
     }
-
+    public String getStartTimeAndDate(){
+        return startDate.toString();
+    }
+    public String getEndTimeAndDate(){
+        return endDate.toString();        
+    }
+    
     public LocalDate getEndDate() {
         return endDate.toLocalDate();
     }

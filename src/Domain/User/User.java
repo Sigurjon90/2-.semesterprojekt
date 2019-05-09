@@ -14,13 +14,13 @@ public class User {
         this.lastName = lastName;
         this.username = username;
         this.password = password;
-        this.id=id;
+        this.id = id;
         role = new Role(roleid, roleName);
     }
-    
+
     @Override
-    public String toString (){
-        return this.firstName +" "+ this.lastName +" "+this.id;
+    public String toString() {
+        return this.firstName + " " + this.lastName + " " + this.id;
     }
 //    public int getRoleid() {
 //        return roleid;
@@ -29,6 +29,10 @@ public class User {
 //    public void setRoleid(int roleid) {
 //        this.roleid = roleid;
 //    }
+
+    public String getFullName() {
+        return firstName + lastName;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -61,21 +65,21 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    public boolean checkForPermission(int permissionID){
+
+    public boolean checkForPermission(int permissionID) {
         System.out.println("check");
-       return role.checkForPermission(permissionID); 
+        return role.checkForPermission(permissionID);
     }
-    
-    public int getRoleID(){
+
+    public int getRoleID() {
         return role.getRoleID();
     }
-    
-    public int getID(){
-         return id;
+
+    public int getID() {
+        return id;
     }
-    
-    public void setID(int id){
-        this.id=id;
+
+    public void setID(int id) {
+        this.id = id;
     }
 }

@@ -12,7 +12,7 @@ public class Resident {
 
     public Resident() {
         this.residentDiary = new Diary();
-        this.residentCalendar = new Calendar();
+        //this.residentCalendar = new Calendar();
     }
 
     public Resident(String firstName, String lastName, String username, String password) {
@@ -22,7 +22,7 @@ public class Resident {
 //        super.setPassword(password);
 
         this.residentDiary = new Diary();
-        this.residentCalendar = new Calendar();
+        //this.residentCalendar = new Calendar();
     }
 
     public Diary getResidentDiary() {
