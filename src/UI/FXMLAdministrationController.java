@@ -3,13 +3,16 @@ package UI;
 import Domain.User.User;
 import Persistence.UserManager;
 import static UI.Vault.stage;
+import static UI.Vault.testCalendar;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +22,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
@@ -67,6 +72,8 @@ public class FXMLAdministrationController implements Initializable {
     private JFXRadioButton careWorkerRadioBtn;
     @FXML
     private JFXRadioButton adminRadioBtn;
+    @FXML
+    private Label error_Lb;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -159,12 +166,92 @@ public class FXMLAdministrationController implements Initializable {
 
     @FXML
     private void deleteUserAction(ActionEvent event) {
-        UserManager.deleteUser(selectedUser.getID());
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Bekræftigelse");
+        alert.setHeaderText(null);
+        alert.setContentText("Er du sikker på du vil slette denne bruger");
+        Optional<ButtonType> action = alert.showAndWait();
+
+        if (action.get() == ButtonType.OK) {
+            UserManager.deleteUser(selectedUser.getID());
+            clearFields();
+            tempUsers = UserManager.getAllUsers();
+            usersObs = FXCollections.observableArrayList(tempUsers);
+            listview_users.setItems(usersObs);
+        }
+
+    }
+
+    private int checkUserType() {
+        if (careWorkerRadioBtn.isSelected()) {
+            return 1;
+        } else if (socialWorkerRadioBtn.isSelected()) {
+            return 2;
+        } else if (residentRadioBtn.isSelected()) {
+            return 4;
+        } else if (adminRadioBtn.isSelected()) {
+            return 5;
+        } else if (careWorkerRadioBtn.isSelected() && adminRadioBtn.isSelected()) {
+            return 6;
+        } else if (socialWorkerRadioBtn.isSelected() && adminRadioBtn.isSelected()) {
+            return 7;
+        }
+        return 0;
     }
 
     @FXML
-    private void createUserAction(ActionEvent event) {
+    private void createUserAction(ActionEvent event) throws SQLException {
+        
+        if(isAllFieldsFilledOut()){
 
+        int roleid = checkUserType();
+
+        User user = new User(firstNameField.getText(), lastNameField.getText(), userNameField.getText(), passwordField.getText(), roleid);
+
+        UserManager.createUserInDatabase(user);
+        clearFields();
+
+        tempUsers = UserManager.getAllUsers();
+        usersObs = FXCollections.observableArrayList(tempUsers);
+        listview_users.setItems(usersObs);
+        }
+        else{
+            error_Lb.setVisible(true);
     }
+    }
+
+    @FXML
+    private void unselectUser(MouseEvent event) {
+        listview_users.getSelectionModel().clearSelection();
+        selectedUser = null;
+        clearFields();
+    }
+    
+    private void clearFields(){
+
+        firstNameField.setText("");
+        lastNameField.setText("");
+        userNameField.setText("");
+        passwordField.setText("");
+        adminRadioBtn.setSelected(false);
+        careWorkerRadioBtn.setSelected(false);
+        socialWorkerRadioBtn.setSelected(false);
+        residentRadioBtn.setSelected(false);
+    }
+    
+    private boolean isAllFieldsFilledOut(){
+        if(
+        firstNameField.getText().isEmpty()||
+        lastNameField.getText().isEmpty()||
+        userNameField.getText().isEmpty()||
+        passwordField.getText().isEmpty()||
+        !careWorkerRadioBtn.isSelected()||
+        !socialWorkerRadioBtn.isSelected()||
+        !residentRadioBtn.isSelected()){
+            return true;
+        }
+            return false;
+        }
 
 }

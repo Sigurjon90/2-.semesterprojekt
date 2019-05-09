@@ -201,4 +201,51 @@ public class UserManager {
 
     }
 
+    public static String createUserInDatabase(User user) throws SQLException {
+
+        String sql = "insert into users(first_name,last_name,roleid,username,password) values (?,?,?,?,?)";
+
+        if (!isUsernameRegistrered(user.getUsername())) {
+
+            try {
+
+                pre = Connector.getCon().prepareStatement(sql);
+                pre.setString(1, user.getFirstName());
+                pre.setString(2, user.getLastName());
+                pre.setInt(3, user.getRoleid());
+                pre.setString(4, user.getUsername());
+                pre.setString(5, user.getPassword());
+
+                pre.executeUpdate();
+                pre.close();
+            } catch (SQLException ex) {
+
+            }
+            System.out.println("bruger er oprettet i database. usermanagaer");
+            return "Brugeren er blevet oprettet";
+        } else {
+            System.out.println("brugeren findes allerede i databasen");
+            return "Brugernavnet er optaget";
+        }
+
+    }
+
+    public static boolean isUsernameRegistrered(String username) throws SQLException {
+        String sql = "SELECT * FROM users WHERE username = ?";
+
+        try {
+            pre = Connector.getCon().prepareStatement(sql);
+            pre.setString(1, username);
+
+            ResultSet result = pre.executeQuery();
+            if (result.next()) {
+                return true;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
 }

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXRadioButton?>
@@ -13,7 +20,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="administrationPane" prefHeight="611.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.FXMLAdministrationController">
+<AnchorPane id="AnchorPane" fx:id="administrationPane" onMouseClicked="#unselectUser" prefHeight="611.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.FXMLAdministrationController">
    <children>
       <JFXListView fx:id="listview_users" layoutX="613.0" layoutY="93.0" onMouseClicked="#setSelectedUser" prefHeight="400.0" prefWidth="278.0" styleClass="jfx-list-view" stylesheets="@CaseUI.css" />
       <Polygon fill="#2d2d2d" layoutX="64.0" layoutY="74.0" points="-64.0, 39.0, 199.0, -74.0, -64.0, -74.0" stroke="#2d2d2d" strokeType="INSIDE" />
@@ -71,5 +78,6 @@
             <JFXTextField fx:id="passwordField" />
          </children>
       </VBox>
+      <Label fx:id="error_Lb" layoutX="53.0" layoutY="423.0" prefHeight="17.0" prefWidth="196.0" text="Udfyld venligst alle felter" textFill="#ff0101" visible="false" />
    </children>
 </AnchorPane>
