@@ -1,6 +1,7 @@
 package Domain.CalendarModule;
 
 import Domain.User.User;
+import Persistence.ActivityManager;
 import java.awt.Image;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
