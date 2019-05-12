@@ -146,7 +146,7 @@ public class UserManager {
     }
 
     //Opretter en user ud fra en beboers id
-    private static User getUser(int residentID) {
+    public static User getUser(int residentID) {
         String sql = "SELECT * FROM users WHERE id = " + residentID;
         //Opretter User til at gemme brugerens oplysninger
         User user = null;
@@ -163,7 +163,7 @@ public class UserManager {
         }
         return user;
     }
-    
+
     public static int getUserIDByUsername(String username) {
         String sql = "SELECT * FROM users WHERE username = ?";
 
@@ -181,7 +181,7 @@ public class UserManager {
         }
         return 0;
     }
-    
+
     public static ArrayList<User> getAllUsersWithRoleID(int roleID) {
         ArrayList<User> users = new ArrayList<>();
         String sql = "SELECT * FROM users where roleid=?";
@@ -200,9 +200,6 @@ public class UserManager {
         }
         return null;
     }
-
-   
-
 
 ///////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ADMIN METHODS\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 //////////////////////////////////////////////////////////////////////////////////////////////////
