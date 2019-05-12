@@ -26,7 +26,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
-import java.sql.Date;
+import java.sql.SQLException;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -78,6 +79,8 @@ public class FXMLCaseCreatorController implements Initializable {
     private ImageView refreshBtn;
     @FXML
     private JFXButton Backbtn;
+    @FXML
+    private JFXTextField residentUsernameField;
 
     @FXML
     void exitAction(MouseEvent event) {
@@ -143,9 +146,11 @@ public class FXMLCaseCreatorController implements Initializable {
     }
 
     @FXML
-    private void createCase(ActionEvent event) throws IOException {
-        if (!titleField.getText().isEmpty() && !residentFirstNameField.getText().isEmpty() && !residentLastNameField.getText().isEmpty() && !descriptionArea.getText().isEmpty()) {
+    private void createCase(ActionEvent event) throws IOException, SQLException {
+        if (!titleField.getText().isEmpty() && !residentFirstNameField.getText().isEmpty() && !residentLastNameField.getText().isEmpty() && !descriptionArea.getText().isEmpty() && !residentUsernameField.getText().isEmpty()) {
             Case createdCase = null;
+            java.sql.Date sqlDate = new java.sql.Date(new Date().getTime());
+
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Bekræftigelse");
             alert.setHeaderText(null);
@@ -153,46 +158,21 @@ public class FXMLCaseCreatorController implements Initializable {
             Optional<ButtonType> action = alert.showAndWait();
 
             if (action.get() == ButtonType.OK) {
-                User tempUser = new User(residentFirstNameField.getText(), residentFirstNameField.getText());
-                createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceBox.getSelectionModel().getSelectedItem(), new Date(), false, tempUser);
+                User tempUser = new User(residentFirstNameField.getText(), residentLastNameField.getText(), residentUsernameField.getText());
+                UserManager.createUserInUsers(tempUser);
+                UserManager.createUserInResidents(UserManager.getCurrentUser().getID(), 50, UserManager.getUserIDByUsername(tempUser.getUsername()));
+                createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceBox.getSelectionModel().getSelectedItem(), sqlDate, false, UserManager.getUserIDByUsername(tempUser.getUsername()));
                 CaseRepository.createCase(createdCase);
+
+                Parent root = FXMLLoader.load(getClass().getResource("FXMLCase.fxml"));
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
 
             }
 
-        }
-
-//                for (Map.Entry<Integer, Case> entry : FXMLCaseController.getSocialWorker().getCases().entrySet()) {
-//                    Resident caseResident = entry.getValue().getResident();
-//                    if (caseResident.getFirstName().equals(residentNameField.getText())) {
-//                        if (attachedFile == null) {
-//                            createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceBox.getSelectionModel().getSelectedItem(), caseResident);
-//                        } else {
-//                            createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceBox.getSelectionModel().getSelectedItem(), attachedFiles, caseResident);
-//                        }
-//                    }
-//                }
-//
-//                if (createdCase == null) {
-//                    if (attachedFile == null) {
-//                        createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceBox.getSelectionModel().getSelectedItem(), new Resident(residentNameField.getText(), "Last name", "Username", "Password"));
-//                    } else {
-//                        createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceBox.getSelectionModel().getSelectedItem(), attachedFiles, new Resident(residentNameField.getText(), "Last name", "Username", "Password"));
-//                    }
-//
-//                }
-//
-//                FXMLCaseController.getSocialWorker().getCases().put(createdCase.getCaseID(), createdCase);
-//                final Node source = (Node) event.getSource();
-//                final Stage stage = (Stage) source.getScene().getWindow();
-//                stage.close();
-//            }
-    }
-
-
-        else {
+        } else {
             warningCreateLabel.setOpacity(1);
-//
-        //   }
+        }
     }
 
     @FXML

@@ -5,12 +5,12 @@ import Persistence.UserManager;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public class Case {
 
-    private static int numberOfCases = 0;
+    //private static int numberOfCases = 0;
     private int caseID;
     private Date date;
     private String description;
@@ -75,14 +75,31 @@ public class Case {
 //        this.closed = isClosed;
 //
 //    }
+    public Case(String title, String description, String caseType, Date date, Boolean isClosed, int residentID, int id) {
+        this.title = title;
+
+        this.date = date;
+        this.description = description;
+        this.caseType = caseType;
+        //numberOfCases++;
+        this.caseID = id;
+        this.residentID = residentID;
+
+        this.closed = isClosed;
+    }
+
+    public Resident getCaseResident() {
+        return caseResident;
+    }
+
     public Case(String title, String description, String caseType, Date date, Boolean isClosed, int residentID) {
         this.title = title;
 
         this.date = date;
         this.description = description;
         this.caseType = caseType;
-        numberOfCases++;
-        this.caseID = numberOfCases;
+        //numberOfCases++;
+        this.caseID = 0;
         this.residentID = residentID;
 
         this.closed = isClosed;
@@ -108,6 +125,7 @@ public class Case {
         return "Sagen er oprettet :" + this.getDate()
                 + "\n" + "Titel: " + this.title
                 + "\n" + "Sag ID: " + this.caseID
+                + "\n" + "Sagstype: " + this.caseType
                 //   + "\n" + "Vedhæftet filer: " + fileNames()
                 + "\n" + "Tilknyttet beboer: " + UserManager.getUser(this.residentID).getFirstName()
                 + " " + UserManager.getUser(this.residentID).getLastName()

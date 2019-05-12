@@ -67,19 +67,19 @@ public class FXMLCaseEditorController implements Initializable {
         obsFileList = FXCollections.observableArrayList();
         fileView.setItems(obsFileList);
         attachedFiles = new ArrayList<>();
-        attachedFiles = Vault.currentCase.getAttachedFiles();
+        attachedFiles = CaseRepository.getSelectedCase().getAttachedFiles();
         chooser.setInitialDirectory(new File("."));
         residentNameField.setEditable(false);
         serviceField.setEditable(false);
         titleField.setEditable(false);
-        titleField.setText(Vault.currentCase.getTitle());
-        serviceField.setText(Vault.currentCase.getCaseType());
-        residentNameField.setText(Vault.currentCase.getResident().getFirstName());
-        descriptionArea.setText(Vault.currentCase.getDescription() + "\nNy redigering: \n");
+        titleField.setText(CaseRepository.getSelectedCase().getTitle());
+        serviceField.setText(CaseRepository.getSelectedCase().getCaseType());
+        residentNameField.setText(UserManager.getUser(CaseRepository.getSelectedCase().getResidentID()).getFirstName());
+        descriptionArea.setText(CaseRepository.getSelectedCase().getDescription() + "\nNy redigering: \n");
 
-        for (File f : Vault.currentCase.getAttachedFiles()) {
-            obsFileList.add(f.getName());
-        }
+//        for (File f : CaseRepository.getSelectedCase().getAttachedFiles()) {
+//            obsFileList.add(f.getName());
+//        }
     }
 
     @FXML
@@ -127,8 +127,8 @@ public class FXMLCaseEditorController implements Initializable {
 
     @FXML
     private void saveCaseEditAction(ActionEvent event) {
-        Vault.currentCase.setDescription(descriptionArea.getText());
-        Vault.currentCase.setAttachedFiles(attachedFiles);
+        CaseRepository.getSelectedCase().setDescription(descriptionArea.getText());
+        CaseRepository.getSelectedCase().setAttachedFiles(attachedFiles);
         final Node source = (Node) event.getSource();
         final Stage stage = (Stage) source.getScene().getWindow();
         stage.close();

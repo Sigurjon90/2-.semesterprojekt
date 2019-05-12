@@ -11,11 +11,12 @@ public class User {
     private int id;
 
     //constructor til oprettelse af case og beboer
-    public User(String firstName, String lastName) {
+    public User(String firstName, String lastName, String username) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.username = null;
+        this.username = username;
         this.password = null;
+        this.roleid=4;
 
         role = new Role(4, "resident");
     }

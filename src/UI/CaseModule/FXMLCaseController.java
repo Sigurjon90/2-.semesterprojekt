@@ -62,6 +62,7 @@ public class FXMLCaseController implements Initializable {
     @FXML
     private JFXTextArea casePreviewField;
 
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tempCases = CaseRepository.getAllCasesByID(UserManager.getCurrentUser().getID());
@@ -98,8 +99,9 @@ public class FXMLCaseController implements Initializable {
     private void editCaseAction(ActionEvent event) throws IOException {
         if (!caseList.getSelectionModel().isEmpty() && UserManager.getCurrentUser().checkForPermission(6)) {
 
-            Vault.currentCase = caseList.getSelectionModel().getSelectedItem();
-            if (!Vault.currentCase.isClosed()) {
+            CaseRepository.setSelectedCase(caseList.getSelectionModel().getSelectedItem());
+            if (!CaseRepository.getSelectedCase().isClosed()) {
+                
                 FXMLLoader createScene = new FXMLLoader(getClass().getResource("FXMLCaseEditor.fxml"));
                 Parent createRoot = (Parent) createScene.load();
                 Stage createStage = new Stage();
@@ -113,7 +115,7 @@ public class FXMLCaseController implements Initializable {
             }
         } else {
             warningLabel.setOpacity(1);
-            warningLabel.setText("ingeng sag er valgt");
+            warningLabel.setText("Ingen sag er valgt");
         }
 
     }
@@ -170,6 +172,7 @@ public class FXMLCaseController implements Initializable {
     private void showCaseInformation(MouseEvent event) {
         try {
             casePreviewField.setText(caseList.getSelectionModel().getSelectedItem().showInformation() + "\n");
+            CaseRepository.setSelectedCase(caseList.getSelectionModel().getSelectedItem());
         } catch (NullPointerException ex) {
             ex.printStackTrace();
         }
@@ -186,37 +189,6 @@ public class FXMLCaseController implements Initializable {
         stage.setScene(scene);
     }
 
-    @FXML
-    private void createUserAction(ActionEvent event) throws SQLException {
-
-        if (isAllFieldsFilledOut()) {
-
-            int roleid = checkUserType();
-
-            User user = new User(firstNameField.getText(), lastNameField.getText(), userNameField.getText(), passwordField.getText(), roleid);
-            //Opret
-            UserManager.createUserInUsers(user);
-
-            //Hvis der er tale om en beboer, skal den også oprettes i resident-table i databasen.
-            if (roleid == 4) {
-                //Hent beboerens id fra users-table i databasen og opret en resident i resident-table ud fra id'et og et id på henholdsvis socialWorker og careWorker.
-                int userID = UserManager.getUserIDByUsername(user.getUsername());
-                UserManager.createUserInResidents(socialworker_Picker.getSelectionModel().getSelectedItem().getID(), careworker_Picker.getSelectionModel().getSelectedItem().getID(), userID);
-            }
-
-            clearFields();
-
-            tempUsers = UserManager.getAllUsers();
-            usersObs = FXCollections.observableArrayList(tempUsers);
-            listview_users.setItems(usersObs);
-
-            careworker_Picker.setVisible(false);
-            socialworker_Picker.setVisible(false);
-            careWorker_Lb.setVisible(false);
-            socialWorker_Lb.setVisible(false);
-        } else {
-            error_Lb.setVisible(true);
-        }
-    }
+//    
 
 }

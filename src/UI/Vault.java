@@ -2,10 +2,7 @@ package UI;
 
 import Domain.CalendarModule.Activity;
 import Domain.CalendarModule.Calendar;
-import Domain.CaseModule.Case;
-import Domain.User.CareWorker;
 import Domain.User.Resident;
-import Domain.User.User;
 import Persistence.Connector;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +16,6 @@ public class Vault extends Application {
     public static Stage stage;
 //    public static User currentLoggedOn = new CareWorker("care", "carer");
     public static Calendar testCalendar = new Calendar();
-    public static Case currentCase;
     public static Resident resident = new Resident();
     public static Activity currentActivity;
     public static boolean newAction;

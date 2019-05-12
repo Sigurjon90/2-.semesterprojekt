@@ -243,18 +243,18 @@ public class FXMLAdministrationController implements Initializable {
     }
 
     private int checkUserType() {
-        if (careWorkerRadioBtn.isSelected()) {
-            return 1;
-        } else if (socialWorkerRadioBtn.isSelected()) {
-            return 2;
+        if (careWorkerRadioBtn.isSelected() && adminRadioBtn.isSelected()) {
+            return 6;
+        } else if (socialWorkerRadioBtn.isSelected() && adminRadioBtn.isSelected()) {
+            return 7;
         } else if (residentRadioBtn.isSelected()) {
             return 4;
         } else if (adminRadioBtn.isSelected()) {
             return 5;
-        } else if (careWorkerRadioBtn.isSelected() && adminRadioBtn.isSelected()) {
-            return 6;
-        } else if (socialWorkerRadioBtn.isSelected() && adminRadioBtn.isSelected()) {
-            return 7;
+        } else if (careWorkerRadioBtn.isSelected()) {
+            return 1;
+        } else if (socialWorkerRadioBtn.isSelected()) {
+            return 2;
         }
         return 0;
     }

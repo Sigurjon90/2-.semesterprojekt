@@ -2,6 +2,7 @@ package Persistence;
 
 import Domain.CaseModule.Case;
 import Domain.User.User;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +11,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CaseRepository {
+    
+    private static Case selectedCase;
+
+    public static Case getSelectedCase() {
+        return selectedCase;
+    }
+
+    public static void setSelectedCase(Case selectedCase) {
+        CaseRepository.selectedCase = selectedCase;
+    }
 
     private static PreparedStatement pre = null;
 
@@ -22,7 +33,7 @@ public class CaseRepository {
             ResultSet result = pre.executeQuery();
 
             while (result.next()) {
-                caseArray.add(new Case(result.getString("title"), result.getString("type"), result.getString("description"), result.getDate("creation_date"), result.getBoolean("is_closed"), result.getInt("residentid")));
+                caseArray.add(new Case(result.getString("title"), result.getString("description"), result.getString("type"), result.getDate("creation_date"), result.getBoolean("is_closed"), result.getInt("residentid"), result.getInt("id")));
 
             }
             return caseArray;
@@ -42,7 +53,7 @@ public class CaseRepository {
             pre.setString(2, newCase.getCaseType());
             pre.setString(3, newCase.getDescription());
             pre.setInt(4, newCase.getResidentID());
-            pre.setString(5, newCase.getDate().toString());
+            pre.setDate(5, newCase.getDate());
             pre.setBoolean(6, false);
             pre.setInt(7, UserManager.getCurrentUser().getID());
 
