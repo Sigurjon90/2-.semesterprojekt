@@ -4,6 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/UI/FXMLAdministrationController.java</file>
+            <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/Persistence/UserManager.java</file>
+            <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/Persistence/CaseRepository.java</file>
+            <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/Domain/User/User.java</file>
+            <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/UI/CalendarModule/FXMLActivityEditorController.java</file>
+            <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/Domain/DiaryModule/Entry.java</file>
+            <file>file:/C:/Users/A/Dropbox/Netbeans/2-.semesterprojekt/src/UI/DiaryModule/FXMLEntryCreatorController.java</file>
         </group>
     </open-files>
 </project-private>

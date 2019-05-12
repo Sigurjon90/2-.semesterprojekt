@@ -34,7 +34,7 @@ public class User {
     
     @Override
     public String toString (){
-        return this.role.getRoleName()+" | " + this.firstName +" "+ this.lastName + " "+this.id;
+        return this.role.getRoleName()+" | " + this.firstName +" "+ this.lastName;
     }
 
     public String getFirstName() {
