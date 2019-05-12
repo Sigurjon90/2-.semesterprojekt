@@ -1,12 +1,19 @@
 package Domain.User;
 
+import Domain.CalendarModule.Calendar;
+import Domain.DiaryModule.Diary;
+
 public class User {
 
     private String firstName;
     private String lastName;
     private String username;
+
+  
     private String password;
     private Role role;
+    private Diary residentDiary;
+    private Calendar residentCalendar;
     private int roleid;
     private int id;
 
@@ -15,8 +22,9 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
+
         this.password = null;
-        this.roleid=4;
+        this.roleid = 4;
 
         role = new Role(4, "resident");
     }
@@ -24,6 +32,8 @@ public class User {
     public User(String firstName, String lastName, String username, String password, int roleid, String roleName, int id) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.residentDiary = new Diary();
+        this.residentCalendar = new Calendar();
         this.username = username;
         this.password = password;
         this.id = id;
@@ -33,10 +43,28 @@ public class User {
     public User(String firstName, String lastName, String username, String password, int roleid) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.residentDiary = new Diary();
+        this.residentCalendar = new Calendar();
         this.username = username;
         this.password = password;
         this.roleid = roleid;
 
+    }
+    
+      public Diary getResidentDiary() {
+        return residentDiary;
+    }
+
+    public void setResidentDiary(Diary residentDiary) {
+        this.residentDiary = residentDiary;
+    }
+
+    public Calendar getResidentCalendar() {
+        return residentCalendar;
+    }
+
+    public void setResidentCalendar(Calendar residentCalendar) {
+        this.residentCalendar = residentCalendar;
     }
 
     public int getRoleid() {

@@ -4,6 +4,8 @@ import Domain.CalendarModule.Activity;
 import Domain.CalendarModule.Calendar;
 import Domain.User.Resident;
 import Persistence.Connector;
+import Persistence.DiaryRepository;
+import Persistence.UserManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

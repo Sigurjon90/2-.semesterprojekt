@@ -1,6 +1,7 @@
 package Persistence;
 
 import Domain.User.Permission;
+import Domain.User.Resident;
 import Domain.User.Role;
 import Domain.User.User;
 import java.sql.Connection;

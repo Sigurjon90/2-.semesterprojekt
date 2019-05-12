@@ -4,6 +4,7 @@ import Domain.User.Resident;
 import static UI.Vault.stage;
 import UI.Vault;
 import Domain.DiaryModule.Entry;
+import Persistence.DiaryRepository;
 import Persistence.UserManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
@@ -84,10 +85,11 @@ public class FXMLDiaryController implements Initializable {
         tempList = FXCollections.observableArrayList();
         list_entrys.itemsProperty().bind(listProperty);
         listProperty.set(list);
-
+        DiaryRepository.getEntrys(UserManager.getCurrentResident().getID());
         updateList();
 
         makeStageDragable();
+
     }
 
     public ObservableList<Entry> getList() {
@@ -96,10 +98,12 @@ public class FXMLDiaryController implements Initializable {
 
     public void updateList() {
         list.clear();
-
-        for (int i = 1; i <= Vault.resident.getResidentDiary().getMap().size(); i++) {
-            if (Vault.resident.getResidentDiary().getMap().get(i).isVisible()) {
-                list.add(Vault.resident.getResidentDiary().getMap().get(i));
+       
+        for (int i = 0; i <= UserManager.getCurrentResident().getResidentDiary().getMap().size(); i++) {
+            System.out.println("te");
+            if (UserManager.getCurrentResident().getResidentDiary().getMap().get(i).isVisible()) {
+                list.add(UserManager.getCurrentResident().getResidentDiary().getMap().get(i));
+                System.out.println("testing");
             }
         }
     }
@@ -137,10 +141,10 @@ public class FXMLDiaryController implements Initializable {
     }
 
     public void updateMap() {
-        Vault.resident.getResidentDiary().getMap().clear();
-        System.out.println(Vault.resident.getResidentDiary().getMap());
+        UserManager.getCurrentResident().getResidentDiary().getMap().clear();
+        System.out.println(UserManager.getCurrentResident().getResidentDiary().getMap());
         for (int i = 0; i < list.size(); i++) {
-            Vault.resident.getResidentDiary().getMap().put(list.get(i).getEntryID(), list.get(i));
+            UserManager.getCurrentResident().getResidentDiary().getMap().put(list.get(i).getEntryID(), list.get(i));
         }
     }
 
@@ -149,7 +153,7 @@ public class FXMLDiaryController implements Initializable {
         if (selectedEntryForEdit != null) {
             if (UserManager.getCurrentUser().checkForPermission(12)) {
 
-                Vault.resident.getResidentDiary().getMap().get(list_entrys.getSelectionModel().getSelectedItem().getEntryID()).setVisible(false);
+                UserManager.getCurrentResident().getResidentDiary().getMap().get(list_entrys.getSelectionModel().getSelectedItem().getEntryID()).setVisible(false);
                 updateList();
 
                 textarea_entry.clear();

@@ -2,6 +2,7 @@ package UI.DiaryModule;
 
 import static UI.Vault.stage;
 import Domain.DiaryModule.Entry;
+import Persistence.DiaryRepository;
 import UI.Vault;
 import com.jfoenix.controls.JFXButton;
 import java.io.File;
@@ -75,10 +76,13 @@ public class FXMLEntryCreatorController implements Initializable {
             entry = new Entry(dp_date.getValue(), textarea_des.getText(), fileList);
         }
 
+        DiaryRepository.storeEntry(entry);
+        
         Vault.resident.getResidentDiary().getMap().put(entry.getEntryID(), entry);
         System.out.println(Vault.resident.getResidentDiary().getMap().get(entry.getEntryID()).getEntryDescription());
+       
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDiary.fxml"));
-
+        
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
