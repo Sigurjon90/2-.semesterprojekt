@@ -32,5 +32,9 @@ public class Role {
     public int getRoleID(){
         return roleID;
     }
+    
+    public String getRoleName(){
+        return roleName;
+    }
 
 }

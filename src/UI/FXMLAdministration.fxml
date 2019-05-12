@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="administrationPane" prefHeight="611.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.FXMLAdministrationController">
+   <children>
+      <JFXListView fx:id="listview_users" layoutX="613.0" layoutY="93.0" onMouseClicked="#setSelectedUser" prefHeight="400.0" prefWidth="278.0" styleClass="jfx-list-view" stylesheets="@CaseUI.css" />
+      <Polygon fill="#2d2d2d" layoutX="64.0" layoutY="74.0" points="-64.0, 39.0, 199.0, -74.0, -64.0, -74.0" stroke="#2d2d2d" strokeType="INSIDE" />
+      <AnchorPane layoutX="5.0" prefHeight="46.0" prefWidth="929.0" style="-fx-background-color: #2d2d2d;">
+         <children>
+            <ImageView fx:id="exitBtn" fitHeight="32.0" fitWidth="46.0" layoutX="883.0" layoutY="7.0" onMouseClicked="#exitAction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/exit.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="minimizeBtn" fitHeight="25.0" fitWidth="30.0" layoutX="848.0" layoutY="10.0" onMouseClicked="#minimizeAction" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/minimize.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="53.0" fitWidth="60.0" layoutX="14.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/logo.png" />
+         </image>
+      </ImageView>
+      <JFXButton fx:id="backToMenuBtn" layoutX="21.0" layoutY="561.0" onAction="#backToMenuAction" style="-fx-background-color: #2d2d2d;" text="Tilbage" textFill="WHITE" />
+      <JFXButton fx:id="deleteUserBtn" layoutX="170.0" layoutY="455.0" onAction="#deleteUserAction" style="-fx-background-color: #2d2d2d;" text="Slet Bruger" textFill="WHITE" />
+      <JFXButton fx:id="createUserBtn" layoutX="55.0" layoutY="455.0" onAction="#createUserAction" style="-fx-background-color: #2d2d2d;" text="Opret Bruger" textFill="WHITE" />
+      <JFXRadioButton fx:id="residentRadioBtn" layoutX="312.0" layoutY="256.0" onAction="#enableChoiceBoxes" text="Beboer">
+         <toggleGroup>
+            <ToggleGroup fx:id="userTypeGroup" />
+         </toggleGroup>
+      </JFXRadioButton>
+      <JFXRadioButton fx:id="careWorkerRadioBtn" layoutX="312.0" layoutY="285.0" text="Pædagog" toggleGroup="$userTypeGroup" />
+      <JFXRadioButton fx:id="socialWorkerRadioBtn" layoutX="312.0" layoutY="315.0" text="Sagsudreder" toggleGroup="$userTypeGroup" />
+      <JFXRadioButton fx:id="adminRadioBtn" layoutX="314.0" layoutY="378.0" text="Admin" />
+      <VBox layoutX="55.0" layoutY="138.0" prefHeight="285.0" prefWidth="190.0" spacing="15.0">
+         <children>
+            <Label text="Fornavn">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <JFXTextField fx:id="firstNameField" />
+            <Label text="Efternavn">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <JFXTextField fx:id="lastNameField" />
+            <Label text="Brugernavn">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <JFXTextField fx:id="userNameField" />
+            <Label text="Kodeord">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <JFXTextField fx:id="passwordField" />
+         </children>
+      </VBox>
+      <Label fx:id="error_Lb" layoutX="53.0" layoutY="423.0" prefHeight="17.0" prefWidth="196.0" text="Udfyld venligst alle felter" textFill="#ff0101" visible="false" />
+      <ChoiceBox fx:id="careworker_Picker" layoutX="463.0" layoutY="213.0" prefWidth="150.0" visible="false" />
+      <ChoiceBox fx:id="socialworker_Picker" layoutX="463.0" layoutY="361.0" prefWidth="150.0" visible="false" />
+      <Label fx:id="careWorker_Lb" layoutX="463.0" layoutY="186.0" prefHeight="17.0" prefWidth="150.0" text="Vælg pædagog:" visible="false" />
+      <Label fx:id="socialWorker_Lb" layoutX="463.0" layoutY="332.0" prefHeight="17.0" prefWidth="150.0" text="Vælg sagsudreder:" visible="false" />
+      <JFXButton fx:id="NewUserBtn" layoutX="55.0" layoutY="455.0" onAction="#newUserButtonHandler" style="-fx-background-color: #2d2d2d;" text="Ny bruger" textFill="WHITE" />
+   </children>
+</AnchorPane>

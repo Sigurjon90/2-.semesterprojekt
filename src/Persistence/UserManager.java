@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Persistence;
 
 import Domain.User.Permission;
@@ -16,10 +11,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author jens
- */
 public class UserManager {
 
     private static PreparedStatement pre = null;
@@ -34,12 +25,12 @@ public class UserManager {
     public static void setCurrentUser(User currentUser) {
         UserManager.currentUser = currentUser;
     }
-    
+
     public static void setCurrentResident(User chosenResident) {
         UserManager.currentResident = chosenResident;
     }
-    
-    public static User getCurrentResident(){
+
+    public static User getCurrentResident() {
         return UserManager.currentResident;
     }
 
@@ -147,7 +138,7 @@ public class UserManager {
                 residents.add(getUser(result.getInt("resident_id")));
             }
             return residents;
-            
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -171,6 +162,168 @@ public class UserManager {
             ex.printStackTrace();
         }
         return user;
+    }
+    
+    public static int getUserIDByUsername(String username) {
+        String sql = "SELECT * FROM users WHERE username = ?";
+
+        try {
+            pre = Connector.getCon().prepareStatement(sql);
+            //Query resultater hentes
+            pre.setString(1, username);
+            ResultSet result = pre.executeQuery();
+
+            if (result.next()) {
+                return result.getInt("id");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+    }
+    
+    public static ArrayList<User> getAllUsersWithRoleID(int roleID) {
+        ArrayList<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM users where roleid=?";
+
+        try {
+            pre = Connector.getCon().prepareStatement(sql);
+            pre.setInt(1, roleID);
+            ResultSet result = pre.executeQuery();
+
+            while (result.next()) {
+                users.add(new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), result.getInt("roleid"), getRoleType(result.getInt("roleid")), result.getInt("id")));
+            }
+            return users;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+   
+
+
+///////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ADMIN METHODS\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+//////////////////////////////////////////////////////////////////////////////////////////////////
+    public static ArrayList<User> getAllUsers() {
+        ArrayList<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM users";
+
+        try {
+            pre = Connector.getCon().prepareStatement(sql);
+            ResultSet result = pre.executeQuery();
+
+            while (result.next()) {
+                users.add(new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), result.getInt("roleid"), getRoleType(result.getInt("roleid")), result.getInt("id")));
+            }
+            return users;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void createUser() {
+
+    }
+
+    public static String deleteUserFromResidents(int user_id) {
+        String sql = "Delete from residents where resident_id = " + user_id;
+        try {
+            pre = Connector.getCon().prepareStatement(sql);
+            pre.executeUpdate();
+            pre.close();
+        } catch (SQLException ex) {
+            System.out.println("Kunne ikke slettes fra residents");
+            ex.printStackTrace();
+
+        }
+        return "Brugeren er slettet fra residents";
+
+    }
+
+    public static String deleteUserFromUsers(int user_id) {
+        String sql = "Delete from users where id = " + user_id;
+        try {
+            pre = Connector.getCon().prepareStatement(sql);
+            pre.executeUpdate();
+            pre.close();
+        } catch (SQLException ex) {
+            System.out.println("Kunne ikke slettes fra users");
+            ex.printStackTrace();
+
+        }
+        return "Brugeren er slettet fra users";
+
+    }
+
+    public static String createUserInUsers(User user) throws SQLException {
+
+        String sql = "insert into users(first_name,last_name,roleid,username,password) values (?,?,?,?,?)";
+
+        if (!isUsernameRegistrered(user.getUsername())) {
+
+            try {
+
+                pre = Connector.getCon().prepareStatement(sql);
+                pre.setString(1, user.getFirstName());
+                pre.setString(2, user.getLastName());
+                pre.setInt(3, user.getRoleid());
+                pre.setString(4, user.getUsername());
+                pre.setString(5, user.getPassword());
+
+                pre.executeUpdate();
+                pre.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            System.out.println("bruger er oprettet i users. usermanager");
+            return "Brugeren er blevet oprettet";
+        } else {
+            System.out.println("brugeren findes allerede i users");
+            return "Brugernavnet er optaget";
+        }
+
+    }
+
+    public static String createUserInResidents(int socialWorkerID, int careWorkerID, int residentID) throws SQLException {
+
+        String sql = "insert into residents(social_worker_id,care_worker_id,resident_id) values (?,?,?)";
+
+        try {
+
+            pre = Connector.getCon().prepareStatement(sql);
+            pre.setInt(1, socialWorkerID);
+            pre.setInt(2, careWorkerID);
+            pre.setInt(3, residentID);
+
+            pre.executeUpdate();
+            pre.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        System.out.println("bruger er oprettet i residents. usermanager");
+        return "Brugeren er blevet oprettet";
+
+    }
+
+    public static boolean isUsernameRegistrered(String username) throws SQLException {
+        String sql = "SELECT * FROM users WHERE username = ?";
+
+        try {
+            pre = Connector.getCon().prepareStatement(sql);
+            pre.setString(1, username);
+
+            ResultSet result = pre.executeQuery();
+            if (result.next()) {
+                return true;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(UserManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
 }
