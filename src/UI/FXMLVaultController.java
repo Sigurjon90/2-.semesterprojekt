@@ -46,6 +46,9 @@ public class FXMLVaultController implements Initializable {
     private Button btn_calendar;
 
     @FXML
+    private Button btn_logout;
+
+    @FXML
     private JFXListView<User> listview_residents;
 
     @FXML
@@ -82,8 +85,14 @@ public class FXMLVaultController implements Initializable {
         UserManager.setCurrentResident(tempUser);
         System.out.println(UserManager.getCurrentResident());
     }
-    
-    
+
+    @FXML
+    void logoutHandler(ActionEvent event) throws IOException {
+         Parent root = FXMLLoader.load(getClass().getResource("/UI/FXMLLogin.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+    }
+
     @FXML
     void diaryHandler(ActionEvent event) throws IOException {
 
