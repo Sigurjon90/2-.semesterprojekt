@@ -2,6 +2,10 @@ package UI.CaseModule;
 
 import Domain.CaseModule.Case;
 import Domain.User.Resident;
+import Domain.User.User;
+import Persistence.CaseRepository;
+import Persistence.UserManager;
+import static UI.Vault.stage;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
@@ -22,10 +26,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -42,7 +50,9 @@ public class FXMLCaseCreatorController implements Initializable {
     @FXML
     private JFXTextField serviceField;
     @FXML
-    private JFXTextField residentNameField;
+    private JFXTextField residentFirstNameField;
+    @FXML
+    private JFXTextField residentLastNameField;
     @FXML
     private JFXTextField titleField;
     @FXML
@@ -89,7 +99,8 @@ public class FXMLCaseCreatorController implements Initializable {
         attachedFiles = new ArrayList<>();
         descriptionArea.setEditable(false);
         serviceField.setEditable(false);
-        residentNameField.setEditable(false);
+        residentFirstNameField.setEditable(false);
+        residentLastNameField.setEditable(false);
         titleField.setEditable(false);
         descriptionArea.setText("Start med at vælge ydelse i menuen til højre"
                 + " og tryk derefter på opdater knappen!");
@@ -116,7 +127,8 @@ public class FXMLCaseCreatorController implements Initializable {
                 break;
         }
         descriptionArea.setEditable(true);
-        residentNameField.setEditable(true);
+        residentFirstNameField.setEditable(true);
+        residentLastNameField.setEditable(true);
         titleField.setEditable(true);
 
     }
@@ -132,7 +144,7 @@ public class FXMLCaseCreatorController implements Initializable {
 
     @FXML
     private void createCase(ActionEvent event) throws IOException {
-        if (!titleField.getText().isEmpty() && !residentNameField.getText().isEmpty() && !descriptionArea.getText().isEmpty()) {
+        if (!titleField.getText().isEmpty() && !residentFirstNameField.getText().isEmpty() && !residentLastNameField.getText().isEmpty() && !descriptionArea.getText().isEmpty()) {
             Case createdCase = null;
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Bekræftigelse");
@@ -141,44 +153,54 @@ public class FXMLCaseCreatorController implements Initializable {
             Optional<ButtonType> action = alert.showAndWait();
 
             if (action.get() == ButtonType.OK) {
+                User tempUser = new User(residentFirstNameField.getText(), residentFirstNameField.getText());
+                createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceBox.getSelectionModel().getSelectedItem(), new Date(), false, tempUser);
+                CaseRepository.createCase(createdCase);
 
-                for (Map.Entry<Integer, Case> entry : FXMLCaseController.getSocialWorker().getCases().entrySet()) {
-                    Resident caseResident = entry.getValue().getResident();
-                    if (caseResident.getFirstName().equals(residentNameField.getText())) {
-                        if (attachedFile == null) {
-                            createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceBox.getSelectionModel().getSelectedItem(), caseResident);
-                        } else {
-                            createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceBox.getSelectionModel().getSelectedItem(), attachedFiles, caseResident);
-                        }
-                    }
-                }
-
-                if (createdCase == null) {
-                    if (attachedFile == null) {
-                        createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceBox.getSelectionModel().getSelectedItem(), new Resident(residentNameField.getText(), "Last name", "Username", "Password"));
-                    } else {
-                        createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceBox.getSelectionModel().getSelectedItem(), attachedFiles, new Resident(residentNameField.getText(), "Last name", "Username", "Password"));
-                    }
-
-                }
-
-                FXMLCaseController.getSocialWorker().getCases().put(createdCase.getCaseID(), createdCase);
-                final Node source = (Node) event.getSource();
-                final Stage stage = (Stage) source.getScene().getWindow();
-                stage.close();
             }
-        } else {
-            warningCreateLabel.setOpacity(1);
 
         }
+
+//                for (Map.Entry<Integer, Case> entry : FXMLCaseController.getSocialWorker().getCases().entrySet()) {
+//                    Resident caseResident = entry.getValue().getResident();
+//                    if (caseResident.getFirstName().equals(residentNameField.getText())) {
+//                        if (attachedFile == null) {
+//                            createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceBox.getSelectionModel().getSelectedItem(), caseResident);
+//                        } else {
+//                            createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceBox.getSelectionModel().getSelectedItem(), attachedFiles, caseResident);
+//                        }
+//                    }
+//                }
+//
+//                if (createdCase == null) {
+//                    if (attachedFile == null) {
+//                        createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceBox.getSelectionModel().getSelectedItem(), new Resident(residentNameField.getText(), "Last name", "Username", "Password"));
+//                    } else {
+//                        createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceBox.getSelectionModel().getSelectedItem(), attachedFiles, new Resident(residentNameField.getText(), "Last name", "Username", "Password"));
+//                    }
+//
+//                }
+//
+//                FXMLCaseController.getSocialWorker().getCases().put(createdCase.getCaseID(), createdCase);
+//                final Node source = (Node) event.getSource();
+//                final Stage stage = (Stage) source.getScene().getWindow();
+//                stage.close();
+//            }
+    }
+
+
+        else {
+            warningCreateLabel.setOpacity(1);
+//
+        //   }
     }
 
     @FXML
     private void backToCaseModule(ActionEvent event
-    ) {
-        final Node source = (Node) event.getSource();
-        final Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
+    ) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLCase.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
     }
 
     @FXML

@@ -34,25 +34,26 @@
       <JFXTextArea fx:id="descriptionArea" layoutX="79.0" layoutY="158.0" prefHeight="362.0" prefWidth="580.0" />
       <Line endX="470.5" layoutX="189.0" layoutY="148.0" startX="-110.0" />
       <Line endX="-154.0" endY="346.0" layoutX="233.0" layoutY="174.0" startX="-154.0" startY="-24.0" />
-      <JFXTextField fx:id="serviceField" layoutX="696.0" layoutY="168.0" prefHeight="25.0" prefWidth="150.0" />
-      <Label layoutX="696.0" layoutY="115.0" prefHeight="17.0" prefWidth="45.0" text="Ydelser" />
-      <JFXTextField fx:id="residentNameField" layoutX="696.0" layoutY="224.0" prefHeight="25.0" prefWidth="150.0" />
-      <Label layoutX="696.0" layoutY="207.0" text="Beboer" />
+      <JFXTextField fx:id="serviceField" layoutX="445.0" layoutY="99.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="445.0" layoutY="57.0" prefHeight="17.0" prefWidth="45.0" text="Ydelser" />
+      <JFXTextField fx:id="residentFirstNameField" layoutX="682.0" layoutY="158.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label layoutX="686.0" layoutY="139.0" text="Beboer" />
       <Line endX="128.0" endY="-60.5" layoutX="531.0" layoutY="209.0" startX="128.0" startY="311.0" />
       <JFXTextField fx:id="titleField" layoutX="93.0" layoutY="111.0" prefHeight="25.0" prefWidth="204.0" />
       <Label layoutX="93.0" layoutY="105.0" text="Titel" />
       <JFXButton fx:id="createCase" layoutX="670.0" layoutY="496.0" onAction="#createCase" style="-fx-background-color: #2d2d2d;" text="Opret Sag" textFill="WHITE" />
       <JFXButton layoutX="757.0" layoutY="496.0" style="-fx-background-color: #2d2d2d;" text="Gem Ændringer" textFill="WHITE" />
-      <JFXButton fx:id="attacheFileBtn" layoutX="694.0" layoutY="281.0" onAction="#attachFileAction" style="-fx-background-color: #2d2d2d;" text="Vedhæft Fil" textFill="WHITE" />
-      <Label fx:id="numberOfFiles" layoutX="694.0" layoutY="258.0" prefHeight="17.0" prefWidth="77.0" text="Antal filer: " />
-      <ChoiceBox fx:id="serviceBox" layoutX="696.0" layoutY="135.0" prefWidth="150.0" />
-      <ImageView fx:id="refreshBtn" fitHeight="25.0" fitWidth="32.0" layoutX="857.0" layoutY="156.0" onMouseClicked="#refreshType" pickOnBounds="true" preserveRatio="true">
+      <JFXButton fx:id="attacheFileBtn" layoutX="694.0" layoutY="350.0" onAction="#attachFileAction" style="-fx-background-color: #2d2d2d;" text="Vedhæft Fil" textFill="WHITE" />
+      <Label fx:id="numberOfFiles" layoutX="702.0" layoutY="297.0" prefHeight="17.0" prefWidth="77.0" text="Antal filer: " />
+      <ChoiceBox fx:id="serviceBox" layoutX="445.0" layoutY="73.0" prefWidth="150.0" />
+      <ImageView fx:id="refreshBtn" fitHeight="25.0" fitWidth="32.0" layoutX="605.0" layoutY="53.0" onMouseClicked="#refreshType" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../icons/refresh.png" />
          </image>
       </ImageView>
       <JFXButton fx:id="Backbtn" layoutX="32.0" layoutY="560.0" onAction="#backToCaseModule" style="-fx-background-color: #2d2d2d;" text="Tilbage" textFill="WHITE" />
       <Label fx:id="warningCreateLabel" layoutX="696.0" layoutY="463.0" opacity="0.0" prefHeight="17.0" prefWidth="150.0" text="Udfyld de nødvendige felter" textFill="RED" />
-      <JFXListView fx:id="fileView" layoutX="788.0" layoutY="306.0" prefHeight="155.0" prefWidth="117.0" stylesheets="@CaseUI.css" />
+      <JFXListView fx:id="fileView" layoutX="788.0" layoutY="423.0" prefHeight="38.0" prefWidth="117.0" stylesheets="@CaseUI.css" />
+      <JFXTextField fx:id="residentLastNameField" layoutX="682.0" layoutY="199.0" prefHeight="25.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

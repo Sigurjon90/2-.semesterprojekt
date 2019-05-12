@@ -10,31 +10,41 @@ public class User {
     private int roleid;
     private int id;
 
+    //constructor til oprettelse af case og beboer
+    public User(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = null;
+        this.password = null;
+
+        role = new Role(4, "resident");
+    }
+
     public User(String firstName, String lastName, String username, String password, int roleid, String roleName, int id) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
-        this.id=id;
+        this.id = id;
         role = new Role(roleid, roleName);
     }
-    
-     public User(String firstName, String lastName, String username, String password, int roleid) {
+
+    public User(String firstName, String lastName, String username, String password, int roleid) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
-        this.roleid = roleid;    
-        
+        this.roleid = roleid;
+
     }
 
     public int getRoleid() {
         return roleid;
     }
-    
+
     @Override
-    public String toString (){
-        return this.role.getRoleName()+" | " + this.firstName +" "+ this.lastName;
+    public String toString() {
+        return this.role.getRoleName() + " | " + this.firstName + " " + this.lastName + " " + this.id;
     }
 
     public String getFirstName() {
@@ -68,21 +78,21 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    public boolean checkForPermission(int permissionID){
+
+    public boolean checkForPermission(int permissionID) {
         System.out.println("check");
-       return role.checkForPermission(permissionID); 
+        return role.checkForPermission(permissionID);
     }
-    
-    public int getRoleID(){
+
+    public int getRoleID() {
         return role.getRoleID();
     }
-    
-    public int getID(){
-         return id;
+
+    public int getID() {
+        return id;
     }
-    
-    public void setID(int id){
-        this.id=id;
+
+    public void setID(int id) {
+        this.id = id;
     }
 }
