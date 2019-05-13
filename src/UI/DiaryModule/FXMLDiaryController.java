@@ -88,7 +88,6 @@ public class FXMLDiaryController implements Initializable {
         //tempList = FXCollections.observableArrayList();
         //list_entrys.itemsProperty().bind(listProperty);
         //listProperty.set(list);
-
         makeStageDragable();
 
     }
@@ -131,7 +130,7 @@ public class FXMLDiaryController implements Initializable {
         if (UserManager.getCurrentUser().checkForPermission(4)) {
             if (selectedEntryForEdit != null) {
                 selectedEntryForEdit = list_entrys.getSelectionModel().getSelectedItem();
-
+                System.out.println(selectedEntryForEdit.getEntryID());
                 Parent root = FXMLLoader.load(getClass().getResource("FXMLEntryEditor.fxml"));
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
@@ -143,7 +142,7 @@ public class FXMLDiaryController implements Initializable {
         UserManager.getCurrentResident().getResidentDiary().getMap().clear();
         System.out.println(UserManager.getCurrentResident().getResidentDiary().getMap());
         for (int i = 0; i < obsEntryList.size(); i++) {
-            UserManager.getCurrentResident().getResidentDiary().getMap().put(obsEntryList.get(i).getEntryID(), obsEntryList.get(i));
+            //UserManager.getCurrentResident().getResidentDiary().getMap().put(obsEntryList.get(i).getEntryID(), obsEntryList.get(i));
         }
     }
 
@@ -151,10 +150,9 @@ public class FXMLDiaryController implements Initializable {
     void deleteEntry(ActionEvent event) {
         if (selectedEntryForEdit != null) {
             if (UserManager.getCurrentUser().checkForPermission(12)) {
-
-                UserManager.getCurrentResident().getResidentDiary().getMap().get(list_entrys.getSelectionModel().getSelectedItem().getEntryID()).setVisible(false);
+                //UserManager.getCurrentResident().getResidentDiary().getMap().get(list_entrys.getSelectionModel().getSelectedItem().getEntryID()).setVisible(false);
+                DiaryRepository.deleteEntry(list_entrys.getSelectionModel().getSelectedItem());
                 updateList();
-
                 textarea_entry.clear();
                 lb_file.setText("");
             }
