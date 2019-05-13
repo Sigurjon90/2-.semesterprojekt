@@ -364,7 +364,7 @@ public class UserManager {
         return false;
     }
 
-    public static void updateUserInDB(String firstname, String lastname, String username, int roleID, int userID) {
+    public static void updateUserInUsers(String firstname, String lastname, String username, int roleID, int userID) {
         String SQL = "update users set first_name =?, last_name =?,roleid=?, username=? where id =?";
         try {
             pre = Connector.getCon().prepareStatement(SQL);
@@ -373,6 +373,24 @@ public class UserManager {
             pre.setString(4, username);
             pre.setInt(3, roleID);
             pre.setInt(5, userID);
+            pre.executeUpdate();
+            pre.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+        }
+
+    }
+    
+        public static void updateUserInResidents(int userID, int careworkerID, int socialworkerID) {
+        String SQL = "update residents set social_worker_id =?, care_worker_id =? where resident_id =?";
+        try {
+            pre = Connector.getCon().prepareStatement(SQL);
+            pre.setInt(1, socialworkerID);
+            pre.setInt(2, careworkerID);
+            pre.setInt(3, userID);
+
             pre.executeUpdate();
             pre.close();
 

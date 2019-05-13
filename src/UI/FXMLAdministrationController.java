@@ -408,10 +408,23 @@ public class FXMLAdministrationController implements Initializable {
     @FXML
     private void updateInfoAction(ActionEvent event) {
         if (selectedUser != null) {
-            if (checkUserType() != 4) {
-                UserManager.updateUserInDB(firstNameField.getText(), lastNameField.getText(), userNameField.getText(), checkUserType(), selectedUser.getID());
-            } else {
+            //Hvis alle bruger undtaget beboere sættes til en anden rolle undtaget beboer-rollen, opdateres det i databasen
+            if (selectedUser.getRoleID() != 4 && checkUserType() != 4) {
+                UserManager.updateUserInUsers(firstNameField.getText(), lastNameField.getText(), userNameField.getText(), checkUserType(), selectedUser.getID());
+
+                tempUsers = UserManager.getAllUsers();
+                usersObs = FXCollections.observableArrayList(tempUsers);
+                listview_users.setItems(usersObs);
+                //Hvis der prøves at ændre rolletypen på en beboer kommer der en fejlmeddelelse    
+            } else if (selectedUser.getRoleID() == 4 && checkUserType() != 4) {
                 System.out.println("Det kan du ikke:");
+            }//Hvis en beboers rolletype ikke er ændret, opdateres de gemte oplysninger
+            else if (selectedUser.getRoleID() == 4 && checkUserType() == 4) {
+                UserManager.updateUserInUsers(firstNameField.getText(), lastNameField.getText(), userNameField.getText(), checkUserType(), selectedUser.getID());
+                UserManager.updateUserInResidents(selectedUser.getID(), comboBoxCareworker.getSelectionModel().getSelectedItem().getID(), comboBoxSocialworker.getSelectionModel().getSelectedItem().getID());
+                tempUsers = UserManager.getAllUsers();
+                usersObs = FXCollections.observableArrayList(tempUsers);
+                listview_users.setItems(usersObs);
             }
         }
     }
@@ -447,6 +460,7 @@ public class FXMLAdministrationController implements Initializable {
                     pas2.setVisible(false);
                     savePasswordBtn.setVisible(false);
                     passwordError.setVisible(false);
+
                 }
             } else {
                 passwordError.setVisible(true);
