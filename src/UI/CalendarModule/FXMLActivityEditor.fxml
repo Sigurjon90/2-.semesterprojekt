@@ -32,12 +32,12 @@
                 <JFXDatePicker fx:id="endTextField" layoutX="22.0" layoutY="125.0" />
                 <JFXDatePicker fx:id="startTextField" layoutX="22.0" layoutY="85.0" />
                 <JFXButton fx:id="updateActivityBtn" buttonType="RAISED" layoutX="300.0" layoutY="545.0" mnemonicParsing="false" onAction="#updateActivity" style="-fx-background-color: #3a7077;" text="Gem" textFill="WHITE" />
-            <JFXTextField fx:id="titleTextField" layoutX="17.0" layoutY="44.0" />
-            <JFXComboBox fx:id="typeComboBox" layoutX="20.0" layoutY="246.0" onAction="#comboAction" prefHeight="25.0" prefWidth="135.0" />
-            <JFXTextField fx:id="placeTextField" layoutX="19.0" layoutY="290.0" />
-            <JFXTextField fx:id="descriptionTextField" alignment="TOP_LEFT" layoutX="17.0" layoutY="339.0" prefHeight="182.0" prefWidth="400.0" />
-            <JFXRadioButton fx:id="sharedYes" layoutX="20.0" layoutY="167.0" text="Ja" />
-            <JFXRadioButton fx:id="entryYes" layoutX="20.0" layoutY="211.0" text="Ja" />
+                <JFXTextField fx:id="titleTextField" layoutX="17.0" layoutY="44.0" />
+                <JFXComboBox fx:id="typeComboBox" layoutX="20.0" layoutY="246.0" onAction="#comboAction" prefHeight="25.0" prefWidth="135.0" />
+                <JFXTextField fx:id="placeTextField" layoutX="19.0" layoutY="290.0" />
+                <JFXTextField fx:id="descriptionTextField" alignment="TOP_LEFT" layoutX="17.0" layoutY="339.0" prefHeight="182.0" prefWidth="400.0" />
+                <JFXRadioButton fx:id="sharedYes" layoutX="20.0" layoutY="167.0" text="Ja" />
+                <JFXRadioButton fx:id="entryYes" layoutX="20.0" layoutY="211.0" text="Ja" />
             </children>
         </AnchorPane>
         <AnchorPane prefHeight="46.0" prefWidth="929.0" style="-fx-background-color: #2d2d2d;">
@@ -60,5 +60,7 @@
                 <Image url="@../../icons/logo.png" />
             </image>
         </ImageView>
+        <Label fx:id="errorLabel" alignment="CENTER" layoutX="0.0" layoutY="48.0" prefHeight="33.0" prefWidth="929.0" textAlignment="CENTER" textFill="RED" />
+
     </children>
 </AnchorPane>

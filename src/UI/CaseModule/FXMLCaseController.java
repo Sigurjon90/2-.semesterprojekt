@@ -85,6 +85,18 @@ public class FXMLCaseController implements Initializable {
         makeStageDragable();
 
     }
+    
+//     void checkPermissions() {
+//        if (!UserManager.getCurrentUser().checkForPermission(1)) {
+//            btn_diary.setDisable(true);
+//        }
+//        if (!UserManager.getCurrentUser().checkForPermission(2)) {
+//            btn_calendar.setDisable(true);
+//        }
+//        if (!UserManager.getCurrentUser().checkForPermission(3)) {
+//            btn_case.setDisable(true);
+//        }
+//    }
 
     private void makeStageDragable() {
         caseModulePane.setOnMousePressed((event) -> {

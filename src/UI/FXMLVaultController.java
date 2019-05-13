@@ -57,6 +57,9 @@ public class FXMLVaultController implements Initializable {
     @FXML
     private AnchorPane vaultPane;
 
+    @FXML
+    private Label errorLabel;
+
     private ObservableList<User> residentsObs;
 
     private ArrayList<User> tempResidents;
@@ -74,6 +77,21 @@ public class FXMLVaultController implements Initializable {
             listview_residents.setVisible(false);
             lb_residents.setVisible(false);
         }
+
+        checkPermissions();
+
+    }
+
+    void checkPermissions() {
+        if (!UserManager.getCurrentUser().checkForPermission(1)) {
+            btn_diary.setDisable(true);
+        }
+        if (!UserManager.getCurrentUser().checkForPermission(2)) {
+            btn_calendar.setDisable(true);
+        }
+        if (!UserManager.getCurrentUser().checkForPermission(3)) {
+            btn_case.setDisable(true);
+        }
     }
 
     @FXML
@@ -82,51 +100,52 @@ public class FXMLVaultController implements Initializable {
         UserManager.setCurrentResident(tempUser);
         System.out.println(UserManager.getCurrentResident());
     }
-    
-    
+
     @FXML
     void diaryHandler(ActionEvent event) throws IOException {
-
-        if (UserManager.getCurrentUser().checkForPermission(1)) {
+        if (UserManager.getCurrentResident() != null) {
             Parent root = FXMLLoader.load(getClass().getResource("/UI/DiaryModule/FXMLDiary.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
         } else {
-            System.out.println("You don't have permission for this action");
+            errorLabel.setText("Du har ikke valgt en beboer");
+            errorLabel.setOpacity(1);
         }
-
     }
 
     @FXML
     void calendarHandler(ActionEvent event) throws IOException {
-        if (UserManager.getCurrentUser().checkForPermission(2)) {
+        if (UserManager.getCurrentResident() != null) {
             Parent root = FXMLLoader.load(getClass().getResource("/UI/CalendarModule/FXMLCalendar.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
         } else {
-            System.out.println("You don't have permission for this action");
+            errorLabel.setText("Du har ikke valgt en beboer");
+            errorLabel.setOpacity(1);
         }
-
     }
 
     @FXML
     void caseHandler(ActionEvent event) throws IOException {
-        if (UserManager.getCurrentUser().checkForPermission(3)) {
+        if (UserManager.getCurrentResident() != null) {
             Parent root = FXMLLoader.load(getClass().getResource("/UI/CaseModule/FXMLCase.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
         } else {
-            System.out.println("You don't have permission for this action");
+            errorLabel.setText("Du har ikke valgt en beboer");
+            errorLabel.setOpacity(1);
         }
     }
 
     @FXML
-    private void exitAction(MouseEvent event) {
+    private void exitAction(MouseEvent event
+    ) {
         System.exit(1);
     }
 
     @FXML
-    private void minimizeAction(MouseEvent event) {
+    private void minimizeAction(MouseEvent event
+    ) {
         Stage stage = (Stage) vaultPane.getScene().getWindow();
         stage.setIconified(true);
     }

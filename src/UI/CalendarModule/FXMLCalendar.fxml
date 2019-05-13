@@ -141,5 +141,6 @@
                 <Image url="@../../icons/logo.png" />
             </image>
         </ImageView>
+        <Label fx:id="errorLabel" alignment="CENTER" layoutX="0.0" layoutY="48.0" prefHeight="33.0" prefWidth="929.0" textAlignment="CENTER" textFill="RED" />
     </children>
 </AnchorPane>

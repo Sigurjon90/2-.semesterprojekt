@@ -11,42 +11,47 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane id="AnchorPane" fx:id="vaultPane" prefHeight="611.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.FXMLVaultController">
-   <children>
-      <Button fx:id="btn_diary" layoutX="48.0" layoutY="119.0" mnemonicParsing="false" onAction="#diaryHandler" prefHeight="102.0" prefWidth="278.0" style="-fx-background-color: #b8d8cd;" text="Dagbog">
-         <font>
-            <Font size="23.0" />
-         </font></Button>
-      <Button fx:id="btn_calendar" layoutX="48.0" layoutY="245.0" mnemonicParsing="false" onAction="#calendarHandler" prefHeight="102.0" prefWidth="278.0" style="-fx-background-color: #b8d8cd;" text="Kalender">
-         <font>
-            <Font size="23.0" />
-         </font></Button>
-      <Button fx:id="btn_case" layoutX="48.0" layoutY="371.0" mnemonicParsing="false" onAction="#caseHandler" prefHeight="102.0" prefWidth="278.0" style="-fx-background-color: #b8d8cd;" text="Sag">
-         <font>
-            <Font size="23.0" />
-         </font></Button>
-      <JFXListView fx:id="listview_residents" layoutX="700.0" layoutY="96.0" prefHeight="400.0" prefWidth="200.0" onMouseClicked="#setCurrentResident" styleClass="jfx-list-view" stylesheets="@CaseUI.css" />
-      <Label fx:id="lb_residents" layoutX="762.0" layoutY="65.0" prefHeight="17.0" prefWidth="67.0" text="Beboere" />
-      <Polygon fill="#2d2d2d" layoutX="64.0" layoutY="74.0" points="-64.0, 39.0, 199.0, -74.0, -64.0, -74.0" stroke="#2d2d2d" strokeType="INSIDE" />
-      <AnchorPane layoutX="5.0" prefHeight="46.0" prefWidth="929.0" style="-fx-background-color: #2d2d2d;">
-         <children>
-            <ImageView fx:id="exitBtn" fitHeight="32.0" fitWidth="46.0" layoutX="883.0" layoutY="7.0" onMouseClicked="#exitAction" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../icons/exit.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="minimizeBtn" fitHeight="25.0" fitWidth="30.0" layoutX="848.0" layoutY="10.0" onMouseClicked="#minimizeAction" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../icons/minimize.png" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
-      <ImageView fitHeight="53.0" fitWidth="60.0" layoutX="14.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../icons/logo.png" />
-         </image>
-      </ImageView>
-      <Line endX="240.0" layoutX="106.0" layoutY="233.0" startX="-80.0" />
-      <Line endX="240.0" layoutX="107.0" layoutY="359.0" startX="-80.0" />
-   </children>
+    <children>
+        <Button fx:id="btn_diary" layoutX="48.0" layoutY="119.0" mnemonicParsing="false" onAction="#diaryHandler" prefHeight="102.0" prefWidth="278.0" style="-fx-background-color: #b8d8cd;" text="Dagbog">
+            <font>
+                <Font size="23.0" />
+            </font>
+        </Button>
+        <Button fx:id="btn_calendar" layoutX="48.0" layoutY="245.0" mnemonicParsing="false" onAction="#calendarHandler" prefHeight="102.0" prefWidth="278.0" style="-fx-background-color: #b8d8cd;" text="Kalender">
+            <font>
+                <Font size="23.0" />
+            </font>
+        </Button>
+        <Button fx:id="btn_case" layoutX="48.0" layoutY="371.0" mnemonicParsing="false" onAction="#caseHandler" prefHeight="102.0" prefWidth="278.0" style="-fx-background-color: #b8d8cd;" text="Sag">
+            <font>
+                <Font size="23.0" />
+            </font>
+        </Button>
+        <JFXListView fx:id="listview_residents" layoutX="700.0" layoutY="96.0" prefHeight="400.0" prefWidth="200.0" onMouseClicked="#setCurrentResident" styleClass="jfx-list-view" stylesheets="@CaseUI.css" />
+        <Label fx:id="lb_residents" layoutX="762.0" layoutY="65.0" prefHeight="17.0" prefWidth="67.0" text="Beboere" />
+        <Polygon fill="#2d2d2d" layoutX="64.0" layoutY="74.0" points="-64.0, 39.0, 199.0, -74.0, -64.0, -74.0" stroke="#2d2d2d" strokeType="INSIDE" />
+        <AnchorPane layoutX="5.0" prefHeight="46.0" prefWidth="929.0" style="-fx-background-color: #2d2d2d;">
+            <children>
+                <ImageView fx:id="exitBtn" fitHeight="32.0" fitWidth="46.0" layoutX="883.0" layoutY="7.0" onMouseClicked="#exitAction" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../icons/exit.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="minimizeBtn" fitHeight="25.0" fitWidth="30.0" layoutX="848.0" layoutY="10.0" onMouseClicked="#minimizeAction" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../icons/minimize.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </AnchorPane>
+        <ImageView fitHeight="53.0" fitWidth="60.0" layoutX="14.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../icons/logo.png" />
+            </image>
+        </ImageView>
+        <Line endX="240.0" layoutX="106.0" layoutY="233.0" startX="-80.0" />
+        <Line endX="240.0" layoutX="107.0" layoutY="359.0" startX="-80.0" />
+        <Label fx:id="errorLabel" alignment="CENTER" layoutX="0.0" layoutY="48.0" prefHeight="33.0" prefWidth="929.0" textAlignment="CENTER" textFill="RED" />
+
+    </children>
 </AnchorPane>
