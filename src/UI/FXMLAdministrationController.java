@@ -7,6 +7,7 @@ import static UI.Vault.testCalendar;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
@@ -31,6 +32,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -71,7 +73,6 @@ public class FXMLAdministrationController implements Initializable {
     private JFXButton createUserBtn;
     @FXML
     private JFXTextField userNameField;
-    @FXML
     private JFXTextField passwordField;
     @FXML
     private JFXRadioButton residentRadioBtn;
@@ -95,9 +96,33 @@ public class FXMLAdministrationController implements Initializable {
     private JFXComboBox<User> comboBoxCareworker;
     @FXML
     private JFXComboBox<User> comboBoxSocialworker;
+    @FXML
+    private JFXButton updateInfoDB;
+
+    private String password = "initial";
+    private AnchorPane passwordAnchor;
+    @FXML
+    private JFXButton setPasswordBtn;
+    @FXML
+    private JFXPasswordField password1;
+    @FXML
+    private JFXPasswordField password2;
+    private Label passwordErrorLabel;
+    @FXML
+    private JFXButton savePasswordBtn;
+    @FXML
+    private Label passwordError;
+    @FXML
+    private Label pas1;
+    @FXML
+    private Label pas2;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        updateInfoDB.setVisible(false);
+
+        savePasswordBtn.setVisible(false);
 
         NewUserBtn.setVisible(true);
         createUserBtn.setVisible(false);
@@ -167,15 +192,17 @@ public class FXMLAdministrationController implements Initializable {
             infoFillOut();
             NewUserBtn.setVisible(true);
             createUserBtn.setVisible(false);
+            updateInfoDB.setVisible(true);
+            careWorker_Lb.setVisible(false);
+            socialWorker_Lb.setVisible(false);
 
-            
-            
-            if(selectedUser.getRoleID()==4){
-            comboBoxCareworker.setVisible(true);
-            comboBoxSocialworker.setVisible(true);
-            comboBoxCareworker.setPromptText(UserManager.getCareworkerFromResidents(selectedUser.getID()).toString());
-            comboBoxSocialworker.setPromptText(UserManager.getSocialworkerFromResidents(selectedUser.getID()).toString());
-
+            if (selectedUser.getRoleID() == 4) {
+                comboBoxCareworker.setVisible(true);
+                comboBoxSocialworker.setVisible(true);
+                comboBoxCareworker.setPromptText(UserManager.getCareworkerFromResidents(selectedUser.getID()).toString());
+                comboBoxSocialworker.setPromptText(UserManager.getSocialworkerFromResidents(selectedUser.getID()).toString());
+                careWorker_Lb.setVisible(true);
+                socialWorker_Lb.setVisible(true);
 
             }
         }
@@ -186,8 +213,8 @@ public class FXMLAdministrationController implements Initializable {
         firstNameField.setText(selectedUser.getFirstName());
         lastNameField.setText(selectedUser.getLastName());
         userNameField.setText(selectedUser.getUsername());
-        passwordField.setText("Ingen information");
 
+        //    passwordField.setText("Ingen information");
         switch (selectedUser.getRoleID()) {
             case 1:
                 careWorkerRadioBtn.setSelected(true);
@@ -266,8 +293,8 @@ public class FXMLAdministrationController implements Initializable {
 
             int roleid = checkUserType();
 
-            User user = new User(firstNameField.getText(), lastNameField.getText(), userNameField.getText(), passwordField.getText(), roleid);
-            //Opret 
+            User user = new User(firstNameField.getText(), lastNameField.getText(), userNameField.getText(), password, roleid);
+            //Opret
             UserManager.createUserInUsers(user);
 
             //Hvis der er tale om en beboer, skal den også oprettes i resident-table i databasen.
@@ -304,7 +331,7 @@ public class FXMLAdministrationController implements Initializable {
         NewUserBtn.setVisible(false);
         createUserBtn.setVisible(true);
         comboBoxCareworker.setVisible(false);
-            comboBoxSocialworker.setVisible(false);
+        comboBoxSocialworker.setVisible(false);
     }
 
     private void clearFields() {
@@ -375,6 +402,60 @@ public class FXMLAdministrationController implements Initializable {
         comboBoxSocialworker.setVisible(false);
         careWorker_Lb.setVisible(false);
         socialWorker_Lb.setVisible(false);
+
+    }
+
+    @FXML
+    private void updateInfoAction(ActionEvent event) {
+        if (selectedUser != null) {
+            if (checkUserType() != 4) {
+                UserManager.updateUserInDB(firstNameField.getText(), lastNameField.getText(), userNameField.getText(), checkUserType(), selectedUser.getID());
+            } else {
+                System.out.println("Det kan du ikke:");
+            }
+        }
+    }
+
+    @FXML
+    private void setPasswordAction(ActionEvent event) {
+        deleteUserBtn.setVisible(false);
+        createUserBtn.setVisible(false);
+        NewUserBtn.setVisible(false);
+        updateInfoDB.setVisible(false);
+        password1.setVisible(true);
+        password2.setVisible(true);
+        pas1.setVisible(true);
+        pas2.setVisible(true);
+        savePasswordBtn.setVisible(true);
+
+    }
+
+    @FXML
+    private void savePasswordAction(ActionEvent event) {
+        if (password1.getText().equals(password2.getText())) {
+            if (!password1.getText().isEmpty() && !password1.getText().isEmpty()) {
+                if (selectedUser != null) {
+
+                    UserManager.updateUserPassword(password1.getText(), selectedUser.getID());
+                    deleteUserBtn.setVisible(true);
+                    createUserBtn.setVisible(true);
+                    NewUserBtn.setVisible(true);
+                    updateInfoDB.setVisible(true);
+                    password1.setVisible(false);
+                    password2.setVisible(false);
+                    pas1.setVisible(false);
+                    pas2.setVisible(false);
+                    savePasswordBtn.setVisible(false);
+                    passwordError.setVisible(false);
+                }
+            } else {
+                passwordError.setVisible(true);
+
+            }
+        } else {
+            passwordError.setVisible(true);
+
+        }
 
     }
 

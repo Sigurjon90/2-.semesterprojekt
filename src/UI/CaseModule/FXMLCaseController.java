@@ -62,7 +62,6 @@ public class FXMLCaseController implements Initializable {
     @FXML
     private JFXTextArea casePreviewField;
 
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         tempCases = CaseRepository.getAllCasesByID(UserManager.getCurrentUser().getID());
@@ -101,13 +100,17 @@ public class FXMLCaseController implements Initializable {
 
             CaseRepository.setSelectedCase(caseList.getSelectionModel().getSelectedItem());
             if (!CaseRepository.getSelectedCase().isClosed()) {
-                
-                FXMLLoader createScene = new FXMLLoader(getClass().getResource("FXMLCaseEditor.fxml"));
-                Parent createRoot = (Parent) createScene.load();
-                Stage createStage = new Stage();
-                createStage.setScene(new Scene(createRoot));
-                createStage.initStyle(StageStyle.UNDECORATED);
-                createStage.show();
+
+                Parent root = FXMLLoader.load(getClass().getResource("FXMLCaseEditor.fxml"));
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+
+//                FXMLLoader createScene = new FXMLLoader(getClass().getResource("FXMLCaseEditor.fxml"));
+//                Parent createRoot = (Parent) createScene.load();
+//                Stage createStage = new Stage();
+//                createStage.setScene(new Scene(createRoot));
+//                createStage.initStyle(StageStyle.UNDECORATED);
+//                createStage.show();
                 warningLabel.setOpacity(0);
             } else {
                 warningLabel.setOpacity(1);
@@ -189,6 +192,5 @@ public class FXMLCaseController implements Initializable {
         stage.setScene(scene);
     }
 
-//    
-
+//
 }

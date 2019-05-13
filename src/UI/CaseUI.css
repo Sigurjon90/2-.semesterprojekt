@@ -15,3 +15,8 @@
     -fx-background-insets: 0;
     -fx-cell-vertical-margin: 10.0;
 }
+
+
+.pane{
+    -fx-background-color: #dae5d5
+}

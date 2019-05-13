@@ -158,7 +158,7 @@ public class UserManager {
             if (result.next()) {
                 System.out.println(result.getString("first_name"));
                 user = new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), result.getInt("roleid"), getRoleType(result.getInt("roleid")), result.getInt("id"));
-                
+
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -362,6 +362,40 @@ public class UserManager {
             Logger.getLogger(UserManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+
+    public static void updateUserInDB(String firstname, String lastname, String username, int roleID, int userID) {
+        String SQL = "update users set first_name =?, last_name =?,roleid=?, username=? where id =?";
+        try {
+            pre = Connector.getCon().prepareStatement(SQL);
+            pre.setString(1, firstname);
+            pre.setString(2, lastname);
+            pre.setString(4, username);
+            pre.setInt(3, roleID);
+            pre.setInt(5, userID);
+            pre.executeUpdate();
+            pre.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+        }
+
+    }
+
+    public static void updateUserPassword(String password, int userID) {
+        String SQL = "update users set password =? where id =?";
+        try {
+            pre = Connector.getCon().prepareStatement(SQL);
+            pre.setString(1, password);
+            pre.setInt(2, userID);
+            pre.executeUpdate();
+            pre.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+        }
     }
 
 }
