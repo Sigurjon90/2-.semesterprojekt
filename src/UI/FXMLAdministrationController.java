@@ -119,6 +119,8 @@ public class FXMLAdministrationController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        setPasswordBtn.setVisible(false);
 
         updateInfoDB.setVisible(false);
 
@@ -195,6 +197,7 @@ public class FXMLAdministrationController implements Initializable {
             updateInfoDB.setVisible(true);
             careWorker_Lb.setVisible(false);
             socialWorker_Lb.setVisible(false);
+            setPasswordBtn.setVisible(true);
 
             if (selectedUser.getRoleID() == 4) {
                 comboBoxCareworker.setVisible(true);
@@ -332,6 +335,7 @@ public class FXMLAdministrationController implements Initializable {
         createUserBtn.setVisible(true);
         comboBoxCareworker.setVisible(false);
         comboBoxSocialworker.setVisible(false);
+        setPasswordBtn.setVisible(false);
     }
 
     private void clearFields() {
@@ -339,18 +343,19 @@ public class FXMLAdministrationController implements Initializable {
         firstNameField.setText("");
         lastNameField.setText("");
         userNameField.setText("");
-        passwordField.setText("");
+        //passwordField.setText("");
         adminRadioBtn.setSelected(false);
         careWorkerRadioBtn.setSelected(false);
         socialWorkerRadioBtn.setSelected(false);
         residentRadioBtn.setSelected(false);
+        careWorker_Lb.setVisible(false);
+        socialWorker_Lb.setVisible(false);
     }
 
     private boolean isAllFieldsFilledOut() {
         if (firstNameField.getText().isEmpty()
                 || lastNameField.getText().isEmpty()
                 || userNameField.getText().isEmpty()
-                || passwordField.getText().isEmpty()
                 || isRadiobuttonsFilledOut() == false) {
             System.out.println("returned false");
             return false;
