@@ -90,6 +90,22 @@ public class FXMLDiaryController implements Initializable {
         //listProperty.set(list);
         makeStageDragable();
 
+        makeStageDragable();
+
+        checkPermissions();
+    }
+
+    void checkPermissions() {
+        if (!UserManager.getCurrentUser().checkForPermission(4)) {
+            btn_edit.setDisable(true);
+        }
+
+        if (!UserManager.getCurrentUser().checkForPermission(12)) {
+            btn_delete.setDisable(true);
+        }
+        if (!UserManager.getCurrentUser().checkForPermission(8)) {
+            btn_newEntry.setDisable(true);
+        }
     }
 
     public ObservableList<Entry> getList() {
@@ -127,14 +143,13 @@ public class FXMLDiaryController implements Initializable {
 
     @FXML
     void displayEntryEditor(ActionEvent event) throws IOException {
-        if (UserManager.getCurrentUser().checkForPermission(4)) {
-            if (selectedEntryForEdit != null) {
-                selectedEntryForEdit = list_entrys.getSelectionModel().getSelectedItem();
-                System.out.println(selectedEntryForEdit.getEntryID());
-                Parent root = FXMLLoader.load(getClass().getResource("FXMLEntryEditor.fxml"));
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-            }
+        if (selectedEntryForEdit != null) {
+            selectedEntryForEdit = list_entrys.getSelectionModel().getSelectedItem();
+
+            Parent root = FXMLLoader.load(getClass().getResource("FXMLEntryEditor.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+
         }
     }
 
@@ -149,23 +164,20 @@ public class FXMLDiaryController implements Initializable {
     @FXML
     void deleteEntry(ActionEvent event) {
         if (selectedEntryForEdit != null) {
-            if (UserManager.getCurrentUser().checkForPermission(12)) {
-                //UserManager.getCurrentResident().getResidentDiary().getMap().get(list_entrys.getSelectionModel().getSelectedItem().getEntryID()).setVisible(false);
                 DiaryRepository.deleteEntry(list_entrys.getSelectionModel().getSelectedItem());
                 updateList();
                 textarea_entry.clear();
                 lb_file.setText("");
-            }
         }
+
     }
 
     @FXML
     void displayEntryCreator(ActionEvent event) throws IOException {
-        if (UserManager.getCurrentUser().checkForPermission(8)) {
-            Parent root = FXMLLoader.load(getClass().getResource("FXMLEntryCreator.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-        }
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLEntryCreator.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+
     }
 
     @FXML

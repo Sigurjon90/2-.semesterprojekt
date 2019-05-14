@@ -39,6 +39,8 @@ public class FXMLEntryCreatorController implements Initializable {
     private JFXButton btn_cancel;
     @FXML
     private Label lb_error;
+    @FXML
+    private Label errorLabel;
 
     private File file = null;
     private FileChooser chooser = new FileChooser();
@@ -67,11 +69,12 @@ public class FXMLEntryCreatorController implements Initializable {
         //    lb_error.setText("Indsæt venligst en dato!");
         //}
         //else{
-        
-        Entry entry = null;
-        if (fileList == null) {
-            entry = new Entry(dp_date.getValue(), textarea_des.getText());
-        } else {
+        if (dp_date.getValue() != null && !textarea_des.getText().isEmpty()) {
+            Entry entry = null;
+            if (fileList == null) {
+                entry = new Entry(dp_date.getValue(), textarea_des.getText());
+            } else {
+
             entry = new Entry(dp_date.getValue(), textarea_des.getText());
         }
 
@@ -84,9 +87,12 @@ public class FXMLEntryCreatorController implements Initializable {
         
         Scene scene = new Scene(root);
 
-        stage.setScene(scene);
-        stage.show();
-    //}
+            stage.setScene(scene);
+            stage.show();
+        } else {
+            errorLabel.setText("Du har ikke udfyldt alle felter");
+            errorLabel.setOpacity(1);
+        }
     }
 
     @FXML

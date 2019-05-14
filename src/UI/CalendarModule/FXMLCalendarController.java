@@ -55,10 +55,7 @@ public class FXMLCalendarController implements Initializable {
 
     private double xOffset = 0;
     private double yOffset = 0;
-    
-    
-    
-    
+
     @FXML
     private AnchorPane parent;
     @FXML
@@ -115,43 +112,74 @@ public class FXMLCalendarController implements Initializable {
     private Label descriptionLabel;
     @FXML
     private ImageView pictoView;
-  
-    
-    
     @FXML
-    public void planAction(ActionEvent event) throws IOException {
-        if (UserManager.getCurrentUser().checkForPermission(9)) {
-            Vault.newAction = true;
-            Parent currentParent = FXMLLoader.load(getClass().getResource("FXMLActivityEditor.fxml"));
-            Scene scene = new Scene(currentParent);
-            stage.setScene(scene);
+    private Label errorLabel;
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        //Opretter kalender til valgte beboer.
+        enableCurrentCalendar();
+        //Opdaterer kalenderen med beboerens aktiviteter.
+        if (UserManager.getCurrentUser().checkForPermission(16)) {
+            ActivityManager.getActivities(UserManager.getCurrentResident().getID());
+        } else {
+            ActivityManager.getActivities(UserManager.getCurrentUser().getID());
+        }
+        hide();
+        planBtn.setDisable(false);
+        deleteBtn.setDisable(true);
+
+        makeStageDragable();
+
+        checkPermissions();
+
+        errorLabel.setOpacity(0);
+    }
+
+    void checkPermissions() {
+        if (!UserManager.getCurrentUser().checkForPermission(9)) {
+            planBtn.setDisable(true);
+        }
+
+        if (!UserManager.getCurrentUser().checkForPermission(13)) {
+            deleteBtn.setDisable(true);
         }
     }
 
     @FXML
-    public void deleteActivity(ActionEvent event) throws IOException {
-        if (UserManager.getCurrentUser().checkForPermission(13)) {
-            Alert alert = new Alert(AlertType.CONFIRMATION);
-            alert.setTitle("Bekræftigelse");
-            alert.setHeaderText(null);
-            alert.setContentText("Er du sikker på du vil slette denne aftale?");
-            Optional<ButtonType> action = alert.showAndWait();
+    public void planAction(ActionEvent event) throws IOException {
 
-            if (action.get() == ButtonType.OK) {
-                Calendar.getCurrentCalendar().getCalendar().remove(Vault.currentActivity.getActivityID());
-            }
-            Vault.currentActivity = null;
-            deleteBtn.setDisable(true);
-            clearAllFields();
-            hide();
-            updateListView("Monday");
-            updateListView("Tuesday");
-            updateListView("Wednesday");
-            updateListView("Thursday");
-            updateListView("Friday");
-            updateListView("Saturday");
-            updateListView("Sunday");
+        Vault.newAction = true;
+        Parent currentParent = FXMLLoader.load(getClass().getResource("FXMLActivityEditor.fxml"));
+        Scene scene = new Scene(currentParent);
+        stage.setScene(scene);
+
+    }
+
+    @FXML
+    public void deleteActivity(ActionEvent event) throws IOException {
+
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Bekræftigelse");
+        alert.setHeaderText(null);
+        alert.setContentText("Er du sikker på du vil slette denne aftale?");
+        Optional<ButtonType> action = alert.showAndWait();
+
+        if (action.get() == ButtonType.OK) {
+            Calendar.getCurrentCalendar().getCalendar().remove(Vault.currentActivity.getActivityID());
         }
+        Vault.currentActivity = null;
+        deleteBtn.setDisable(true);
+        clearAllFields();
+        hide();
+        updateListView("Monday");
+        updateListView("Tuesday");
+        updateListView("Wednesday");
+        updateListView("Thursday");
+        updateListView("Friday");
+        updateListView("Saturday");
+        updateListView("Sunday");
+
     }
 
     public void clearAllFields() {
@@ -274,19 +302,25 @@ public class FXMLCalendarController implements Initializable {
 
         Vault.newAction = false;
         if (event.getButton().equals(MouseButton.PRIMARY)) {
-            if (event.getClickCount() == 2 && UserManager.getCurrentUser().checkForPermission(5)) {
-                myList = (ListView) event.getSource();
-                myActivity = (Activity) myList.getSelectionModel().getSelectedItem();
-                Parent currentParent;
-                Vault.currentActivity = myActivity;
-                try {
-                    currentParent = FXMLLoader.load(getClass().getResource("FXMLActivityEditor.fxml"));
-                    Scene scene = new Scene(currentParent);
-                    stage.setScene(scene);
+            if (event.getClickCount() == 2) {
+                if (UserManager.getCurrentUser().checkForPermission(5)) {
+                    myList = (ListView) event.getSource();
+                    myActivity = (Activity) myList.getSelectionModel().getSelectedItem();
+                    Parent currentParent;
+                    Vault.currentActivity = myActivity;
+                    try {
+                        currentParent = FXMLLoader.load(getClass().getResource("FXMLActivityEditor.fxml"));
+                        Scene scene = new Scene(currentParent);
+                        stage.setScene(scene);
 
-                } catch (IOException ex) {
-                    Logger.getLogger(FXMLCalendarController.class
-                            .getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLCalendarController.class
+                                .getName()).log(Level.SEVERE, null, ex);
+                    }
+                    errorLabel.setOpacity(0);
+                } else {
+                    errorLabel.setText("Du har ikke adgang til at redigere i aktiviteter");
+                    errorLabel.setOpacity(1);
                 }
             }
             if (event.getClickCount() == 1) {
@@ -392,19 +426,6 @@ public class FXMLCalendarController implements Initializable {
 
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        //Opretter kalender til valgte beboer.
-       enableCurrentCalendar();
-        //Opdaterer kalenderen med beboerens aktiviteter.
-        ActivityManager.getActivities(UserManager.getCurrentResident().getID());
-        hide();
-        planBtn.setDisable(false);
-        deleteBtn.setDisable(true);
-
-        makeStageDragable();
-    }
-
     @FXML
     void backToMenu(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/UI/FXMLVault.fxml"));
@@ -440,6 +461,5 @@ public class FXMLCalendarController implements Initializable {
             Vault.stage.setOpacity(1.0f);
         });
     }
-    
 
 }
