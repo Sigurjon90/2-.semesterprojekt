@@ -1,9 +1,10 @@
 package UI.CalendarModule;
 
+import Domain.CalendarModule.Calendar;
 import Persistence.UserManager;
 import UI.Vault;
 import static UI.Vault.stage;
-import static UI.Vault.testCalendar;
+import UI.CalendarModule.FXMLCalendarController;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTimePicker;
 import java.io.IOException;
@@ -92,7 +93,7 @@ public class FXMLActivityEditorController implements Initializable {
             startDate = startTextField.getValue().atTime(startTimeField.getValue());
             endDate = startTextField.getValue().atTime(endTimeField.getValue());
 
-            testCalendar.createActivity(titleTextField.getText(), UserManager.getCurrentUser(), placeTextField.getText(), startDate, endDate, descriptionTextField.getText(), typeComboBox.getValue(), sharedYes.isSelected(), entryYes.isSelected());
+            Calendar.getCurrentCalendar().createActivity(titleTextField.getText(), UserManager.getCurrentUser().getFullName(), placeTextField.getText(), startDate, endDate, descriptionTextField.getText(), typeComboBox.getValue(), sharedYes.isSelected(), entryYes.isSelected());
             Parent root = FXMLLoader.load(getClass().getResource("FXMLCalendar.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -113,8 +114,8 @@ public class FXMLActivityEditorController implements Initializable {
             startDate = startTextField.getValue().atTime(startTimeField.getValue());
             endDate = startTextField.getValue().atTime(endTimeField.getValue());
 
-            Vault.currentActivity.updateActivity(titleTextField.getText(), UserManager.getCurrentUser(), placeTextField.getText(), startDate, endDate, descriptionTextField.getText(), typeComboBox.getValue(), sharedYes.isSelected(), entryYes.isSelected());
-            testCalendar.getCalendar().replace(Vault.currentActivity.getActivityID(), Vault.currentActivity);
+            Vault.currentActivity.updateActivity(titleTextField.getText(), UserManager.getCurrentUser().getFullName(), placeTextField.getText(), startDate, endDate, descriptionTextField.getText(), typeComboBox.getValue(), sharedYes.isSelected(), entryYes.isSelected());
+            Calendar.getCurrentCalendar().getCalendar().replace(Vault.currentActivity.getActivityID(), Vault.currentActivity);
             Parent root = FXMLLoader.load(getClass().getResource("FXMLCalendar.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);

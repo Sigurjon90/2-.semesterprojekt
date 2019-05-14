@@ -1,25 +1,45 @@
 package Domain.CalendarModule;
 
 import Domain.User.User;
+import Persistence.ActivityManager;
+import Persistence.UserManager;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 public class Calendar {
-    
+
+    private static Calendar currentCalendar;
+
     private Map<Integer, Activity> calendar;
-            
-    public Calendar() {
+    private User resident;
+
+    public Calendar(User resident) {
+        this.resident = resident;
         calendar = new HashMap<>();
+    }
+
+    public static Calendar getCurrentCalendar() {
+        return currentCalendar;
+    }
+    
+    public static void enableCurrentCalendar(){
+         currentCalendar =  new Calendar(UserManager.getCurrentResident());
     }
 
     public void deleteActivity(Activity activity) {
         calendar.remove(activity.getActivityID(), activity);
     }
 
-    public void createActivity(String title, User creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry) {
+    public void createActivity(String title, String creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry) {
         Activity activity = new Activity(title, creator, place, startDate, endDate, description, type, shared, entry);
+        calendar.put(activity.getActivityID(), activity);
+        System.out.println(startDate.toString());
+        ActivityManager.storeActivity(activity);
+    }
+
+    public void putInCalendar(Activity activity) {
         calendar.put(activity.getActivityID(), activity);
     }
 

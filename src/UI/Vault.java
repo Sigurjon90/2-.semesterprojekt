@@ -17,7 +17,7 @@ public class Vault extends Application {
 
     public static Stage stage;
 //    public static User currentLoggedOn = new CareWorker("care", "carer");
-    public static Calendar testCalendar = new Calendar();
+    public static Case currentCase;
     public static Resident resident = new Resident();
     public static Activity currentActivity;
     public static boolean newAction;

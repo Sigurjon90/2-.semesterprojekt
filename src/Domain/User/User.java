@@ -76,6 +76,10 @@ public class User {
         return this.role.getRoleName() + " | " + this.firstName + " " + this.lastName + " " + this.id;
     }
 
+    public String getFullName() {
+        return firstName + lastName;
+    }
+
     public String getFirstName() {
         return firstName;
     }

@@ -1,10 +1,12 @@
 package UI.CalendarModule;
 
 import Domain.CalendarModule.Activity;
+import Domain.CalendarModule.Calendar;
+import static Domain.CalendarModule.Calendar.enableCurrentCalendar;
+import Persistence.ActivityManager;
 import Persistence.UserManager;
 import UI.Vault;
 import static UI.Vault.stage;
-import static UI.Vault.testCalendar;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
 import com.jfoenix.controls.JFXButton;
@@ -53,6 +55,10 @@ public class FXMLCalendarController implements Initializable {
 
     private double xOffset = 0;
     private double yOffset = 0;
+    
+    
+    
+    
     @FXML
     private AnchorPane parent;
     @FXML
@@ -109,7 +115,9 @@ public class FXMLCalendarController implements Initializable {
     private Label descriptionLabel;
     @FXML
     private ImageView pictoView;
-
+  
+    
+    
     @FXML
     public void planAction(ActionEvent event) throws IOException {
         if (UserManager.getCurrentUser().checkForPermission(9)) {
@@ -130,7 +138,7 @@ public class FXMLCalendarController implements Initializable {
             Optional<ButtonType> action = alert.showAndWait();
 
             if (action.get() == ButtonType.OK) {
-                testCalendar.getCalendar().remove(Vault.currentActivity.getActivityID());
+                Calendar.getCurrentCalendar().getCalendar().remove(Vault.currentActivity.getActivityID());
             }
             Vault.currentActivity = null;
             deleteBtn.setDisable(true);
@@ -185,13 +193,13 @@ public class FXMLCalendarController implements Initializable {
 
     public void updateListView(String day) {
         obList = FXCollections.observableArrayList(new ArrayList<>());
-        Set<Integer> keyList = testCalendar.getKeySet();
+        Set<Integer> keyList = Calendar.getCurrentCalendar().getKeySet();
 
         switch (day) {
             case "Monday":
                 for (Integer i : keyList) {
-                    if (testCalendar.getActivity(i).getDay() == 1) {
-                        obList.add(testCalendar.getActivity(i));
+                    if (Calendar.getCurrentCalendar().getActivity(i).getDay() == 1) {
+                        obList.add(Calendar.getCurrentCalendar().getActivity(i));
                     }
                 }
                 mondayList.setItems(obList);
@@ -199,8 +207,8 @@ public class FXMLCalendarController implements Initializable {
                 break;
             case "Tuesday":
                 for (Integer i : keyList) {
-                    if (testCalendar.getActivity(i).getDay() == 2) {
-                        obList.add(testCalendar.getActivity(i));
+                    if (Calendar.getCurrentCalendar().getActivity(i).getDay() == 2) {
+                        obList.add(Calendar.getCurrentCalendar().getActivity(i));
                     }
                 }
                 tuesdayList.setItems(obList);
@@ -209,8 +217,8 @@ public class FXMLCalendarController implements Initializable {
 
             case "Wednesday":
                 for (Integer i : keyList) {
-                    if (testCalendar.getActivity(i).getDay() == 3) {
-                        obList.add(testCalendar.getActivity(i));
+                    if (Calendar.getCurrentCalendar().getActivity(i).getDay() == 3) {
+                        obList.add(Calendar.getCurrentCalendar().getActivity(i));
                     }
                 }
                 wednesdayList.setItems(obList);
@@ -219,8 +227,8 @@ public class FXMLCalendarController implements Initializable {
 
             case "Thursday":
                 for (Integer i : keyList) {
-                    if (testCalendar.getActivity(i).getDay() == 4) {
-                        obList.add(testCalendar.getActivity(i));
+                    if (Calendar.getCurrentCalendar().getActivity(i).getDay() == 4) {
+                        obList.add(Calendar.getCurrentCalendar().getActivity(i));
                     }
                 }
                 thursdayList.setItems(obList);
@@ -229,8 +237,8 @@ public class FXMLCalendarController implements Initializable {
 
             case "Friday":
                 for (Integer i : keyList) {
-                    if (testCalendar.getActivity(i).getDay() == 5) {
-                        obList.add(testCalendar.getActivity(i));
+                    if (Calendar.getCurrentCalendar().getActivity(i).getDay() == 5) {
+                        obList.add(Calendar.getCurrentCalendar().getActivity(i));
                     }
                 }
                 fridayList.setItems(obList);
@@ -239,8 +247,8 @@ public class FXMLCalendarController implements Initializable {
 
             case "Saturday":
                 for (Integer i : keyList) {
-                    if (testCalendar.getActivity(i).getDay() == 6) {
-                        obList.add(testCalendar.getActivity(i));
+                    if (Calendar.getCurrentCalendar().getActivity(i).getDay() == 6) {
+                        obList.add(Calendar.getCurrentCalendar().getActivity(i));
                     }
                 }
                 saturdayList.setItems(obList);
@@ -249,8 +257,8 @@ public class FXMLCalendarController implements Initializable {
 
             case "Sunday":
                 for (Integer i : keyList) {
-                    if (testCalendar.getActivity(i).getDay() == 7) {
-                        obList.add(testCalendar.getActivity(i));
+                    if (Calendar.getCurrentCalendar().getActivity(i).getDay() == 7) {
+                        obList.add(Calendar.getCurrentCalendar().getActivity(i));
                     }
                 }
                 sundayList.setItems(obList);
@@ -385,11 +393,12 @@ public class FXMLCalendarController implements Initializable {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb
-    ) {
+    public void initialize(URL url, ResourceBundle rb) {
+        //Opretter kalender til valgte beboer.
+       enableCurrentCalendar();
+        //Opdaterer kalenderen med beboerens aktiviteter.
+        ActivityManager.getActivities(UserManager.getCurrentResident().getID());
         hide();
-//        User is the person logged into the system
-//        if (Vault.currentLoggedOn instanceof CareWorker) {
         planBtn.setDisable(false);
         deleteBtn.setDisable(true);
 
@@ -431,5 +440,6 @@ public class FXMLCalendarController implements Initializable {
             Vault.stage.setOpacity(1.0f);
         });
     }
+    
 
 }
