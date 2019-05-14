@@ -1,6 +1,7 @@
 package UI.DiaryModule;
 
 import Persistence.DiaryRepository;
+import UI.Vault;
 import static UI.Vault.stage;
 import com.jfoenix.controls.JFXButton;
 import java.io.File;
@@ -19,11 +20,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class FXMLEntryEditorController implements Initializable {
 
+    @FXML
+    private AnchorPane DiaryPane;
     @FXML
     private TextArea textarea_des;
     @FXML
@@ -37,6 +42,9 @@ public class FXMLEntryEditorController implements Initializable {
     @FXML
     private JFXButton btn_cancel;
 
+    private double xOffset = 0;
+    private double yOffset = 0;
+
     private File file = null;
     private FileChooser chooser = new FileChooser();
     private List<File> fileList;
@@ -46,21 +54,20 @@ public class FXMLEntryEditorController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        makeStageDragable();
         dp_date.setValue(FXMLDiaryController.selectedEntryForEdit.getDate());
 
         textarea_des.setText(FXMLDiaryController.selectedEntryForEdit.getEntryDescription());
 
         chooser.setInitialDirectory(new File("."));
         fileList = new ArrayList<>();
-        
-        //fileList.addAll(FXMLDiaryController.selectedEntryForEdit.getFiles());
 
+        //fileList.addAll(FXMLDiaryController.selectedEntryForEdit.getFiles());
     }
 
     @FXML
     void saveEntryHandler(ActionEvent event) throws IOException {
-        
+
         FXMLDiaryController.selectedEntryForEdit.editEntry(textarea_des.getText(), dp_date.getValue(), fileList);
         DiaryRepository.updateEntry(FXMLDiaryController.selectedEntryForEdit);
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDiary.fxml"));
@@ -80,5 +87,34 @@ public class FXMLEntryEditorController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("/UI/DiaryModule/FXMLDiary.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
+    }
+
+    private void makeStageDragable() {
+        DiaryPane.setOnMousePressed((event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        DiaryPane.setOnMouseDragged((event) -> {
+            Vault.stage.setX(event.getScreenX() - xOffset);
+            Vault.stage.setY(event.getScreenY() - yOffset);
+            Vault.stage.setOpacity(0.8f);
+        });
+        DiaryPane.setOnDragDone((event) -> {
+            Vault.stage.setOpacity(1.0f);
+        });
+        DiaryPane.setOnMouseReleased((event) -> {
+            Vault.stage.setOpacity(1.0f);
+        });
+    }
+
+    @FXML
+    private void exitAction(MouseEvent event) {
+        System.exit(1);
+    }
+
+    @FXML
+    private void minimizeAction(MouseEvent event) {
+        Stage stage = (Stage) DiaryPane.getScene().getWindow();
+        stage.setIconified(true);
     }
 }
