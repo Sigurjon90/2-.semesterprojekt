@@ -4,6 +4,7 @@ import Domain.User.Resident;
 import static UI.Vault.stage;
 import UI.Vault;
 import Domain.DiaryModule.Entry;
+import Persistence.DiaryRepository;
 import Persistence.UserManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
@@ -11,6 +12,7 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -60,14 +62,15 @@ public class FXMLDiaryController implements Initializable {
     private JFXButton btn_newEntry;
 
     public static Entry selectedEntryForEdit;
-    public ObservableList<Entry> list;
+    public ObservableList<Entry> obsEntryList;
     public ObservableList<Entry> tempList;
     private ListProperty<Entry> listProperty = new SimpleListProperty<>();
+    private ArrayList<Entry> tempEntries;
 
     Resident resident = new Resident();
 
     public void setList(ObservableList<Entry> list) {
-        this.list = list;
+        this.obsEntryList = list;
     }
 
     public Resident getResident() {
@@ -80,42 +83,41 @@ public class FXMLDiaryController implements Initializable {
         //Vault.resident.getResidentDiary().getMap().put(2, new Entry(new Date(), "hej med dig Mathias"));
         //Vault.resident.getResidentDiary().getMap().put(3, new Entry(new Date(), "hej  dig Mathias"));
         //Vault.resident.getResidentDiary().getMap().put(1, new Entry(new Date(), "hej med Mathias"));
-        list = FXCollections.observableArrayList();
-        tempList = FXCollections.observableArrayList();
-        list_entrys.itemsProperty().bind(listProperty);
-        listProperty.set(list);
-
         updateList();
-
+        //list = FXCollections.observableArrayList();
+        //tempList = FXCollections.observableArrayList();
+        //list_entrys.itemsProperty().bind(listProperty);
+        //listProperty.set(list);
         makeStageDragable();
+
     }
 
     public ObservableList<Entry> getList() {
-        return list;
+        return obsEntryList;
     }
 
     public void updateList() {
-        list.clear();
+        tempEntries = DiaryRepository.getEntrys(UserManager.getCurrentResident().getID());
+        obsEntryList = FXCollections.observableArrayList(tempEntries);
+        list_entrys.setItems(obsEntryList);
 
-        for (int i = 1; i <= Vault.resident.getResidentDiary().getMap().size(); i++) {
-            if (Vault.resident.getResidentDiary().getMap().get(i).isVisible()) {
-                list.add(Vault.resident.getResidentDiary().getMap().get(i));
-            }
-        }
+//        for (int i = 1; i <= UserManager.getCurrentResident().getResidentDiary().getMap().size(); i++) {
+//            if (UserManager.getCurrentResident().getResidentDiary().getMap().get(i).isVisible()) {
+//                obsEntryList.add(UserManager.getCurrentResident().getResidentDiary().getMap().get(i));
+//                System.out.println("testing");
+//            }
+//        }
     }
 
     @FXML
     void showEntry(MouseEvent event) {
         selectedEntryForEdit = list_entrys.getSelectionModel().getSelectedItem();
-        if (!list.isEmpty()) {
+        if (!obsEntryList.isEmpty()) {
             try {
+                textarea_entry.setText(list_entrys.getSelectionModel().getSelectedItem().getEntryDescription());
                 if (list_entrys.getSelectionModel().getSelectedItem().fileNames() != null) {
-                    textarea_entry.setText(list_entrys.getSelectionModel().getSelectedItem().getEntryDescription());
                     lb_file.setText(list_entrys.getSelectionModel().getSelectedItem().fileNames());
-                } else {
-                    textarea_entry.setText(list_entrys.getSelectionModel().getSelectedItem().getEntryDescription());
                 }
-
                 //lb_file.setText(filenames);
             } catch (NullPointerException ex) {
             }
@@ -128,7 +130,7 @@ public class FXMLDiaryController implements Initializable {
         if (UserManager.getCurrentUser().checkForPermission(4)) {
             if (selectedEntryForEdit != null) {
                 selectedEntryForEdit = list_entrys.getSelectionModel().getSelectedItem();
-
+                System.out.println(selectedEntryForEdit.getEntryID());
                 Parent root = FXMLLoader.load(getClass().getResource("FXMLEntryEditor.fxml"));
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
@@ -137,10 +139,10 @@ public class FXMLDiaryController implements Initializable {
     }
 
     public void updateMap() {
-        Vault.resident.getResidentDiary().getMap().clear();
-        System.out.println(Vault.resident.getResidentDiary().getMap());
-        for (int i = 0; i < list.size(); i++) {
-            Vault.resident.getResidentDiary().getMap().put(list.get(i).getEntryID(), list.get(i));
+        UserManager.getCurrentResident().getResidentDiary().getMap().clear();
+        System.out.println(UserManager.getCurrentResident().getResidentDiary().getMap());
+        for (int i = 0; i < obsEntryList.size(); i++) {
+            //UserManager.getCurrentResident().getResidentDiary().getMap().put(obsEntryList.get(i).getEntryID(), obsEntryList.get(i));
         }
     }
 
@@ -148,10 +150,9 @@ public class FXMLDiaryController implements Initializable {
     void deleteEntry(ActionEvent event) {
         if (selectedEntryForEdit != null) {
             if (UserManager.getCurrentUser().checkForPermission(12)) {
-
-                Vault.resident.getResidentDiary().getMap().get(list_entrys.getSelectionModel().getSelectedItem().getEntryID()).setVisible(false);
+                //UserManager.getCurrentResident().getResidentDiary().getMap().get(list_entrys.getSelectionModel().getSelectedItem().getEntryID()).setVisible(false);
+                DiaryRepository.deleteEntry(list_entrys.getSelectionModel().getSelectedItem());
                 updateList();
-
                 textarea_entry.clear();
                 lb_file.setText("");
             }
@@ -188,13 +189,13 @@ public class FXMLDiaryController implements Initializable {
     @FXML
     void searchEntryButtonHandler(ActionEvent event) throws IOException {
         if (dp_search.getValue() == null) {
-            listProperty.set(list);
+            listProperty.set(obsEntryList);
             tempList.clear();
         } else if (dp_search.getValue() != null) {
             tempList.clear();
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getDate().equals(dp_search.getValue())) {
-                    tempList.add(list.get(i));
+            for (int i = 0; i < obsEntryList.size(); i++) {
+                if (obsEntryList.get(i).getDate().equals(dp_search.getValue())) {
+                    tempList.add(obsEntryList.get(i));
                     listProperty.set(tempList);
                 }
             }

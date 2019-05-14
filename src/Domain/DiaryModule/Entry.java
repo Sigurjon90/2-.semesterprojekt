@@ -3,6 +3,7 @@ package Domain.DiaryModule;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 public class Entry {
 
@@ -11,26 +12,39 @@ public class Entry {
     private String description;
     private List<Integer> accessType;
     private List<File> files;
-    private int entryID;
+    private String entryID;
     public static int idCounter = 1;
     private boolean visible = true;
 
-    public Entry(LocalDate date, String description) {
-        this.entryID = idCounter;
+    public Entry(LocalDate date, String description, String UUID) {
+        //this.entryID = UUID.randomUUID().toString();
         this.date = date;
         this.description = description;
-        idCounter++;
-    }
-    
-    public Entry(LocalDate date, String description, List<File> files) {
-        this.files = files;
-        this.entryID = idCounter;
-        this.date = date;
-        this.description = description;
-        idCounter++;
+        this.entryID = UUID;
+        //System.out.println("udprint af entryid:" + entryID);
     }
 
+    public Entry(LocalDate date, String description) {
+        //this.entryID = UUID.randomUUID().toString();
+        this.date = date;
+        this.description = description;
+        //System.out.println("udprint af entryid:" + entryID);
+    }
+
+//    public Entry(LocalDate date, String description, List<File> files) {
+//        this.files = files;
+//        this.entryID = idCounter;
+//        this.date = date;
+//        this.description = description;
+//        idCounter++;
+//    }
     public void editEntry(String description, LocalDate date, List<File> files) {
+        this.description = description;
+        this.date = date;
+        this.files = files;
+    }
+
+    public void deleteEntry() {
         this.description = description;
         this.date = date;
         this.files = files;
@@ -52,7 +66,7 @@ public class Entry {
         return description + "\n" + fileNames();
     }
 
-    public int getEntryID() {
+    public String getEntryID() {
         return entryID;
     }
 

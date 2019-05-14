@@ -1,10 +1,12 @@
 package UI.DiaryModule;
 
+import Persistence.DiaryRepository;
 import static UI.Vault.stage;
 import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -52,16 +54,15 @@ public class FXMLEntryEditorController implements Initializable {
         chooser.setInitialDirectory(new File("."));
         fileList = new ArrayList<>();
         
-        fileList.addAll(FXMLDiaryController.selectedEntryForEdit.getFiles());
+        //fileList.addAll(FXMLDiaryController.selectedEntryForEdit.getFiles());
 
     }
 
     @FXML
     void saveEntryHandler(ActionEvent event) throws IOException {
         
-        
         FXMLDiaryController.selectedEntryForEdit.editEntry(textarea_des.getText(), dp_date.getValue(), fileList);
-
+        DiaryRepository.updateEntry(FXMLDiaryController.selectedEntryForEdit);
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDiary.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
