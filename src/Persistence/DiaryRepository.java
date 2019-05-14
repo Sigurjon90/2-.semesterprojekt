@@ -38,8 +38,8 @@ public class DiaryRepository {
 
         String description = entry.getEntryDescription();
         String dato = entry.getDate().toString();
-        String entryid = UUID.randomUUID().toString();
-        String sql = "insert into entry(description, dato, residentid, entryid) values (?,?,?,?)";
+      //  String entryid = UUID.randomUUID().toString();
+        String sql = "insert into entry(description, dato, residentid) values (?,?,?)";
 
         try {
             pre = Connector.getCon().prepareStatement(sql);
@@ -47,7 +47,7 @@ public class DiaryRepository {
             pre.setString(1, description);
             pre.setString(2, dato);
             pre.setInt(3, getResidentID());
-            pre.setString(4, entryid);
+          
 
             pre.executeUpdate();
             pre.close();
@@ -57,9 +57,9 @@ public class DiaryRepository {
 
     }
 
-    public static void deleteEntry(Entry entry) {
+    public static void deleteEntry(int id) {
 
-        String sql = "DELETE FROM entry WHERE entryid = '" + entry.getEntryID() + "'";
+        String sql = "DELETE FROM entry WHERE id = " + id;
 
         try {
             pre = Connector.getCon().prepareStatement(sql);
@@ -71,14 +71,14 @@ public class DiaryRepository {
 
     }
 
-    public static void updateEntry(Entry entry) {
+    public static void updateEntry(String description, String date, int id) {
 
-        String sql = "UPDATE entry SET description = ?, dato = ? WHERE entryid = '" + entry.getEntryID() + "'";
+        String sql = "UPDATE entry SET description = ?, dato = ? WHERE id = " + id;
 
         try {
             pre = Connector.getCon().prepareStatement(sql);
-             pre.setString(1, entry.getEntryDescription());
-            pre.setString(2, entry.getDate().toString());
+             pre.setString(1, description);
+            pre.setString(2, date);
             pre.executeUpdate();
             pre.close();
         } catch (SQLException ex) {
@@ -99,7 +99,7 @@ public class DiaryRepository {
             ResultSet result = pre.executeQuery();
 
             while (result.next()) {
-                myEntry = new Entry(LocalDate.parse(result.getString("dato")), result.getString("description"), result.getString("entryid"));
+                myEntry = new Entry(LocalDate.parse(result.getString("dato")), result.getString("description"), result.getInt("id"));
                 //UserManager.getCurrentUser().getResidentDiary().getMap().put(result.getInt("entryid"), myEntry);
                 myList.add(myEntry);
 

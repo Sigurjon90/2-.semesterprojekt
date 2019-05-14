@@ -164,7 +164,7 @@ public class FXMLDiaryController implements Initializable {
     @FXML
     void deleteEntry(ActionEvent event) {
         if (selectedEntryForEdit != null) {
-                DiaryRepository.deleteEntry(list_entrys.getSelectionModel().getSelectedItem());
+                DiaryRepository.deleteEntry(list_entrys.getSelectionModel().getSelectedItem().getid());
                 updateList();
                 textarea_entry.clear();
                 lb_file.setText("");

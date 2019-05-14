@@ -12,22 +12,23 @@ public class Entry {
     private String description;
     private List<Integer> accessType;
     private List<File> files;
-    private String entryID;
+    private int id;
     public static int idCounter = 1;
     private boolean visible = true;
 
-    public Entry(LocalDate date, String description, String UUID) {
+
+    public Entry(LocalDate date, String description, int id) {
         //this.entryID = UUID.randomUUID().toString();
         this.date = date;
         this.description = description;
-        this.entryID = UUID;
+        this.id = id;
         //System.out.println("udprint af entryid:" + entryID);
     }
-
-    public Entry(LocalDate date, String description) {
+     public Entry(LocalDate date, String description) {
         //this.entryID = UUID.randomUUID().toString();
         this.date = date;
         this.description = description;
+       
         //System.out.println("udprint af entryid:" + entryID);
     }
 
@@ -66,8 +67,8 @@ public class Entry {
         return description + "\n" + fileNames();
     }
 
-    public String getEntryID() {
-        return entryID;
+    public int getid() {
+        return id;
     }
 
     public LocalDate getDate() {

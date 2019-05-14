@@ -12,7 +12,7 @@ public class Diary {
     }
 
     public void deleteEntry(Entry entry) {
-        entryMap.remove(entry.getEntryID());
+        entryMap.remove(entry.getid());
     }
 
     public Map<Integer, Entry> getMap() {
