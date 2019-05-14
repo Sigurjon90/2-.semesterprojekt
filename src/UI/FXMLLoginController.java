@@ -12,6 +12,7 @@ import Domain.User.User;
 import Persistence.UserManager;
 import static UI.Vault.stage;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
@@ -40,7 +41,7 @@ public class FXMLLoginController implements Initializable {
     @FXML
     private JFXTextField text_username;
     @FXML
-    private JFXTextField text_password;
+    private JFXPasswordField text_password;
     @FXML
     private Label lb_password;
     @FXML

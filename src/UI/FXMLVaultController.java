@@ -37,6 +37,12 @@ public class FXMLVaultController implements Initializable {
     private Label lb_residents;
 
     @FXML
+    private Button btn_calendar;
+
+    @FXML
+    private Button btn_logout;
+
+    @FXML
     private JFXListView<User> listview_residents;
 
     @FXML
@@ -91,6 +97,13 @@ public class FXMLVaultController implements Initializable {
         User tempUser = listview_residents.getSelectionModel().getSelectedItem();
         UserManager.setCurrentResident(tempUser);
         System.out.println(UserManager.getCurrentResident());
+    }
+
+    @FXML
+    void logoutHandler(ActionEvent event) throws IOException {
+         Parent root = FXMLLoader.load(getClass().getResource("/UI/FXMLLogin.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
     }
 
     @FXML
