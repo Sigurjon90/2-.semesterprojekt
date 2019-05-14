@@ -1,8 +1,10 @@
 package UI.CalendarModule;
 
+import Domain.CalendarModule.Calendar;
+import Persistence.UserManager;
 import UI.Vault;
 import static UI.Vault.stage;
-import static UI.Vault.testCalendar;
+import UI.CalendarModule.FXMLCalendarController;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTimePicker;
 import java.io.IOException;
@@ -23,6 +25,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -69,6 +72,8 @@ public class FXMLActivityEditorController implements Initializable {
     private JFXTimePicker endTimeField;
     @FXML
     private JFXTimePicker startTimeField;
+    @FXML
+    private Label errorLabel;
 
     @FXML
     public void comboAction(ActionEvent event) {
@@ -78,23 +83,27 @@ public class FXMLActivityEditorController implements Initializable {
 
     @FXML
     public void saveActivity(ActionEvent event) throws IOException {
+        if (!titleTextField.getText().isEmpty() && startTextField.getValue() != null && endTextField.getValue() != null && !placeTextField.getText().isEmpty() && !descriptionTextField.getText().isEmpty() && !typeComboBox.getValue().isEmpty() && startTimeField.getValue() != null && endTimeField.getValue() != null) {
+            LocalDateTime startDate, endDate;
 
-        LocalDateTime startDate, endDate;
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Bekræftigelse");
+            alert.setHeaderText(null);
+            alert.setContentText("Er du sikker på du vil gemme?");
+            Optional<ButtonType> action = alert.showAndWait();
 
-        Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setTitle("Bekræftigelse");
-        alert.setHeaderText(null);
-        alert.setContentText("Er du sikker på du vil gemme?");
-        Optional<ButtonType> action = alert.showAndWait();
+            if (action.get() == ButtonType.OK) {
+                startDate = startTextField.getValue().atTime(startTimeField.getValue());
+                endDate = startTextField.getValue().atTime(endTimeField.getValue());
 
-        if (action.get() == ButtonType.OK) {
-            startDate = startTextField.getValue().atTime(startTimeField.getValue());
-            endDate = startTextField.getValue().atTime(endTimeField.getValue());
-
-            testCalendar.createActivity(titleTextField.getText(), Vault.currentLoggedOn, placeTextField.getText(), startDate, endDate, descriptionTextField.getText(), typeComboBox.getValue(), sharedYes.isSelected(), entryYes.isSelected());
-            Parent root = FXMLLoader.load(getClass().getResource("FXMLCalendar.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+                Calendar.getCurrentCalendar().createActivity(titleTextField.getText(), UserManager.getCurrentUser().getFullName(), placeTextField.getText(), startDate, endDate, descriptionTextField.getText(), typeComboBox.getValue(), sharedYes.isSelected(), entryYes.isSelected());
+                Parent root = FXMLLoader.load(getClass().getResource("FXMLCalendar.fxml"));
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+            }
+        } else {
+            errorLabel.setText("Du har ikke udfyldt alle felter");
+            errorLabel.setOpacity(1);
         }
     }
 
@@ -112,8 +121,8 @@ public class FXMLActivityEditorController implements Initializable {
             startDate = startTextField.getValue().atTime(startTimeField.getValue());
             endDate = startTextField.getValue().atTime(endTimeField.getValue());
 
-            Vault.currentActivity.updateActivity(titleTextField.getText(), Vault.currentLoggedOn, placeTextField.getText(), startDate, endDate, descriptionTextField.getText(), typeComboBox.getValue(), sharedYes.isSelected(), entryYes.isSelected());
-            testCalendar.getCalendar().replace(Vault.currentActivity.getActivityID(), Vault.currentActivity);
+            Vault.currentActivity.updateActivity(titleTextField.getText(), UserManager.getCurrentUser().getFullName(), placeTextField.getText(), startDate, endDate, descriptionTextField.getText(), typeComboBox.getValue(), sharedYes.isSelected(), entryYes.isSelected());
+            Calendar.getCurrentCalendar().getCalendar().replace(Vault.currentActivity.getActivityID(), Vault.currentActivity);
             Parent root = FXMLLoader.load(getClass().getResource("FXMLCalendar.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -161,6 +170,7 @@ public class FXMLActivityEditorController implements Initializable {
         }
 
         makeStageDragable();
+        errorLabel.setOpacity(0);
     }
 
     @FXML

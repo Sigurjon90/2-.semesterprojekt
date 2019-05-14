@@ -2,10 +2,10 @@ package UI;
 
 import Domain.CalendarModule.Activity;
 import Domain.CalendarModule.Calendar;
-import Domain.CaseModule.Case;
-import Domain.User.CareWorker;
 import Domain.User.Resident;
-import Domain.User.User;
+import Persistence.Connector;
+import Persistence.DiaryRepository;
+import Persistence.UserManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,9 +16,8 @@ import javafx.stage.StageStyle;
 public class Vault extends Application {
 
     public static Stage stage;
-    public static User currentLoggedOn = new CareWorker("care", "carer");
-    public static Calendar testCalendar = new Calendar();
-    public static Case currentCase;
+//    public static User currentLoggedOn = new CareWorker("care", "carer");
+
     public static Resident resident = new Resident();
     public static Activity currentActivity;
     public static boolean newAction;
@@ -35,6 +34,9 @@ public class Vault extends Application {
     }
 
     public static void main(String[] args) {
+        Connector connection = new Connector();
+        connection.setupConnection();
+
         launch(args);
     }
 

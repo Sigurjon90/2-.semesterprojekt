@@ -2,6 +2,7 @@ package UI.DiaryModule;
 
 import static UI.Vault.stage;
 import Domain.DiaryModule.Entry;
+import Persistence.DiaryRepository;
 import UI.Vault;
 import com.jfoenix.controls.JFXButton;
 import java.io.File;
@@ -38,6 +39,8 @@ public class FXMLEntryCreatorController implements Initializable {
     private JFXButton btn_cancel;
     @FXML
     private Label lb_error;
+    @FXML
+    private Label errorLabel;
 
     private File file = null;
     private FileChooser chooser = new FileChooser();
@@ -66,24 +69,30 @@ public class FXMLEntryCreatorController implements Initializable {
         //    lb_error.setText("Indsæt venligst en dato!");
         //}
         //else{
-        
-        Entry entry = null;
-        if (fileList == null) {
-            entry = new Entry(dp_date.getValue(), textarea_des.getText());
-        } else {
+        if (dp_date.getValue() != null && !textarea_des.getText().isEmpty()) {
+            Entry entry = null;
+            if (fileList == null) {
+                entry = new Entry(dp_date.getValue(), textarea_des.getText());
+            } else {
 
-            entry = new Entry(dp_date.getValue(), textarea_des.getText(), fileList);
+            entry = new Entry(dp_date.getValue(), textarea_des.getText());
         }
 
-        Vault.resident.getResidentDiary().getMap().put(entry.getEntryID(), entry);
-        System.out.println(Vault.resident.getResidentDiary().getMap().get(entry.getEntryID()).getEntryDescription());
+        DiaryRepository.storeEntry(entry);
+        
+        //Vault.resident.getResidentDiary().getMap().put(entry.getEntryID(), entry);
+        //System.out.println("unikt id for entry = " + entry.getEntryID());
+       
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDiary.fxml"));
-
+        
         Scene scene = new Scene(root);
 
-        stage.setScene(scene);
-        stage.show();
-    //}
+            stage.setScene(scene);
+            stage.show();
+        } else {
+            errorLabel.setText("Du har ikke udfyldt alle felter");
+            errorLabel.setOpacity(1);
+        }
     }
 
     @FXML

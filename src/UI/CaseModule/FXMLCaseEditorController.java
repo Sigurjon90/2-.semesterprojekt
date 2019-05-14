@@ -1,21 +1,29 @@
 package UI.CaseModule;
 
+import Persistence.CaseRepository;
+import Persistence.UserManager;
 import UI.Vault;
+import static UI.Vault.stage;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -62,22 +70,20 @@ public class FXMLCaseEditorController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Date date = new Date();
         obsFileList = FXCollections.observableArrayList();
         fileView.setItems(obsFileList);
         attachedFiles = new ArrayList<>();
-        attachedFiles = Vault.currentCase.getAttachedFiles();
+        attachedFiles = CaseRepository.getSelectedCase().getAttachedFiles();
         chooser.setInitialDirectory(new File("."));
         residentNameField.setEditable(false);
         serviceField.setEditable(false);
         titleField.setEditable(false);
-        titleField.setText(Vault.currentCase.getTitle());
-        serviceField.setText(Vault.currentCase.getCaseType());
-        residentNameField.setText(Vault.currentCase.getResident().getFirstName());
-        descriptionArea.setText(Vault.currentCase.getDescription() + "\nNy redigering: \n");
+        titleField.setText(CaseRepository.getSelectedCase().getTitle());
+        serviceField.setText(CaseRepository.getSelectedCase().getCaseType());
+        residentNameField.setText(UserManager.getUser(CaseRepository.getSelectedCase().getResidentID()).getFirstName());
+        descriptionArea.setText(CaseRepository.getSelectedCase().getDescription() + "\nNy redigering:" + date.toGMTString() + "\n");
 
-        for (File f : Vault.currentCase.getAttachedFiles()) {
-            obsFileList.add(f.getName());
-        }
     }
 
     @FXML
@@ -103,32 +109,36 @@ public class FXMLCaseEditorController implements Initializable {
     }
 
     @FXML
-    private void backToCaseModule(ActionEvent event) {
-        final Node source = (Node) event.getSource();
-        final Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
+    private void backToCaseModule(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLCase.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
     }
 
     @FXML
-    private void closeCaseAction(ActionEvent event) {
-        if (!closeReasonField.getText().isEmpty()) {
-            Vault.currentCase.closeCase(true, closeReasonField.getText());
-            final Node source = (Node) event.getSource();
-            final Stage stage = (Stage) source.getScene().getWindow();
-            stage.close();
+    private void closeCaseAction(ActionEvent event) throws IOException {
+        if (!closeReasonField.getText().isEmpty() && UserManager.getCurrentUser().checkForPermission(15)) {
+
+            CaseRepository.closeCase(CaseRepository.getSelectedCase().getCaseID());
+            Parent root = FXMLLoader.load(getClass().getResource("FXMLCase.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+
         } else {
             closeReasonField.setText("Angiv grund");
         }
     }
 
     @FXML
-    private void saveCaseEditAction(ActionEvent event) {
-        Vault.currentCase.setDescription(descriptionArea.getText());
-        Vault.currentCase.setAttachedFiles(attachedFiles);
-        final Node source = (Node) event.getSource();
-        final Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
-
+    private void saveCaseEditAction(ActionEvent event) throws IOException {
+        if (UserManager.getCurrentUser().checkForPermission(6)) {
+            CaseRepository.updateCaseInDB(descriptionArea.getText(), CaseRepository.getSelectedCase().getCaseID());
+//            CaseRepository.getSelectedCase().setDescription(descriptionArea.getText());
+//            CaseRepository.getSelectedCase().setAttachedFiles(attachedFiles);
+            Parent root = FXMLLoader.load(getClass().getResource("FXMLCase.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+        }
     }
 
 }

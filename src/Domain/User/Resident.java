@@ -3,24 +3,26 @@ package Domain.User;
 import Domain.CalendarModule.Calendar;
 import Domain.DiaryModule.Diary;
 
-public class Resident extends User {
+public class Resident {
 
     private Diary residentDiary;
     private Calendar residentCalendar;
+    private String firstName = "SDALAS";
+    private String lastName = "OPIDK";
 
     public Resident() {
         this.residentDiary = new Diary();
-        this.residentCalendar = new Calendar();
+        //this.residentCalendar = new Calendar();
     }
 
     public Resident(String firstName, String lastName, String username, String password) {
-        super.setFirstName(firstName);
-        super.setLastName(lastName);
-        super.setUsername(username);
-        super.setPassword(password);
+//        super.setFirstName(firstName);
+//        super.setLastName(lastName);
+//        super.setUsername(username);
+//        super.setPassword(password);
 
         this.residentDiary = new Diary();
-        this.residentCalendar = new Calendar();
+        //this.residentCalendar = new Calendar();
     }
 
     public Diary getResidentDiary() {
@@ -37,6 +39,14 @@ public class Resident extends User {
 
     public void setResidentCalendar(Calendar residentCalendar) {
         this.residentCalendar = residentCalendar;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
 }

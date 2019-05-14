@@ -5,11 +5,21 @@
  */
 package UI;
 
+import Domain.User.CareWorker;
+import Domain.User.Resident;
+import Domain.User.SocialWorker;
+import Domain.User.User;
+import Persistence.UserManager;
 import static UI.Vault.stage;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,7 +41,7 @@ public class FXMLLoginController implements Initializable {
     @FXML
     private JFXTextField text_username;
     @FXML
-    private JFXTextField text_password;
+    private JFXPasswordField text_password;
     @FXML
     private Label lb_password;
     @FXML
@@ -39,19 +49,21 @@ public class FXMLLoginController implements Initializable {
     @FXML
     private JFXButton btn_cancel;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
     }
 
     @FXML
-    private void loginHandler(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLVault.fxml"));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
+    private void loginHandler(ActionEvent event) throws IOException, SQLException {
+
+        if (UserManager.login(text_username.getText(), text_password.getText())) {
+            System.out.println(UserManager.getCurrentUser().toString());
+            Parent root = FXMLLoader.load(getClass().getResource("FXMLVault.fxml"));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+        }
+
     }
 
     @FXML

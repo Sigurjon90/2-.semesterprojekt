@@ -1,9 +1,12 @@
 package UI.CalendarModule;
 
 import Domain.CalendarModule.Activity;
+import Domain.CalendarModule.Calendar;
+import static Domain.CalendarModule.Calendar.enableCurrentCalendar;
+import Persistence.ActivityManager;
+import Persistence.UserManager;
 import UI.Vault;
 import static UI.Vault.stage;
-import static UI.Vault.testCalendar;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
 import com.jfoenix.controls.JFXButton;
@@ -52,6 +55,7 @@ public class FXMLCalendarController implements Initializable {
 
     private double xOffset = 0;
     private double yOffset = 0;
+
     @FXML
     private AnchorPane parent;
     @FXML
@@ -108,17 +112,53 @@ public class FXMLCalendarController implements Initializable {
     private Label descriptionLabel;
     @FXML
     private ImageView pictoView;
+    @FXML
+    private Label errorLabel;
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        //Opretter kalender til valgte beboer.
+        enableCurrentCalendar();
+        //Opdaterer kalenderen med beboerens aktiviteter.
+        if (UserManager.getCurrentUser().checkForPermission(16)) {
+            ActivityManager.getActivities(UserManager.getCurrentResident().getID());
+        } else {
+            ActivityManager.getActivities(UserManager.getCurrentUser().getID());
+        }
+        hide();
+        planBtn.setDisable(false);
+        deleteBtn.setDisable(true);
+
+        makeStageDragable();
+
+        checkPermissions();
+
+        errorLabel.setOpacity(0);
+    }
+
+    void checkPermissions() {
+        if (!UserManager.getCurrentUser().checkForPermission(9)) {
+            planBtn.setDisable(true);
+        }
+
+        if (!UserManager.getCurrentUser().checkForPermission(13)) {
+            deleteBtn.setDisable(true);
+        }
+    }
 
     @FXML
     public void planAction(ActionEvent event) throws IOException {
+
         Vault.newAction = true;
         Parent currentParent = FXMLLoader.load(getClass().getResource("FXMLActivityEditor.fxml"));
         Scene scene = new Scene(currentParent);
         stage.setScene(scene);
+
     }
 
     @FXML
     public void deleteActivity(ActionEvent event) throws IOException {
+
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Bekræftigelse");
         alert.setHeaderText(null);
@@ -126,7 +166,7 @@ public class FXMLCalendarController implements Initializable {
         Optional<ButtonType> action = alert.showAndWait();
 
         if (action.get() == ButtonType.OK) {
-            testCalendar.getCalendar().remove(Vault.currentActivity.getActivityID());
+            Calendar.getCurrentCalendar().getCalendar().remove(Vault.currentActivity.getActivityID());
         }
         Vault.currentActivity = null;
         deleteBtn.setDisable(true);
@@ -139,6 +179,7 @@ public class FXMLCalendarController implements Initializable {
         updateListView("Friday");
         updateListView("Saturday");
         updateListView("Sunday");
+
     }
 
     public void clearAllFields() {
@@ -180,13 +221,13 @@ public class FXMLCalendarController implements Initializable {
 
     public void updateListView(String day) {
         obList = FXCollections.observableArrayList(new ArrayList<>());
-        Set<Integer> keyList = testCalendar.getKeySet();
+        Set<Integer> keyList = Calendar.getCurrentCalendar().getKeySet();
 
         switch (day) {
             case "Monday":
                 for (Integer i : keyList) {
-                    if (testCalendar.getActivity(i).getDay() == 1) {
-                        obList.add(testCalendar.getActivity(i));
+                    if (Calendar.getCurrentCalendar().getActivity(i).getDay() == 1) {
+                        obList.add(Calendar.getCurrentCalendar().getActivity(i));
                     }
                 }
                 mondayList.setItems(obList);
@@ -194,8 +235,8 @@ public class FXMLCalendarController implements Initializable {
                 break;
             case "Tuesday":
                 for (Integer i : keyList) {
-                    if (testCalendar.getActivity(i).getDay() == 2) {
-                        obList.add(testCalendar.getActivity(i));
+                    if (Calendar.getCurrentCalendar().getActivity(i).getDay() == 2) {
+                        obList.add(Calendar.getCurrentCalendar().getActivity(i));
                     }
                 }
                 tuesdayList.setItems(obList);
@@ -204,8 +245,8 @@ public class FXMLCalendarController implements Initializable {
 
             case "Wednesday":
                 for (Integer i : keyList) {
-                    if (testCalendar.getActivity(i).getDay() == 3) {
-                        obList.add(testCalendar.getActivity(i));
+                    if (Calendar.getCurrentCalendar().getActivity(i).getDay() == 3) {
+                        obList.add(Calendar.getCurrentCalendar().getActivity(i));
                     }
                 }
                 wednesdayList.setItems(obList);
@@ -214,8 +255,8 @@ public class FXMLCalendarController implements Initializable {
 
             case "Thursday":
                 for (Integer i : keyList) {
-                    if (testCalendar.getActivity(i).getDay() == 4) {
-                        obList.add(testCalendar.getActivity(i));
+                    if (Calendar.getCurrentCalendar().getActivity(i).getDay() == 4) {
+                        obList.add(Calendar.getCurrentCalendar().getActivity(i));
                     }
                 }
                 thursdayList.setItems(obList);
@@ -224,8 +265,8 @@ public class FXMLCalendarController implements Initializable {
 
             case "Friday":
                 for (Integer i : keyList) {
-                    if (testCalendar.getActivity(i).getDay() == 5) {
-                        obList.add(testCalendar.getActivity(i));
+                    if (Calendar.getCurrentCalendar().getActivity(i).getDay() == 5) {
+                        obList.add(Calendar.getCurrentCalendar().getActivity(i));
                     }
                 }
                 fridayList.setItems(obList);
@@ -234,8 +275,8 @@ public class FXMLCalendarController implements Initializable {
 
             case "Saturday":
                 for (Integer i : keyList) {
-                    if (testCalendar.getActivity(i).getDay() == 6) {
-                        obList.add(testCalendar.getActivity(i));
+                    if (Calendar.getCurrentCalendar().getActivity(i).getDay() == 6) {
+                        obList.add(Calendar.getCurrentCalendar().getActivity(i));
                     }
                 }
                 saturdayList.setItems(obList);
@@ -244,8 +285,8 @@ public class FXMLCalendarController implements Initializable {
 
             case "Sunday":
                 for (Integer i : keyList) {
-                    if (testCalendar.getActivity(i).getDay() == 7) {
-                        obList.add(testCalendar.getActivity(i));
+                    if (Calendar.getCurrentCalendar().getActivity(i).getDay() == 7) {
+                        obList.add(Calendar.getCurrentCalendar().getActivity(i));
                     }
                 }
                 sundayList.setItems(obList);
@@ -262,18 +303,24 @@ public class FXMLCalendarController implements Initializable {
         Vault.newAction = false;
         if (event.getButton().equals(MouseButton.PRIMARY)) {
             if (event.getClickCount() == 2) {
-                myList = (ListView) event.getSource();
-                myActivity = (Activity) myList.getSelectionModel().getSelectedItem();
-                Parent currentParent;
-                Vault.currentActivity = myActivity;
-                try {
-                    currentParent = FXMLLoader.load(getClass().getResource("FXMLActivityEditor.fxml"));
-                    Scene scene = new Scene(currentParent);
-                    stage.setScene(scene);
+                if (UserManager.getCurrentUser().checkForPermission(5)) {
+                    myList = (ListView) event.getSource();
+                    myActivity = (Activity) myList.getSelectionModel().getSelectedItem();
+                    Parent currentParent;
+                    Vault.currentActivity = myActivity;
+                    try {
+                        currentParent = FXMLLoader.load(getClass().getResource("FXMLActivityEditor.fxml"));
+                        Scene scene = new Scene(currentParent);
+                        stage.setScene(scene);
 
-                } catch (IOException ex) {
-                    Logger.getLogger(FXMLCalendarController.class
-                            .getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLCalendarController.class
+                                .getName()).log(Level.SEVERE, null, ex);
+                    }
+                    errorLabel.setOpacity(0);
+                } else {
+                    errorLabel.setText("Du har ikke adgang til at redigere i aktiviteter");
+                    errorLabel.setOpacity(1);
                 }
             }
             if (event.getClickCount() == 1) {
@@ -377,18 +424,6 @@ public class FXMLCalendarController implements Initializable {
         descriptionLabel.setOpacity(0);
         pictoView.setOpacity(0);
 
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb
-    ) {
-        hide();
-//        User is the person logged into the system
-//        if (Vault.currentLoggedOn instanceof CareWorker) {
-        planBtn.setDisable(false);
-        deleteBtn.setDisable(true);
-
-        makeStageDragable();
     }
 
     @FXML
