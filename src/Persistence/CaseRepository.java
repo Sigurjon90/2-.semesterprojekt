@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CaseRepository {
-    
+
     private static Case selectedCase;
 
     public static Case getSelectedCase() {
@@ -72,6 +72,22 @@ public class CaseRepository {
 
         try {
             pre = Connector.getCon().prepareStatement(SQL);
+            pre.executeUpdate();
+            pre.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    public static void updateCaseInDB(String description, int caseID) {
+        String SQL = "update case_table set description =? where id =?";
+        try {
+
+            pre = Connector.getCon().prepareStatement(SQL);
+            pre.setString(1, description);
+            pre.setInt(2, caseID);
             pre.executeUpdate();
             pre.close();
 
