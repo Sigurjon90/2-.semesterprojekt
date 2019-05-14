@@ -3,7 +3,7 @@ package UI;
 import Domain.User.User;
 import Persistence.UserManager;
 import static UI.Vault.stage;
-import static UI.Vault.testCalendar;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
@@ -119,7 +119,7 @@ public class FXMLAdministrationController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         setPasswordBtn.setVisible(false);
 
         updateInfoDB.setVisible(false);

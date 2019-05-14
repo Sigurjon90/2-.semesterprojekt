@@ -63,11 +63,9 @@ public class FXMLVaultController implements Initializable {
     @FXML
     private Button btn_diary;
     @FXML
-    private Button btn_calendar;
-    @FXML
     private Button btn_case;
     @FXML
-    private Button btn_Admin;
+    private Button btn_admin;
     @FXML
     private Line lastLine;
 
@@ -85,8 +83,8 @@ public class FXMLVaultController implements Initializable {
             btn_diary.setDisable(true);
             btn_calendar.setDisable(true);
             btn_case.setDisable(true);
-            btn_Admin.setVisible(true);
-            btn_Admin.setDisable(false);
+            btn_admin.setVisible(true);
+            btn_admin.setDisable(false);
             lastLine.setVisible(true);
 
         } else {
@@ -119,9 +117,9 @@ public class FXMLVaultController implements Initializable {
 
     @FXML
     void logoutHandler(ActionEvent event) throws IOException {
-         Parent root = FXMLLoader.load(getClass().getResource("/UI/FXMLLogin.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+        Parent root = FXMLLoader.load(getClass().getResource("/UI/FXMLLogin.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
     }
 
     @FXML

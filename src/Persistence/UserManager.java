@@ -383,8 +383,8 @@ public class UserManager {
         }
 
     }
-    
-        public static void updateUserInResidents(int userID, int careworkerID, int socialworkerID) {
+
+    public static void updateUserInResidents(int userID, int careworkerID, int socialworkerID) {
         String SQL = "update residents set social_worker_id =?, care_worker_id =? where resident_id =?";
         try {
             pre = Connector.getCon().prepareStatement(SQL);
