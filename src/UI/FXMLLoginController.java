@@ -28,6 +28,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -48,10 +51,15 @@ public class FXMLLoginController implements Initializable {
     private JFXButton btn_login;
     @FXML
     private JFXButton btn_cancel;
+    @FXML
+    private AnchorPane loginPane;
+
+    private double xOffset = 0;
+    private double yOffset = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        makeStageDragable();
     }
 
     @FXML
@@ -71,4 +79,32 @@ public class FXMLLoginController implements Initializable {
         System.exit(1);
     }
 
+    @FXML
+    private void exitAction(MouseEvent event) {
+        System.exit(1);
+    }
+
+    @FXML
+    private void minimizeAction(MouseEvent event) {
+        Stage stage = (Stage) loginPane.getScene().getWindow();
+        stage.setIconified(true);
+    }
+
+    private void makeStageDragable() {
+        loginPane.setOnMousePressed((event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        loginPane.setOnMouseDragged((event) -> {
+            Vault.stage.setX(event.getScreenX() - xOffset);
+            Vault.stage.setY(event.getScreenY() - yOffset);
+            Vault.stage.setOpacity(0.8f);
+        });
+        loginPane.setOnDragDone((event) -> {
+            Vault.stage.setOpacity(1.0f);
+        });
+        loginPane.setOnMouseReleased((event) -> {
+            Vault.stage.setOpacity(1.0f);
+        });
+    }
 }

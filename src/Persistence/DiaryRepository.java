@@ -38,7 +38,7 @@ public class DiaryRepository {
 
         String description = entry.getEntryDescription();
         String dato = entry.getDate().toString();
-      //  String entryid = UUID.randomUUID().toString();
+        //  String entryid = UUID.randomUUID().toString();
         String sql = "insert into entry(description, dato, residentid) values (?,?,?)";
 
         try {
@@ -47,7 +47,6 @@ public class DiaryRepository {
             pre.setString(1, description);
             pre.setString(2, dato);
             pre.setInt(3, getResidentID());
-          
 
             pre.executeUpdate();
             pre.close();
@@ -77,7 +76,7 @@ public class DiaryRepository {
 
         try {
             pre = Connector.getCon().prepareStatement(sql);
-             pre.setString(1, description);
+            pre.setString(1, description);
             pre.setString(2, date);
             pre.executeUpdate();
             pre.close();

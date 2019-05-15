@@ -64,7 +64,6 @@ public class FXMLDiaryController implements Initializable {
     public static Entry selectedEntryForEdit;
     public ObservableList<Entry> obsEntryList;
     public ObservableList<Entry> tempList;
-    private ListProperty<Entry> listProperty = new SimpleListProperty<>();
     private ArrayList<Entry> tempEntries;
 
     Resident resident = new Resident();
@@ -79,19 +78,8 @@ public class FXMLDiaryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        //Vault.resident.getResidentDiary().getMap().put(2, new Entry(new Date(), "hej med dig Mathias"));
-        //Vault.resident.getResidentDiary().getMap().put(3, new Entry(new Date(), "hej  dig Mathias"));
-        //Vault.resident.getResidentDiary().getMap().put(1, new Entry(new Date(), "hej med Mathias"));
         updateList();
-        //list = FXCollections.observableArrayList();
-        //tempList = FXCollections.observableArrayList();
-        //list_entrys.itemsProperty().bind(listProperty);
-        //listProperty.set(list);
         makeStageDragable();
-
-        makeStageDragable();
-
         checkPermissions();
     }
 
@@ -99,7 +87,6 @@ public class FXMLDiaryController implements Initializable {
         if (!UserManager.getCurrentUser().checkForPermission(4)) {
             btn_edit.setDisable(true);
         }
-
         if (!UserManager.getCurrentUser().checkForPermission(12)) {
             btn_delete.setDisable(true);
         }
@@ -115,14 +102,24 @@ public class FXMLDiaryController implements Initializable {
     public void updateList() {
         tempEntries = DiaryRepository.getEntrys(UserManager.getCurrentResident().getID());
         obsEntryList = FXCollections.observableArrayList(tempEntries);
-        list_entrys.setItems(obsEntryList);
+        list_entrys.setItems(obsEntryList.sorted());
 
-//        for (int i = 1; i <= UserManager.getCurrentResident().getResidentDiary().getMap().size(); i++) {
-//            if (UserManager.getCurrentResident().getResidentDiary().getMap().get(i).isVisible()) {
-//                obsEntryList.add(UserManager.getCurrentResident().getResidentDiary().getMap().get(i));
-//                System.out.println("testing");
-//            }
-//        }
+    }
+
+    @FXML
+    void searchEntryButtonHandler(ActionEvent event) throws IOException {
+        Entry list;
+        if (dp_search.getValue() == null) {
+            list_entrys.setItems(obsEntryList);
+        } else if (dp_search.getValue() != null) {
+            for (int i = 0; i < obsEntryList.size(); i++) {
+                if (obsEntryList.get(i).getDate().equals(dp_search.getValue())) {
+                    tempList = obsEntryList.get(i);
+                    System.out.println("Temp list: " + tempList);
+                    list_entrys.setItems(tempList.sorted());
+                }
+            }
+        }
     }
 
     @FXML
@@ -164,10 +161,10 @@ public class FXMLDiaryController implements Initializable {
     @FXML
     void deleteEntry(ActionEvent event) {
         if (selectedEntryForEdit != null) {
-                DiaryRepository.deleteEntry(list_entrys.getSelectionModel().getSelectedItem().getid());
-                updateList();
-                textarea_entry.clear();
-                lb_file.setText("");
+            DiaryRepository.deleteEntry(list_entrys.getSelectionModel().getSelectedItem().getid());
+            updateList();
+            textarea_entry.clear();
+            lb_file.setText("");
         }
 
     }
@@ -196,23 +193,6 @@ public class FXMLDiaryController implements Initializable {
     private void minimizeAction(MouseEvent event) {
         Stage stage = (Stage) DiaryPane.getScene().getWindow();
         stage.setIconified(true);
-    }
-
-    @FXML
-    void searchEntryButtonHandler(ActionEvent event) throws IOException {
-        if (dp_search.getValue() == null) {
-            listProperty.set(obsEntryList);
-            tempList.clear();
-        } else if (dp_search.getValue() != null) {
-            tempList.clear();
-            for (int i = 0; i < obsEntryList.size(); i++) {
-                if (obsEntryList.get(i).getDate().equals(dp_search.getValue())) {
-                    tempList.add(obsEntryList.get(i));
-                    listProperty.set(tempList);
-                }
-            }
-
-        }
     }
 
     private void makeStageDragable() {

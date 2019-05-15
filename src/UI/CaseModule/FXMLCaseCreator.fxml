@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextArea?>
@@ -18,7 +12,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Polygon?>
 
-<AnchorPane id="AnchorPane" fx:id="caseModulePane" prefHeight="611.0" prefWidth="832.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.CaseModule.FXMLCaseCreatorController">
+<AnchorPane id="AnchorPane" fx:id="caseModulePane" prefHeight="611.0" prefWidth="832.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.CaseModule.FXMLCaseCreatorController">
    <children>
       <AnchorPane prefHeight="46.0" prefWidth="929.0" style="-fx-background-color: #2d2d2d;">
          <children>
@@ -47,17 +41,17 @@
       <Line endX="128.0" endY="-60.5" layoutX="531.0" layoutY="209.0" startX="128.0" startY="311.0" />
       <JFXTextField fx:id="titleField" layoutX="93.0" layoutY="111.0" prefHeight="25.0" prefWidth="204.0" />
       <Label layoutX="93.0" layoutY="105.0" text="Titel" />
-      <JFXButton fx:id="createCase" layoutX="670.0" layoutY="560.0" onAction="#createCase" style="-fx-background-color: #2d2d2d;" text="Opret Sag" textFill="WHITE" />
-      <JFXButton layoutX="757.0" layoutY="560.0" style="-fx-background-color: #2d2d2d;" text="Gem Ændringer" textFill="WHITE" />
-      <JFXButton fx:id="attacheFileBtn" layoutX="303.0" layoutY="560.0" onAction="#attachFileAction" style="-fx-background-color: #2d2d2d;" text="Vedhæft Fil" textFill="WHITE" />
+      <JFXButton fx:id="createCase" layoutX="670.0" layoutY="560.0" onAction="#createCase" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Opret Sag" textFill="WHITE" />
+      <JFXButton layoutX="757.0" layoutY="560.0" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Gem Ændringer" textFill="WHITE" />
+      <JFXButton fx:id="attacheFileBtn" layoutX="303.0" layoutY="560.0" onAction="#attachFileAction" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Vedhæft Fil" textFill="WHITE" />
       <Label fx:id="numberOfFiles" layoutX="324.0" layoutY="535.0" prefHeight="17.0" prefWidth="77.0" text="Antal filer: " />
       <ChoiceBox fx:id="serviceBox" layoutX="445.0" layoutY="73.0" prefWidth="150.0" />
-      <ImageView fx:id="refreshBtn" fitHeight="25.0" fitWidth="32.0" layoutX="605.0" layoutY="53.0" onMouseClicked="#refreshType" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="refreshBtn" fitHeight="25.0" fitWidth="32.0" layoutX="605.0" layoutY="73.0" onMouseClicked="#refreshType" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
          <image>
             <Image url="@../../icons/refresh.png" />
          </image>
       </ImageView>
-      <JFXButton fx:id="Backbtn" layoutX="32.0" layoutY="560.0" onAction="#backToCaseModule" style="-fx-background-color: #2d2d2d;" text="Tilbage" textFill="WHITE" />
+      <JFXButton fx:id="Backbtn" layoutX="32.0" layoutY="560.0" onAction="#backToCaseModule" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Tilbage" textFill="WHITE" />
       <Label fx:id="warningCreateLabel" layoutX="696.0" layoutY="463.0" opacity="0.0" prefHeight="17.0" prefWidth="150.0" text="Udfyld de nødvendige felter" textFill="RED" />
       <JFXListView fx:id="fileView" layoutX="387.0" layoutY="541.0" prefHeight="38.0" prefWidth="117.0" stylesheets="@CaseUI.css" />
       <JFXTextField fx:id="residentLastNameField" layoutX="682.0" layoutY="206.0" prefHeight="25.0" prefWidth="150.0" />
