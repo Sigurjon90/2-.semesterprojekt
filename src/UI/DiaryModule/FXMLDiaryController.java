@@ -103,7 +103,6 @@ public class FXMLDiaryController implements Initializable {
         tempEntries = DiaryRepository.getEntrys(UserManager.getCurrentResident().getID());
         obsEntryList = FXCollections.observableArrayList(tempEntries);
         list_entrys.setItems(obsEntryList.sorted());
-
     }
 
     @FXML
@@ -114,9 +113,7 @@ public class FXMLDiaryController implements Initializable {
         } else if (dp_search.getValue() != null) {
             for (int i = 0; i < obsEntryList.size(); i++) {
                 if (obsEntryList.get(i).getDate().equals(dp_search.getValue())) {
-                    System.out.println("obslist: " + obsEntryList.get(i));
                     tempList.add(obsEntryList.get(i));
-                    System.out.println("Temp list: " + tempList);
                     list_entrys.setItems(tempList.sorted());
                 }
             }

@@ -53,9 +53,6 @@ public class FXMLEntryCreatorController implements Initializable {
     private FileChooser chooser = new FileChooser();
     private List<File> fileList;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         makeStageDragable();
@@ -81,16 +78,13 @@ public class FXMLEntryCreatorController implements Initializable {
             if (fileList == null) {
                 entry = new Entry(dp_date.getValue(), textarea_des.getText());
             } else {
-
-                entry = new Entry(dp_date.getValue(), textarea_des.getText());
+                entry = new Entry(dp_date.getValue(), textarea_des.getText(), fileList);
             }
-
+            System.out.println(entry.getFiles());
             DiaryRepository.storeEntry(entry);
+            DiaryRepository.storeEntryFile(entry);
 
-            //Vault.resident.getResidentDiary().getMap().put(entry.getEntryID(), entry);
-            //System.out.println("unikt id for entry = " + entry.getEntryID());
             Parent root = FXMLLoader.load(getClass().getResource("FXMLDiary.fxml"));
-
             Scene scene = new Scene(root);
 
             stage.setScene(scene);

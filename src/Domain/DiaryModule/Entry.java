@@ -8,37 +8,29 @@ import java.util.UUID;
 public class Entry {
 
     private LocalDate date;
-    //todo User creator;
     private String description;
     private List<Integer> accessType;
     private List<File> files;
     private int id;
-    public static int idCounter = 1;
-    private boolean visible = true;
 
 
     public Entry(LocalDate date, String description, int id) {
-        //this.entryID = UUID.randomUUID().toString();
         this.date = date;
         this.description = description;
         this.id = id;
-        //System.out.println("udprint af entryid:" + entryID);
     }
      public Entry(LocalDate date, String description) {
         //this.entryID = UUID.randomUUID().toString();
         this.date = date;
         this.description = description;
-       
         //System.out.println("udprint af entryid:" + entryID);
     }
 
-//    public Entry(LocalDate date, String description, List<File> files) {
-//        this.files = files;
-//        this.entryID = idCounter;
-//        this.date = date;
-//        this.description = description;
-//        idCounter++;
-//    }
+    public Entry(LocalDate date, String description, List<File> files) {
+        this.files = files;
+        this.date = date;
+        this.description = description;
+    }
     public void editEntry(String description, LocalDate date, List<File> files) {
         this.description = description;
         this.date = date;
@@ -49,14 +41,6 @@ public class Entry {
         this.description = description;
         this.date = date;
         this.files = files;
-    }
-
-    public boolean isVisible() {
-        return visible;
-    }
-
-    public void setVisible(boolean visible) {
-        this.visible = visible;
     }
 
     public String getEntryDescription() {
