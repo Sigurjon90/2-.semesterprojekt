@@ -108,13 +108,14 @@ public class FXMLDiaryController implements Initializable {
 
     @FXML
     void searchEntryButtonHandler(ActionEvent event) throws IOException {
-        Entry list;
+        tempList = FXCollections.observableArrayList();
         if (dp_search.getValue() == null) {
             list_entrys.setItems(obsEntryList);
         } else if (dp_search.getValue() != null) {
             for (int i = 0; i < obsEntryList.size(); i++) {
                 if (obsEntryList.get(i).getDate().equals(dp_search.getValue())) {
-                    tempList = obsEntryList.get(i);
+                    System.out.println("obslist: " + obsEntryList.get(i));
+                    tempList.add(obsEntryList.get(i));
                     System.out.println("Temp list: " + tempList);
                     list_entrys.setItems(tempList.sorted());
                 }
