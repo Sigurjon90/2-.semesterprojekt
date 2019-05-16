@@ -234,7 +234,7 @@ public class UserManager {
             ResultSet result = pre.executeQuery();
 
             while (result.next()) {
-                users.add(new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), result.getInt("roleid"), getRoleType(result.getInt("roleid")), result.getInt("id")));
+                users.add(new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), getRoleType(result.getInt("roleid")), result.getInt("id")));
             }
             return users;
         } catch (SQLException ex) {
@@ -255,6 +255,24 @@ public class UserManager {
 
             while (result.next()) {
                 users.add(new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), result.getInt("roleid"), getRoleType(result.getInt("roleid")), result.getInt("id")));
+            }
+            return users;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public static ArrayList<User> getAllUsersWithOutRoleID() {
+        ArrayList<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM users";
+
+        try {
+            pre = Connector.getCon().prepareStatement(sql);
+            ResultSet result = pre.executeQuery();
+
+            while (result.next()) {
+                users.add(new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), getRoleType(result.getInt("roleid")), result.getInt("id")));
             }
             return users;
         } catch (SQLException ex) {

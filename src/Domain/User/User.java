@@ -28,6 +28,17 @@ public class User {
         role = new Role(4, "resident");
     }
 
+    public User(String firstName, String lastName, String username, String password, String roleName, int id) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.residentDiary = new Diary();
+        this.username = username;
+        this.password = password;
+        this.id = id;
+        role = new Role(roleName);
+        System.out.println("THE NEW ONE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }
+
     public User(String firstName, String lastName, String username, String password, int roleid, String roleName, int id) {
         this.firstName = firstName;
         this.lastName = lastName;
