@@ -70,7 +70,7 @@ public class FXMLCaseController implements Initializable {
         makeStageDragable();
 
     }
-    
+
 //     void checkPermissions() {
 //        if (!UserManager.getCurrentUser().checkForPermission(1)) {
 //            btn_diary.setDisable(true);
@@ -82,7 +82,6 @@ public class FXMLCaseController implements Initializable {
 //            btn_case.setDisable(true);
 //        }
 //    }
-
     private void makeStageDragable() {
         caseModulePane.setOnMousePressed((event) -> {
             xOffset = event.getSceneX();
@@ -151,7 +150,11 @@ public class FXMLCaseController implements Initializable {
     }
 
     @FXML
-    private void searchCaseAction(ActionEvent event) {
+    private void searchCaseAction(ActionEvent event) throws SQLException {
+
+        tempCases = CaseRepository.getCaseByID(Integer.parseInt(searchIDField.getText()));
+        obsCaseList = FXCollections.observableArrayList(tempCases);
+        caseList.setItems(obsCaseList);
         //     CaseRepository.closeCase(2);
 //
 //        if (!searchIDField.getText().isEmpty() && searchIDField.getText().matches("\\d+")) {

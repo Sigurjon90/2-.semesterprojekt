@@ -17,7 +17,7 @@ public class Role {
 
     public Role(String roleName) {
         this.roleName = roleName;
-        System.out.println("NEW 2");
+
     }
 
     public boolean checkForPermission(int permissionID) {

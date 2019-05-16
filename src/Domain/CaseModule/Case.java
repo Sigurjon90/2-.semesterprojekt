@@ -15,7 +15,7 @@ public class Case {
     private Date date;
     private String description;
     private String caseType;
-    private List<File> attachedFiles;
+    private ArrayList<String> attachedFiles;
     private boolean closed;
     private Resident caseResident;
     private String title;
@@ -75,30 +75,26 @@ public class Case {
 //        this.closed = isClosed;
 //
 //    }
-    public Case(String title, String description, String caseType, Date date, Boolean isClosed, int residentID, int id) {
+    public Case(String title, String description, String caseType, Date date, Boolean isClosed, int residentID, int id, ArrayList<String> fileList) {
         this.title = title;
-
+        this.attachedFiles = fileList;
         this.date = date;
         this.description = description;
         this.caseType = caseType;
-        //numberOfCases++;
+
         this.caseID = id;
         this.residentID = residentID;
 
         this.closed = isClosed;
     }
 
-    public Resident getCaseResident() {
-        return caseResident;
-    }
-
-    public Case(String title, String description, String caseType, Date date, Boolean isClosed, int residentID) {
+    public Case(String title, String description, String caseType, Date date, Boolean isClosed, int residentID, ArrayList<String> fileList) {
         this.title = title;
-
+        this.attachedFiles = fileList;
         this.date = date;
         this.description = description;
         this.caseType = caseType;
-        //numberOfCases++;
+
         this.caseID = 0;
         this.residentID = residentID;
 
@@ -106,7 +102,11 @@ public class Case {
 
     }
 
-    public void attachFile(File file) {
+    public Resident getCaseResident() {
+        return caseResident;
+    }
+
+    public void attachFile(String file) {
         if (!this.closed) {
             attachedFiles.add(file);
         }
@@ -174,11 +174,11 @@ public class Case {
         return caseType;
     }
 
-    public List<File> getAttachedFiles() {
+    public ArrayList<String> getAttachedFiles() {
         return attachedFiles;
     }
 
-    public void setAttachedFiles(List<File> attachedFiles) {
+    public void setAttachedFiles(ArrayList<String> attachedFiles) {
         this.attachedFiles = attachedFiles;
     }
 

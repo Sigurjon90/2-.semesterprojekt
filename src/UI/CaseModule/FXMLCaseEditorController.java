@@ -33,9 +33,9 @@ import javafx.stage.Stage;
 
 public class FXMLCaseEditorController implements Initializable {
 
-    private File attachedFile = null;
+    private String attachedFile = null;
     private FileChooser chooser = new FileChooser();
-    private List<File> attachedFiles;
+    private ArrayList<String> attachedFiles;
     @FXML
     private AnchorPane caseModulePane;
     @FXML
@@ -102,9 +102,9 @@ public class FXMLCaseEditorController implements Initializable {
     @FXML
     private void attachFileAction(ActionEvent event) {
         chooser.setTitle("Vedhæft Fil");
-        attachedFile = chooser.showOpenDialog(new Stage());
+        attachedFile = chooser.showOpenDialog(new Stage()).getName();
         attachedFiles.add(attachedFile);
-        obsFileList.add(attachedFile.getName());
+        obsFileList.add(attachedFile);
 
     }
 

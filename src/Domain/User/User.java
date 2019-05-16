@@ -36,7 +36,7 @@ public class User {
         this.password = password;
         this.id = id;
         role = new Role(roleName);
-        System.out.println("THE NEW ONE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
     }
 
     public User(String firstName, String lastName, String username, String password, int roleid, String roleName, int id) {

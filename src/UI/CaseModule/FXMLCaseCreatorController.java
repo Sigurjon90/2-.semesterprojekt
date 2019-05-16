@@ -42,9 +42,9 @@ import javafx.stage.Stage;
 public class FXMLCaseCreatorController implements Initializable {
 
     private ObservableList<String> typestatus = FXCollections.observableArrayList();
-    private File attachedFile = null;
+    private String attachedFile = null;
     private FileChooser chooser = new FileChooser();
-    private List<File> attachedFiles;
+    private ArrayList<String> attachedFiles;
 
     @FXML
     private AnchorPane caseModulePane;
@@ -161,9 +161,9 @@ public class FXMLCaseCreatorController implements Initializable {
                 User tempUser = new User(residentFirstNameField.getText(), residentLastNameField.getText(), residentUsernameField.getText());
                 UserManager.createUserInUsers(tempUser);
                 UserManager.createUserInResidents(UserManager.getCurrentUser().getID(), 50, UserManager.getUserIDByUsername(tempUser.getUsername()));
-                createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceBox.getSelectionModel().getSelectedItem(), sqlDate, false, UserManager.getUserIDByUsername(tempUser.getUsername()));
+                createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceBox.getSelectionModel().getSelectedItem(), sqlDate, false, UserManager.getUserIDByUsername(tempUser.getUsername()), null);
                 CaseRepository.createCase(createdCase);
-
+                //  CaseRepository.attachFilesToCase(attachedFile, CaseRepository.getLastCaseID());
                 Parent root = FXMLLoader.load(getClass().getResource("FXMLCase.fxml"));
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
@@ -186,9 +186,9 @@ public class FXMLCaseCreatorController implements Initializable {
     @FXML
     private void attachFileAction(ActionEvent event) {
         chooser.setTitle("Vedhæft Fil");
-        attachedFile = chooser.showOpenDialog(new Stage());
+        attachedFile = chooser.showOpenDialog(new Stage()).getName();
         attachedFiles.add(attachedFile);
-        obsFileList.add(attachedFile.getName());
+        obsFileList.add(attachedFile);
 
     }
 
