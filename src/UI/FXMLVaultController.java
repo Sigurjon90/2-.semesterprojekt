@@ -73,13 +73,13 @@ public class FXMLVaultController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         makeStageDragable();
 
-        if (UserManager.getCurrentUser().checkForPermission(16)) {
+        if (UserManager.getCurrentUser().checkForPermission("view_residents")) {
             listview_residents.setVisible(true);
             tempResidents = UserManager.getResidents(UserManager.getCurrentUser().getID());
             residentsObs = FXCollections.observableArrayList(tempResidents);
             listview_residents.setItems(residentsObs);
 
-        } else if (UserManager.getCurrentUser().checkForPermission(14) || UserManager.getCurrentUser().checkForPermission(11)) {
+        } else if (UserManager.getCurrentUser().checkForPermission("delete_user") || UserManager.getCurrentUser().checkForPermission("create_user")) {
             btn_diary.setDisable(true);
             btn_calendar.setDisable(true);
             btn_case.setDisable(true);
@@ -97,13 +97,13 @@ public class FXMLVaultController implements Initializable {
     }
 
     void checkPermissions() {
-        if (!UserManager.getCurrentUser().checkForPermission(1)) {
+        if (!UserManager.getCurrentUser().checkForPermission("view_diary")) {
             btn_diary.setDisable(true);
         }
-        if (!UserManager.getCurrentUser().checkForPermission(2)) {
+        if (!UserManager.getCurrentUser().checkForPermission("view_calendar")) {
             btn_calendar.setDisable(true);
         }
-        if (!UserManager.getCurrentUser().checkForPermission(3)) {
+        if (!UserManager.getCurrentUser().checkForPermission("view_case")) {
             btn_case.setDisable(true);
         }
     }

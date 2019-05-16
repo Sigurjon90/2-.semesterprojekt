@@ -15,6 +15,10 @@ public class Permission {
         return permissionID;
     }
     
+    public String getPermissionName(){
+        return name;
+    }
+    
     
     
 }

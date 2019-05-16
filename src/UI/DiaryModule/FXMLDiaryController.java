@@ -96,14 +96,14 @@ public class FXMLDiaryController implements Initializable {
     }
 
     void checkPermissions() {
-        if (!UserManager.getCurrentUser().checkForPermission(4)) {
+        if (!UserManager.getCurrentUser().checkForPermission("edit_entry")) {
             btn_edit.setDisable(true);
         }
 
-        if (!UserManager.getCurrentUser().checkForPermission(12)) {
+        if (!UserManager.getCurrentUser().checkForPermission("delete_entry")) {
             btn_delete.setDisable(true);
         }
-        if (!UserManager.getCurrentUser().checkForPermission(8)) {
+        if (!UserManager.getCurrentUser().checkForPermission("create_entry")) {
             btn_newEntry.setDisable(true);
         }
     }

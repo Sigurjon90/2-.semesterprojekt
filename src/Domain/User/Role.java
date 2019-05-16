@@ -16,9 +16,9 @@ public class Role {
         permissions = UserManager.getPermissions(roleID);
     }
     
-    public boolean checkForPermission(int permissionID){
+    public boolean checkForPermission(String name){
         for (Permission permission : permissions) {
-            if(permissionID==permission.getPermissionID()){
+            if(name.equals(permission.getPermissionName())){
                 return true;
             }
         }

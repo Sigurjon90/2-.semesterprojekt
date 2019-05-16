@@ -108,7 +108,7 @@ public class FXMLCaseController implements Initializable {
 
     @FXML
     private void editCaseAction(ActionEvent event) throws IOException {
-        if (!caseList.getSelectionModel().isEmpty() && UserManager.getCurrentUser().checkForPermission(6)) {
+        if (!caseList.getSelectionModel().isEmpty() && UserManager.getCurrentUser().checkForPermission("edit_case")) {
 
             CaseRepository.setSelectedCase(caseList.getSelectionModel().getSelectedItem());
             if (!CaseRepository.getSelectedCase().isClosed()) {
@@ -143,7 +143,7 @@ public class FXMLCaseController implements Initializable {
 
     @FXML
     private void createCaseAction(ActionEvent event) throws IOException {
-        if (UserManager.getCurrentUser().checkForPermission(10)) {
+        if (UserManager.getCurrentUser().checkForPermission("create_case")) {
             Parent root = FXMLLoader.load(getClass().getResource("FXMLCaseCreator.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
