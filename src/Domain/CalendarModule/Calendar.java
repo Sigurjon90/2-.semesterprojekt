@@ -34,9 +34,10 @@ public class Calendar {
 
     public void createActivity(String title, String creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry) {
         Activity activity = new Activity(title, creator, place, startDate, endDate, description, type, shared, entry);
-        calendar.put(activity.getActivityID(), activity);
+        int newID = ActivityManager.storeActivity(activity);
+        calendar.put(newID, activity);
         System.out.println(startDate.toString());
-        ActivityManager.storeActivity(activity);
+        
     }
 
     public void putInCalendar(Activity activity) {
