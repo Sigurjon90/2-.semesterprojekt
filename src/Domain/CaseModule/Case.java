@@ -2,15 +2,11 @@ package Domain.CaseModule;
 
 import Domain.User.Resident;
 import Persistence.UserManager;
-import java.io.File;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.sql.Date;
-import java.util.List;
 
 public class Case {
 
-    //private static int numberOfCases = 0;
     private int caseID;
     private Date date;
     private String description;
@@ -126,20 +122,27 @@ public class Case {
                 + "\n" + "Titel: " + this.title
                 + "\n" + "Sag ID: " + this.caseID
                 + "\n" + "Sagstype: " + this.caseType
-                //   + "\n" + "Vedhæftet filer: " + fileNames()
+                + "\n" + "Filer tilknyttet " + this.getAttachedFiles()
                 + "\n" + "Tilknyttet beboer: " + UserManager.getUser(this.residentID).getFirstName()
                 + " " + UserManager.getUser(this.residentID).getLastName()
                 + "\n" + "Sagen omhandler: "
                 + "\n" + this.getDescription();
     }
-
+//
 //    private String fileNames() {
 //        String result = "";
-//        for (File f : this.attachedFiles) {
-//            result += f.getName() + ", ";
+//        if (!this.attachedFiles.isEmpty() && attachedFiles != null) {
+//            for (String s : this.attachedFiles) {
+//                result += s + ", ";
+//                return result;
+//            }
+//
+//        } else {
+//            System.out.println("DER I_NGE_N FILER");
 //        }
-//        return result;
+//        return "";
 //    }
+
     public boolean isClosed() {
         return this.closed;
     }

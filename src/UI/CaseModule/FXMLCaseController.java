@@ -1,9 +1,7 @@
 package UI.CaseModule;
 
 import Domain.CaseModule.Case;
-import Domain.User.Resident;
 import Domain.User.SocialWorker;
-import Domain.User.User;
 import Persistence.CaseRepository;
 import Persistence.UserManager;
 import UI.Vault;
@@ -29,8 +27,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class FXMLCaseController implements Initializable {
 
@@ -56,7 +54,7 @@ public class FXMLCaseController implements Initializable {
     @FXML
     private JFXTextField searchIDField;
     @FXML
-    private JFXButton resetBtn;
+    private ImageView resetBtn;
     @FXML
     private Label warningLabel;
     @FXML
@@ -68,20 +66,10 @@ public class FXMLCaseController implements Initializable {
         obsCaseList = FXCollections.observableArrayList(tempCases);
         caseList.setItems(obsCaseList);
         makeStageDragable();
+        testColor();
 
     }
 
-//     void checkPermissions() {
-//        if (!UserManager.getCurrentUser().checkForPermission(1)) {
-//            btn_diary.setDisable(true);
-//        }
-//        if (!UserManager.getCurrentUser().checkForPermission(2)) {
-//            btn_calendar.setDisable(true);
-//        }
-//        if (!UserManager.getCurrentUser().checkForPermission(3)) {
-//            btn_case.setDisable(true);
-//        }
-//    }
     private void makeStageDragable() {
         caseModulePane.setOnMousePressed((event) -> {
             xOffset = event.getSceneX();
@@ -100,6 +88,14 @@ public class FXMLCaseController implements Initializable {
         });
     }
 
+    private void testColor() {
+        for (Case c : tempCases) {
+            if (c.isClosed()) {
+                caseList.setStyle("-fx-background-color: #dd0808");
+            }
+        }
+    }
+
     @FXML
     private void exitAction(MouseEvent event) {
         System.exit(1);
@@ -115,13 +111,6 @@ public class FXMLCaseController implements Initializable {
                 Parent root = FXMLLoader.load(getClass().getResource("FXMLCaseEditor.fxml"));
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
-
-//                FXMLLoader createScene = new FXMLLoader(getClass().getResource("FXMLCaseEditor.fxml"));
-//                Parent createRoot = (Parent) createScene.load();
-//                Stage createStage = new Stage();
-//                createStage.setScene(new Scene(createRoot));
-//                createStage.initStyle(StageStyle.UNDECORATED);
-//                createStage.show();
                 warningLabel.setOpacity(0);
             } else {
                 warningLabel.setOpacity(1);
@@ -131,7 +120,6 @@ public class FXMLCaseController implements Initializable {
             warningLabel.setOpacity(1);
             warningLabel.setText("Ingen sag er valgt");
         }
-
     }
 
     @FXML
@@ -151,31 +139,27 @@ public class FXMLCaseController implements Initializable {
 
     @FXML
     private void searchCaseAction(ActionEvent event) throws SQLException {
-
-        tempCases = CaseRepository.getCaseByID(Integer.parseInt(searchIDField.getText()));
-        obsCaseList = FXCollections.observableArrayList(tempCases);
-        caseList.setItems(obsCaseList);
-        //     CaseRepository.closeCase(2);
-//
-//        if (!searchIDField.getText().isEmpty() && searchIDField.getText().matches("\\d+")) {
-//            Integer idSearch = Integer.parseInt(searchIDField.getText());
-//            if (obsCaseList.contains(currentLoggedOn.getCases().get(idSearch))) {
-//                obsCaseList.clear();
-//                obsCaseList.add(currentLoggedOn.getCases().get(idSearch));
-//                warningLabel.setOpacity(0);
-//            } else {
-//                obsCaseList.clear();
-//            }
-//        } else {
-//            warningLabel.setOpacity(1);
-//        }
-
+        if (!searchIDField.getText().isEmpty() && searchIDField.getText().matches("\\d+")) {
+            if (CaseRepository.getCaseByID(Integer.parseInt(searchIDField.getText())) != null) {
+                tempCases = CaseRepository.getCaseByID(Integer.parseInt(searchIDField.getText()));
+                obsCaseList = FXCollections.observableArrayList(tempCases);
+                caseList.setItems(obsCaseList);
+                warningLabel.setOpacity(0);
+            } else {
+                obsCaseList.clear();
+            }
+        } else {
+            warningLabel.setOpacity(1);
+        }
     }
 
     @FXML
-    private void resetListAction(ActionEvent event) {
+    private void resetListAction(MouseEvent event) throws SQLException {
         obsCaseList.clear();
-        //   caseHandler(currentLoggedOn.getCases());
+        tempCases = CaseRepository.getAllCasesByID(UserManager.getCurrentUser().getID());
+        obsCaseList = FXCollections.observableArrayList(tempCases);
+        caseList.setItems(obsCaseList);
+
         if (!caseList.isExpanded()) {
             caseList.setExpanded(true);
             caseList.depthProperty().set(1);
@@ -194,10 +178,6 @@ public class FXMLCaseController implements Initializable {
         } catch (NullPointerException ex) {
             ex.printStackTrace();
         }
-    }
-
-    public static SocialWorker getSocialWorker() {
-        return currentLoggedOn;
     }
 
     @FXML

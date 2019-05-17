@@ -1,18 +1,13 @@
 package Persistence;
 
 import Domain.CaseModule.Case;
-import Domain.User.User;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.spi.DirStateFactory.Result;
 
 public class CaseRepository {
 
@@ -62,12 +57,6 @@ public class CaseRepository {
             pre.setInt(7, UserManager.getCurrentUser().getID());
             pre.executeUpdate();
 
-//            ResultSet result = pre.executeQuery();
-//            for (String s : newCase.getAttachedFiles()) {
-//                System.out.println(s);
-//                System.out.println("FILE TESTING");
-//                attachFilesToCase(s, result.getInt("SELECT LAST_INSERT_ID()"));
-//            }
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
@@ -78,23 +67,23 @@ public class CaseRepository {
 
     }
 
-//    public static int getLastCaseID() {
-//        String sql = "select max(case_id) from case_file";
-//        int resultOfId = 0;
-//        try {
-//            pre = Connector.getCon().prepareStatement(sql);
-//            ResultSet result = pre.executeQuery();
-//            while (result.next()) {
-//                resultOfId = result.getInt("case_id");
-//                System.out.println(resultOfId);
-//            }
-//            pre.close();
-//        } catch (SQLException ex) {
-//
-//        }
-//        return resultOfId;
-//
-//    }
+    public static int getMaxCaseID() {
+        String SQL = "SELECT * FROM  case_table WHERE id = (SELECT MAX(id) FROM case_table)";
+
+        try {
+            pre = Connector.getCon().prepareStatement(SQL);
+            ResultSet result = pre.executeQuery();
+            while (result.next()) {
+                return result.getInt("id");
+            }
+            pre.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return 0;
+
+    }
+
     public static void closeCase(int caseID) {
         String SQL = "update case_table set is_closed = true where id =" + caseID;
 
@@ -129,10 +118,7 @@ public class CaseRepository {
         String SQL = "INSERT INTO case_file (filename,case_id) VALUES (?,?) ";
 
         try {
-
-            // FileReader fr=new FileReader(fileName);
             pre = pre = Connector.getCon().prepareStatement(SQL);
-            //  pre.setCharacterStream(1,fr ,file.length());
             pre.setString(1, fileName);
             pre.setInt(2, caseID);
             pre.executeUpdate();
