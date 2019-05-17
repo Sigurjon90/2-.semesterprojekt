@@ -117,7 +117,7 @@ public class FXMLCaseEditorController implements Initializable {
 
     @FXML
     private void closeCaseAction(ActionEvent event) throws IOException {
-        if (!closeReasonField.getText().isEmpty() && UserManager.getCurrentUser().checkForPermission(15)) {
+        if (!closeReasonField.getText().isEmpty() && UserManager.getCurrentUser().checkForPermission("close_case")) {
 
             CaseRepository.closeCase(CaseRepository.getSelectedCase().getCaseID());
             Parent root = FXMLLoader.load(getClass().getResource("FXMLCase.fxml"));
@@ -131,7 +131,7 @@ public class FXMLCaseEditorController implements Initializable {
 
     @FXML
     private void saveCaseEditAction(ActionEvent event) throws IOException {
-        if (UserManager.getCurrentUser().checkForPermission(6)) {
+        if (UserManager.getCurrentUser().checkForPermission("edit_case")) {
             CaseRepository.updateCaseInDB(descriptionArea.getText(), CaseRepository.getSelectedCase().getCaseID());
 //            CaseRepository.getSelectedCase().setDescription(descriptionArea.getText());
 //            CaseRepository.getSelectedCase().setAttachedFiles(attachedFiles);

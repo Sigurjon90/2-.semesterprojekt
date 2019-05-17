@@ -26,7 +26,6 @@ public class ActivityManager {
     private static Boolean shared;
     private static Boolean entry;
     private static String title;
-    private static int activityID;
 
     private static int residentID;
 
@@ -40,23 +39,23 @@ public class ActivityManager {
         shared = activity.getShared();
         entry = activity.getEntry();
         title = activity.getTitle();
-        activityID = activity.getActivityID();
     }
 
     private static void getResidentID() {
         residentID = UserManager.getCurrentResident().getID();
     }
 
-    public static void storeActivity(Activity activity) {
+    public static int storeActivity(Activity activity) {
         ActivityManager.getActivityInfo(activity);
         ActivityManager.getResidentID();
         System.out.println(startDate);
-        if (ActivityRepository.storeActivity(place, description, type, startDate, endDate, shared, entry, title, activityID, residentID, creator)) {
+        if (ActivityRepository.storeActivity(place, description, type, startDate, endDate, shared, entry, title, residentID, creator)) {
             System.out.println("successful storing");
+            return ActivityRepository.getHighestID();
         } else {
             System.out.println("unsuccessful storing");
         }
-
+        return 0;
     }
 
     public static void getActivities(int residentID) {
@@ -64,7 +63,7 @@ public class ActivityManager {
         ArrayList<Integer> activities = ActivityRepository.getActivityIDs(residentID);
         for (Integer id : activities) {
             ArrayList<Object> activityInfo = ActivityRepository.getActivityInfo(id);
-            Calendar.getCurrentCalendar().putInCalendar(new Activity((String) activityInfo.get(0), (String) activityInfo.get(1), (String) activityInfo.get(2), getLocalDateTime((String) activityInfo.get(3)), getLocalDateTime((String) activityInfo.get(4)), (String) activityInfo.get(5), (String) activityInfo.get(6), (Boolean) activityInfo.get(7), (Boolean) activityInfo.get(8)));
+            Calendar.getCurrentCalendar().putInCalendar(new Activity((String) activityInfo.get(0), (String) activityInfo.get(1), (String) activityInfo.get(2), getLocalDateTime((String) activityInfo.get(3)), getLocalDateTime((String) activityInfo.get(4)), (String) activityInfo.get(5), (String) activityInfo.get(6), (Boolean) activityInfo.get(7), (Boolean) activityInfo.get(8), (int)(activityInfo.get(10))));
         }
     }
 

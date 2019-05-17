@@ -120,7 +120,7 @@ public class FXMLCalendarController implements Initializable {
         //Opretter kalender til valgte beboer.
         enableCurrentCalendar();
         //Opdaterer kalenderen med beboerens aktiviteter.
-        if (UserManager.getCurrentUser().checkForPermission(16)) {
+        if (UserManager.getCurrentUser().checkForPermission("view_residents")) {
             ActivityManager.getActivities(UserManager.getCurrentResident().getID());
         } else {
             ActivityManager.getActivities(UserManager.getCurrentUser().getID());
@@ -137,11 +137,11 @@ public class FXMLCalendarController implements Initializable {
     }
 
     void checkPermissions() {
-        if (!UserManager.getCurrentUser().checkForPermission(9)) {
+        if (!UserManager.getCurrentUser().checkForPermission("create_activity")) {
             planBtn.setDisable(true);
         }
 
-        if (!UserManager.getCurrentUser().checkForPermission(13)) {
+        if (!UserManager.getCurrentUser().checkForPermission("delete_activity")) {
             deleteBtn.setDisable(true);
         }
     }
@@ -303,7 +303,7 @@ public class FXMLCalendarController implements Initializable {
         Vault.newAction = false;
         if (event.getButton().equals(MouseButton.PRIMARY)) {
             if (event.getClickCount() == 2) {
-                if (UserManager.getCurrentUser().checkForPermission(5)) {
+                if (UserManager.getCurrentUser().checkForPermission("edit_activity")) {
                     myList = (ListView) event.getSource();
                     myActivity = (Activity) myList.getSelectionModel().getSelectedItem();
                     Parent currentParent;

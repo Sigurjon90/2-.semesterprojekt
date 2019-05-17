@@ -103,9 +103,9 @@ public class User {
         this.password = password;
     }
 
-    public boolean checkForPermission(int permissionID) {
+    public boolean checkForPermission(String name) {
         System.out.println("check");
-        return role.checkForPermission(permissionID);
+        return role.checkForPermission(name);
     }
 
     public int getRoleID() {

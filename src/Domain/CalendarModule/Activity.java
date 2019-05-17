@@ -19,9 +19,21 @@ public class Activity {
     private String creator;
     private Boolean entry;
     private String title;
-    private static int idCounter = 1;
     private int activityID;
 
+    public Activity(String title, String creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry, int activityID) {
+        this.title = title;
+        this.creator = creator;
+        this.place = place;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.description = description;
+        this.type = type;
+        this.shared = shared;
+        this.activityID = activityID;
+        this.entry = entry;
+    }
+    
     public Activity(String title, String creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry) {
         this.title = title;
         this.creator = creator;
@@ -31,9 +43,7 @@ public class Activity {
         this.description = description;
         this.type = type;
         this.shared = shared;
-        this.activityID = idCounter;
         this.entry = entry;
-        idCounter++;
     }
 
     public void updateActivity(String title, String creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry) {

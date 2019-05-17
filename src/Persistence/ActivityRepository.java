@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,9 +19,9 @@ import java.util.ArrayList;
  */
 public class ActivityRepository {
 
-    public static boolean storeActivity(String place, String description, String type, String startDate, String endDate, Boolean shared, Boolean entry, String title, int activityID, int residentID, String creator) {
+    public static boolean storeActivity(String place, String description, String type, String startDate, String endDate, Boolean shared, Boolean entry, String title, int residentID, String creator) {
         Statement storeStatement;
-        String sql = "INSERT INTO activity " + "VALUES ('" + title + "', '" + description + "', '" + type + "', '" + place + "', '" + startDate + "', '" + endDate + "', " + shared + ", " + entry + ", " + residentID + ", " + activityID + ", '" + creator + "')";
+        String sql = "INSERT INTO activity " + "VALUES ('" + title + "', '" + description + "', '" + type + "', '" + place + "', '" + startDate + "', '" + endDate + "', " + shared + ", " + entry + ", " + residentID + ", '" + creator + "' )";
         System.out.println(sql);
         try {
             storeStatement = Connector.getCon().createStatement();
@@ -82,6 +84,25 @@ public class ActivityRepository {
             ex.printStackTrace();
         }
         return activityInfo;
+    }
+    
+    public static int getHighestID(){
+        String sql = "SELECT id FROM activity";
+        PreparedStatement getIDs;
+        int highestID = 1;
+        try{
+            getIDs = Connector.getCon().prepareStatement(sql);
+            // Query resultater hentes
+            ResultSet result = getIDs.executeQuery();
+            while(result.next()){
+                if(result.getInt("id")>highestID){
+                    highestID = result.getInt("id");
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ActivityRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return highestID;
     }
 
 }
