@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXListView?>
@@ -20,9 +13,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Polygon?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="administrationPane" prefHeight="611.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.FXMLAdministrationController">
+<AnchorPane id="AnchorPane" fx:id="administrationPane" prefHeight="611.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.FXMLAdministrationController">
    <children>
       <JFXListView fx:id="listview_users" layoutX="663.0" layoutY="93.0" onMouseClicked="#setSelectedUser" prefHeight="400.0" prefWidth="228.0" styleClass="jfx-list-view" stylesheets="@CaseUI.css" />
       <Polygon fill="#2d2d2d" layoutX="64.0" layoutY="74.0" points="-64.0, 39.0, 199.0, -74.0, -64.0, -74.0" stroke="#2d2d2d" strokeType="INSIDE" />
@@ -45,10 +37,10 @@
             <Image url="@../icons/logo.png" />
          </image>
       </ImageView>
-      <JFXButton fx:id="NewUserBtn" layoutX="63.0" layoutY="493.0" onAction="#newUserButtonHandler" style="-fx-background-color: #2d2d2d;" text="Ny bruger" textFill="WHITE" />
-      <JFXButton fx:id="backToMenuBtn" layoutX="26.0" layoutY="564.0" onAction="#backToMenuAction" style="-fx-background-color: #2d2d2d;" text="Tilbage" textFill="WHITE" />
-      <JFXButton fx:id="deleteUserBtn" layoutX="174.0" layoutY="493.0" onAction="#deleteUserAction" style="-fx-background-color: #2d2d2d;" text="Slet Bruger" textFill="WHITE" />
-      <JFXButton fx:id="createUserBtn" layoutX="55.0" layoutY="493.0" onAction="#createUserAction" style="-fx-background-color: #2d2d2d;" text="Opret Bruger" textFill="WHITE" />
+      <JFXButton fx:id="NewUserBtn" layoutX="63.0" layoutY="493.0" onAction="#newUserButtonHandler" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Ny bruger" textFill="WHITE" />
+      <JFXButton fx:id="backToMenuBtn" layoutX="26.0" layoutY="564.0" onAction="#backToMenuAction" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Tilbage" textFill="WHITE" />
+      <JFXButton fx:id="deleteUserBtn" layoutX="174.0" layoutY="493.0" onAction="#deleteUserAction" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Slet Bruger" textFill="WHITE" />
+      <JFXButton fx:id="createUserBtn" layoutX="55.0" layoutY="493.0" onAction="#createUserAction" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Opret Bruger" textFill="WHITE" />
       <JFXRadioButton fx:id="residentRadioBtn" layoutX="312.0" layoutY="256.0" onAction="#residentRadioButtonHandler" text="Beboer">
          <toggleGroup>
             <ToggleGroup fx:id="userTypeGroup" />
@@ -59,22 +51,13 @@
       <JFXRadioButton fx:id="adminRadioBtn" layoutX="314.0" layoutY="378.0" text="Admin" />
       <VBox layoutX="53.0" layoutY="93.0" minHeight="-Infinity" prefHeight="394.0" prefWidth="196.0" spacing="15.0">
          <children>
-            <Label text="Fornavn">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font></Label>
+            <Label text="Fornavn" />
             <JFXTextField fx:id="firstNameField" />
-            <Label text="Efternavn">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font></Label>
+            <Label text="Efternavn" />
             <JFXTextField fx:id="lastNameField" />
-            <Label text="Brugernavn">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font></Label>
+            <Label text="Brugernavn" />
             <JFXTextField fx:id="userNameField" />
-            <JFXButton fx:id="setPasswordBtn" onAction="#setPasswordAction" prefHeight="25.0" prefWidth="201.0" style="-fx-background-color: #2d2d2d;" text="Sæt nyt kodeord" textFill="WHITE" />
+            <JFXButton fx:id="setPasswordBtn" onAction="#setPasswordAction" prefHeight="25.0" prefWidth="201.0" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Sæt nyt kodeord" textFill="WHITE" />
             <Label fx:id="pas1" text="Indsæt nyt kodeord" visible="false" />
             <JFXPasswordField fx:id="password1" prefHeight="45.0" prefWidth="190.0" visible="false" />
             <Label fx:id="pas2" text="Gentag Kodeord" visible="false" />
@@ -86,8 +69,8 @@
       <Label fx:id="socialWorker_Lb" layoutX="463.0" layoutY="332.0" prefHeight="17.0" prefWidth="150.0" text="Vælg sagsudreder:" visible="false" />
       <JFXComboBox fx:id="comboBoxCareworker" layoutX="463.0" layoutY="213.0" prefHeight="25.0" prefWidth="150.0" visible="false" />
       <JFXComboBox fx:id="comboBoxSocialworker" layoutX="463.0" layoutY="361.0" prefHeight="25.0" prefWidth="150.0" visible="false" />
-      <JFXButton fx:id="updateInfoDB" layoutX="151.0" layoutY="564.0" onAction="#updateInfoAction" style="-fx-background-color: #2d2d2d;" text="Gem Ændringer" textFill="WHITE" />
+      <JFXButton fx:id="updateInfoDB" layoutX="151.0" layoutY="564.0" onAction="#updateInfoAction" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Gem Ændringer" textFill="WHITE" />
       <Label fx:id="passwordError" alignment="TOP_CENTER" layoutX="56.0" layoutY="527.0" prefHeight="17.0" prefWidth="196.0" text="Kodeordene er ikke ens" textFill="RED" visible="false" />
-      <JFXButton fx:id="savePasswordBtn" layoutX="56.0" layoutY="493.0" onAction="#savePasswordAction" prefHeight="0.0" prefWidth="190.0" style="-fx-background-color: #2d2d2d;" text="Gem" textFill="WHITE" />
+      <JFXButton fx:id="savePasswordBtn" layoutX="53.0" layoutY="493.0" onAction="#savePasswordAction" prefHeight="25.0" prefWidth="196.0" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Gem" textFill="WHITE" />
    </children>
 </AnchorPane>

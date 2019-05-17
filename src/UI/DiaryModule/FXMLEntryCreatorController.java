@@ -20,11 +20,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class FXMLEntryCreatorController implements Initializable {
 
+    @FXML
+    private AnchorPane DiaryPane;
     @FXML
     private TextArea textarea_des;
     @FXML
@@ -42,16 +46,16 @@ public class FXMLEntryCreatorController implements Initializable {
     @FXML
     private Label errorLabel;
 
+    private double xOffset = 0;
+    private double yOffset = 0;
+
     private File file = null;
     private FileChooser chooser = new FileChooser();
     private List<File> fileList;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        makeStageDragable();
         fileList = new ArrayList<>();
         chooser.setInitialDirectory(new File("."));
     }
@@ -74,18 +78,14 @@ public class FXMLEntryCreatorController implements Initializable {
             if (fileList == null) {
                 entry = new Entry(dp_date.getValue(), textarea_des.getText());
             } else {
+                entry = new Entry(dp_date.getValue(), textarea_des.getText(), fileList);
+            }
+            System.out.println(entry.getFiles());
+            DiaryRepository.storeEntry(entry);
+            DiaryRepository.storeEntryFile(entry);
 
-            entry = new Entry(dp_date.getValue(), textarea_des.getText());
-        }
-
-        DiaryRepository.storeEntry(entry);
-        
-        //Vault.resident.getResidentDiary().getMap().put(entry.getEntryID(), entry);
-        //System.out.println("unikt id for entry = " + entry.getEntryID());
-       
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDiary.fxml"));
-        
-        Scene scene = new Scene(root);
+            Parent root = FXMLLoader.load(getClass().getResource("FXMLDiary.fxml"));
+            Scene scene = new Scene(root);
 
             stage.setScene(scene);
             stage.show();
@@ -93,6 +93,35 @@ public class FXMLEntryCreatorController implements Initializable {
             errorLabel.setText("Du har ikke udfyldt alle felter");
             errorLabel.setOpacity(1);
         }
+    }
+
+    private void makeStageDragable() {
+        DiaryPane.setOnMousePressed((event) -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        DiaryPane.setOnMouseDragged((event) -> {
+            Vault.stage.setX(event.getScreenX() - xOffset);
+            Vault.stage.setY(event.getScreenY() - yOffset);
+            Vault.stage.setOpacity(0.8f);
+        });
+        DiaryPane.setOnDragDone((event) -> {
+            Vault.stage.setOpacity(1.0f);
+        });
+        DiaryPane.setOnMouseReleased((event) -> {
+            Vault.stage.setOpacity(1.0f);
+        });
+    }
+
+    @FXML
+    private void exitAction(MouseEvent event) {
+        System.exit(1);
+    }
+
+    @FXML
+    private void minimizeAction(MouseEvent event) {
+        Stage stage = (Stage) DiaryPane.getScene().getWindow();
+        stage.setIconified(true);
     }
 
     @FXML

@@ -15,7 +15,9 @@
     -fx-background-insets: 0;
     -fx-cell-vertical-margin: 10.0;
 }
-
+.jfx-hand:hover{
+    -fx-cursor: hand;
+}
 
 .pane{
     -fx-background-color: #dae5d5

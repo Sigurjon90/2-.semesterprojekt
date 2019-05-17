@@ -25,8 +25,8 @@
                   <Image url="@../../icons/minimize.png" />
                </image></ImageView>
          </children></AnchorPane>
-      <JFXButton fx:id="editCaseBtn" buttonType="RAISED" layoutX="815.0" layoutY="567.0" onAction="#editCaseAction" style="-fx-background-color: #3a7077;" text="Rediger Sag" textFill="WHITE" />
-      <JFXButton fx:id="searchCaseBtn" buttonType="RAISED" layoutX="855.0" layoutY="82.0" onAction="#searchCaseAction" style="-fx-background-color: #2d2d2d;" text="Søg Sag" textFill="WHITE" />
+      <JFXButton fx:id="editCaseBtn" buttonType="RAISED" layoutX="815.0" layoutY="567.0" onAction="#editCaseAction" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Rediger Sag" textFill="WHITE" />
+      <JFXButton fx:id="searchCaseBtn" buttonType="RAISED" layoutX="855.0" layoutY="82.0" onAction="#searchCaseAction" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Søg Sag" textFill="WHITE" />
       <JFXTextField fx:id="searchIDField" focusColor="#3a7077" layoutX="669.0" layoutY="78.0" prefHeight="25.0" prefWidth="175.0" promptText="Sag ID:" />
       <Polygon fill="#2d2d2d" layoutX="64.0" layoutY="74.0" points="-64.0, 39.0, 199.0, -74.0, -64.0, -74.0" stroke="#2d2d2d" strokeType="INSIDE" />
       <ImageView fitHeight="53.0" fitWidth="60.0" layoutX="14.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
@@ -34,7 +34,7 @@
             <Image url="@../../icons/logo.png" />
          </image>
       </ImageView>
-      <JFXButton fx:id="createCaseBtn" buttonType="RAISED" layoutX="708.0" layoutY="567.0" onAction="#createCaseAction" style="-fx-background-color: #2d2d2d;" text="Opret Sag" textFill="WHITE" />
+      <JFXButton fx:id="createCaseBtn" buttonType="RAISED" layoutX="708.0" layoutY="567.0" onAction="#createCaseAction" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Opret Sag" textFill="WHITE" />
       <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="815.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../icons/loop.png" />
@@ -47,7 +47,7 @@
       <JFXListView fx:id="caseList" editable="true" layoutX="671.0" layoutY="113.0" onMouseClicked="#showCaseInformation" prefHeight="441.0" prefWidth="244.0" styleClass="jfx-list-view" stylesheets="@CaseUI.css" verticalGap="10.0" />
       <JFXTextArea fx:id="casePreviewField" editable="false" focusColor="#3a7077" layoutX="28.0" layoutY="113.0" prefHeight="441.0" prefWidth="584.0" />
       <Line endX="478.0" layoutX="132.0" layoutY="117.0" startX="-100.0" />
-      <JFXButton fx:id="BackBtn" buttonType="RAISED" layoutX="14.0" layoutY="567.0" onAction="#backToMenuAction" style="-fx-background-color: #2d2d2d;" text="Tilbage" textFill="WHITE" />
+      <JFXButton fx:id="BackBtn" buttonType="RAISED" layoutX="14.0" layoutY="567.0" onAction="#backToMenuAction" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Tilbage" textFill="WHITE" />
       <ImageView fx:id="resetBtn" fitHeight="32.0" fitWidth="32.0" layoutX="637.0" layoutY="79.0" onMouseClicked="#resetListAction" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../icons/refresh.png" />
