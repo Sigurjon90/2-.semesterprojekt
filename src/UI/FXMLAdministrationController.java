@@ -130,7 +130,7 @@ public class FXMLAdministrationController implements Initializable {
         createUserBtn.setVisible(false);
 
         makeStageDragable();
-        tempUsers = UserManager.getAllUsers();
+        tempUsers = UserManager.getAllUsersWithOutRoleID();
         usersObs = FXCollections.observableArrayList(tempUsers);
         listview_users.setItems(usersObs);
 
@@ -143,7 +143,6 @@ public class FXMLAdministrationController implements Initializable {
         tempSocialworkers = UserManager.getAllUsersWithRoleID(2);
         socialworkersObs = FXCollections.observableArrayList(tempSocialworkers);
         comboBoxSocialworker.setItems(socialworkersObs);
-
     }
 
     private void makeStageDragable() {
@@ -262,7 +261,7 @@ public class FXMLAdministrationController implements Initializable {
                 UserManager.deleteUserFromResidents(selectedUser.getID());
                 UserManager.deleteUserFromUsers(selectedUser.getID());
                 clearFields();
-                tempUsers = UserManager.getAllUsers();
+                tempUsers = UserManager.getAllUsersWithOutRoleID();
                 usersObs = FXCollections.observableArrayList(tempUsers);
                 listview_users.setItems(usersObs);
             }
@@ -309,7 +308,7 @@ public class FXMLAdministrationController implements Initializable {
 
             clearFields();
 
-            tempUsers = UserManager.getAllUsers();
+            tempUsers = UserManager.getAllUsersWithOutRoleID();
             usersObs = FXCollections.observableArrayList(tempUsers);
             listview_users.setItems(usersObs);
 
@@ -417,17 +416,17 @@ public class FXMLAdministrationController implements Initializable {
             if (selectedUser.getRoleID() != 4 && checkUserType() != 4) {
                 UserManager.updateUserInUsers(firstNameField.getText(), lastNameField.getText(), userNameField.getText(), checkUserType(), selectedUser.getID());
 
-                tempUsers = UserManager.getAllUsers();
+                tempUsers = UserManager.getAllUsersWithOutRoleID();
                 usersObs = FXCollections.observableArrayList(tempUsers);
                 listview_users.setItems(usersObs);
-                //Hvis der prøves at ændre rolletypen på en beboer kommer der en fejlmeddelelse    
+                //Hvis der prøves at ændre rolletypen på en beboer kommer der en fejlmeddelelse
             } else if (selectedUser.getRoleID() == 4 && checkUserType() != 4) {
                 System.out.println("Det kan du ikke:");
             }//Hvis en beboers rolletype ikke er ændret, opdateres de gemte oplysninger
             else if (selectedUser.getRoleID() == 4 && checkUserType() == 4) {
                 UserManager.updateUserInUsers(firstNameField.getText(), lastNameField.getText(), userNameField.getText(), checkUserType(), selectedUser.getID());
                 UserManager.updateUserInResidents(selectedUser.getID(), comboBoxCareworker.getSelectionModel().getSelectedItem().getID(), comboBoxSocialworker.getSelectionModel().getSelectedItem().getID());
-                tempUsers = UserManager.getAllUsers();
+                tempUsers = UserManager.getAllUsersWithOutRoleID();
                 usersObs = FXCollections.observableArrayList(tempUsers);
                 listview_users.setItems(usersObs);
             }

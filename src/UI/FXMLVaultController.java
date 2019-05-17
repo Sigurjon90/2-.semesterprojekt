@@ -1,8 +1,6 @@
 package UI;
 
 import Domain.DiaryModule.Entry;
-import Domain.User.CareWorker;
-import Domain.User.Resident;
 import Domain.User.User;
 import Persistence.UserManager;
 import static UI.Vault.stage;
@@ -148,14 +146,11 @@ public class FXMLVaultController implements Initializable {
 
     @FXML
     void caseHandler(ActionEvent event) throws IOException {
-        if (UserManager.getCurrentResident() != null) {
-            Parent root = FXMLLoader.load(getClass().getResource("/UI/CaseModule/FXMLCase.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-        } else {
-            errorLabel.setText("Du har ikke valgt en beboer");
-            errorLabel.setOpacity(1);
-        }
+
+        Parent root = FXMLLoader.load(getClass().getResource("/UI/CaseModule/FXMLCase.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+
     }
 
     @FXML

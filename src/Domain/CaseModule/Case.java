@@ -2,20 +2,16 @@ package Domain.CaseModule;
 
 import Domain.User.Resident;
 import Persistence.UserManager;
-import java.io.File;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.sql.Date;
-import java.util.List;
 
 public class Case {
 
-    //private static int numberOfCases = 0;
     private int caseID;
     private Date date;
     private String description;
     private String caseType;
-    private List<File> attachedFiles;
+    private ArrayList<String> attachedFiles;
     private boolean closed;
     private Resident caseResident;
     private String title;
@@ -75,30 +71,26 @@ public class Case {
 //        this.closed = isClosed;
 //
 //    }
-    public Case(String title, String description, String caseType, Date date, Boolean isClosed, int residentID, int id) {
+    public Case(String title, String description, String caseType, Date date, Boolean isClosed, int residentID, int id, ArrayList<String> fileList) {
         this.title = title;
-
+        this.attachedFiles = fileList;
         this.date = date;
         this.description = description;
         this.caseType = caseType;
-        //numberOfCases++;
+
         this.caseID = id;
         this.residentID = residentID;
 
         this.closed = isClosed;
     }
 
-    public Resident getCaseResident() {
-        return caseResident;
-    }
-
-    public Case(String title, String description, String caseType, Date date, Boolean isClosed, int residentID) {
+    public Case(String title, String description, String caseType, Date date, Boolean isClosed, int residentID, ArrayList<String> fileList) {
         this.title = title;
-
+        this.attachedFiles = fileList;
         this.date = date;
         this.description = description;
         this.caseType = caseType;
-        //numberOfCases++;
+
         this.caseID = 0;
         this.residentID = residentID;
 
@@ -106,7 +98,11 @@ public class Case {
 
     }
 
-    public void attachFile(File file) {
+    public Resident getCaseResident() {
+        return caseResident;
+    }
+
+    public void attachFile(String file) {
         if (!this.closed) {
             attachedFiles.add(file);
         }
@@ -126,20 +122,27 @@ public class Case {
                 + "\n" + "Titel: " + this.title
                 + "\n" + "Sag ID: " + this.caseID
                 + "\n" + "Sagstype: " + this.caseType
-                //   + "\n" + "Vedhæftet filer: " + fileNames()
+                + "\n" + "Filer tilknyttet " + this.getAttachedFiles()
                 + "\n" + "Tilknyttet beboer: " + UserManager.getUser(this.residentID).getFirstName()
                 + " " + UserManager.getUser(this.residentID).getLastName()
                 + "\n" + "Sagen omhandler: "
                 + "\n" + this.getDescription();
     }
-
+//
 //    private String fileNames() {
 //        String result = "";
-//        for (File f : this.attachedFiles) {
-//            result += f.getName() + ", ";
+//        if (!this.attachedFiles.isEmpty() && attachedFiles != null) {
+//            for (String s : this.attachedFiles) {
+//                result += s + ", ";
+//                return result;
+//            }
+//
+//        } else {
+//            System.out.println("DER I_NGE_N FILER");
 //        }
-//        return result;
+//        return "";
 //    }
+
     public boolean isClosed() {
         return this.closed;
     }
@@ -174,11 +177,11 @@ public class Case {
         return caseType;
     }
 
-    public List<File> getAttachedFiles() {
+    public ArrayList<String> getAttachedFiles() {
         return attachedFiles;
     }
 
-    public void setAttachedFiles(List<File> attachedFiles) {
+    public void setAttachedFiles(ArrayList<String> attachedFiles) {
         this.attachedFiles = attachedFiles;
     }
 

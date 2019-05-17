@@ -1,12 +1,12 @@
 package UI.CaseModule;
 
 import Domain.CaseModule.Case;
-import Domain.User.Resident;
 import Domain.User.User;
 import Persistence.CaseRepository;
 import Persistence.UserManager;
 import static UI.Vault.stage;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
@@ -29,8 +29,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -42,14 +40,12 @@ import javafx.stage.Stage;
 public class FXMLCaseCreatorController implements Initializable {
 
     private ObservableList<String> typestatus = FXCollections.observableArrayList();
-    private File attachedFile = null;
+    private String attachedFile = null;
     private FileChooser chooser = new FileChooser();
-    private List<File> attachedFiles;
+    private ArrayList<String> attachedFiles;
 
     @FXML
     private AnchorPane caseModulePane;
-    @FXML
-    private JFXTextField serviceField;
     @FXML
     private JFXTextField residentFirstNameField;
     @FXML
@@ -59,11 +55,7 @@ public class FXMLCaseCreatorController implements Initializable {
     @FXML
     private JFXTextArea descriptionArea;
     @FXML
-    private ChoiceBox<String> serviceBox;
-    @FXML
     private Label warningCreateLabel;
-    @FXML
-    private Label numberOfFiles;
     @FXML
     private JFXListView<String> fileView;
     private ObservableList<String> obsFileList;
@@ -76,11 +68,13 @@ public class FXMLCaseCreatorController implements Initializable {
     @FXML
     private JFXButton attacheFileBtn;
     @FXML
-    private ImageView refreshBtn;
-    @FXML
     private JFXButton Backbtn;
     @FXML
     private JFXTextField residentUsernameField;
+    @FXML
+    private JFXComboBox<String> serviceComboBox;
+    private ObservableList<String> serviceObs;
+    private ArrayList<String> tempService;
 
     @FXML
     void exitAction(MouseEvent event) {
@@ -101,48 +95,34 @@ public class FXMLCaseCreatorController implements Initializable {
         chooser.setInitialDirectory(new File("."));
         attachedFiles = new ArrayList<>();
         descriptionArea.setEditable(false);
-        serviceField.setEditable(false);
+
         residentFirstNameField.setEditable(false);
         residentLastNameField.setEditable(false);
         titleField.setEditable(false);
-        descriptionArea.setText("Start med at vælge ydelse i menuen til højre"
-                + " og tryk derefter på opdater knappen!");
-        typestatus.add("Sundhed");
-        typestatus.add("Mobilitet");
-        typestatus.add("Kommunikation");
-        serviceBox.setItems(typestatus);
 
         obsFileList = FXCollections.observableArrayList();
         fileView.setItems(obsFileList);
 
-    }
+        tempService = fillWithDummyValues();
+        serviceObs = FXCollections.observableArrayList(tempService);
+        serviceComboBox.setItems(serviceObs);
 
-    private void typeSetup(String type) {
-        switch (type) {
-            case "Sundhed":
-                serviceField.setText("Sundheds ydelse");
-                break;
-            case "Mobilitet":
-                serviceField.setText("Mobilitets ydelse");
-                break;
-            case "Kommunikation":
-                serviceField.setText("Komunikations ydelse");
-                break;
-        }
         descriptionArea.setEditable(true);
         residentFirstNameField.setEditable(true);
         residentLastNameField.setEditable(true);
         titleField.setEditable(true);
-
     }
 
-    @FXML
-    private void refreshType(MouseEvent event) {
-        try {
-            typeSetup(serviceBox.getSelectionModel().getSelectedItem());
-        } catch (NullPointerException ex) {
-            System.out.println("Ingen type valgt");
-        }
+    private ArrayList<String> fillWithDummyValues() {
+        ArrayList<String> ary = new ArrayList<>();
+        ary.add("Sundhed");
+        ary.add("Mobilitet");
+        ary.add("Kommunikation");
+        ary.add("Socialt Problem");
+        ary.add("Egenomsorg");
+
+        return ary;
+
     }
 
     @FXML
@@ -161,13 +141,12 @@ public class FXMLCaseCreatorController implements Initializable {
                 User tempUser = new User(residentFirstNameField.getText(), residentLastNameField.getText(), residentUsernameField.getText());
                 UserManager.createUserInUsers(tempUser);
                 UserManager.createUserInResidents(UserManager.getCurrentUser().getID(), 50, UserManager.getUserIDByUsername(tempUser.getUsername()));
-                createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceBox.getSelectionModel().getSelectedItem(), sqlDate, false, UserManager.getUserIDByUsername(tempUser.getUsername()));
+                createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceComboBox.getSelectionModel().getSelectedItem(), sqlDate, false, UserManager.getUserIDByUsername(tempUser.getUsername()), null);
                 CaseRepository.createCase(createdCase);
-
+                CaseRepository.attachFilesToCase(attachedFile, CaseRepository.getMaxCaseID());
                 Parent root = FXMLLoader.load(getClass().getResource("FXMLCase.fxml"));
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
-
             }
 
         } else {
@@ -186,10 +165,9 @@ public class FXMLCaseCreatorController implements Initializable {
     @FXML
     private void attachFileAction(ActionEvent event) {
         chooser.setTitle("Vedhæft Fil");
-        attachedFile = chooser.showOpenDialog(new Stage());
+        attachedFile = chooser.showOpenDialog(new Stage()).getName();
         attachedFiles.add(attachedFile);
-        obsFileList.add(attachedFile.getName());
-
+        obsFileList.add(attachedFile);
     }
 
 }

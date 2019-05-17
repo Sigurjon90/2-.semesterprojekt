@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextArea?>
@@ -19,7 +12,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="caseModulePane" prefHeight="611.0" prefWidth="832.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.CaseModule.FXMLCaseController">
+<AnchorPane id="AnchorPane" fx:id="caseModulePane" prefHeight="611.0" prefWidth="832.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.CaseModule.FXMLCaseController">
    <children>
       <AnchorPane prefHeight="46.0" prefWidth="929.0" style="-fx-background-color: #2d2d2d;">
          <children>
@@ -47,7 +40,6 @@
             <Image url="@../../icons/loop.png" />
          </image>
       </ImageView>
-      <JFXButton fx:id="resetBtn" layoutX="638.0" layoutY="82.0" onAction="#resetListAction" text="X" />
       <Label fx:id="warningLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="684.0" layoutY="63.0" opacity="0.0" prefHeight="17.0" prefWidth="188.0" text="Ilegal søgeord" textFill="RED">
          <font>
             <Font name="System Bold" size="15.0" />
@@ -56,5 +48,10 @@
       <JFXTextArea fx:id="casePreviewField" editable="false" focusColor="#3a7077" layoutX="28.0" layoutY="113.0" prefHeight="441.0" prefWidth="584.0" />
       <Line endX="478.0" layoutX="132.0" layoutY="117.0" startX="-100.0" />
       <JFXButton fx:id="BackBtn" buttonType="RAISED" layoutX="14.0" layoutY="567.0" onAction="#backToMenuAction" style="-fx-background-color: #2d2d2d;" text="Tilbage" textFill="WHITE" />
+      <ImageView fx:id="resetBtn" fitHeight="32.0" fitWidth="32.0" layoutX="637.0" layoutY="79.0" onMouseClicked="#resetListAction" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../icons/refresh.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
