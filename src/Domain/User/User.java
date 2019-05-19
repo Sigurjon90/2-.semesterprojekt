@@ -35,6 +35,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.id = id;
+
         role = new Role(roleName);
 
     }
@@ -46,6 +47,7 @@ public class User {
 
         this.username = username;
         this.password = password;
+        this.roleid = roleid;
         this.id = id;
         role = new Role(roleid, roleName);
     }
@@ -121,6 +123,10 @@ public class User {
 
     public int getRoleID() {
         return role.getRoleID();
+    }
+
+    public String getRoleName() {
+        return role.getRoleName();
     }
 
     public int getID() {

@@ -187,6 +187,10 @@ public class Case {
 
     @Override
     public String toString() {
-        return "Sag ID: " + this.caseID + "\n";
+        if (!this.isClosed()) {
+            return "Sag ID: " + this.caseID + "\n";
+        } else {
+            return "Sag ID: " + this.caseID + " " + "SAGEN ER LUKKET" + "\n";
+        }
     }
 }
