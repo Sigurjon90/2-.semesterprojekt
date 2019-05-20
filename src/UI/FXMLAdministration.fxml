@@ -65,12 +65,16 @@
          </children>
       </VBox>
       <Label fx:id="error_Lb" layoutX="53.0" layoutY="423.0" prefHeight="17.0" prefWidth="196.0" text="Udfyld venligst alle felter" textFill="#ff0101" visible="false" />
-      <Label fx:id="careWorker_Lb" layoutX="463.0" layoutY="186.0" prefHeight="17.0" prefWidth="150.0" text="Vælg pædagog:" visible="false" />
-      <Label fx:id="socialWorker_Lb" layoutX="463.0" layoutY="332.0" prefHeight="17.0" prefWidth="150.0" text="Vælg sagsudreder:" visible="false" />
-      <JFXComboBox fx:id="comboBoxCareworker" layoutX="463.0" layoutY="213.0" prefHeight="25.0" prefWidth="150.0" visible="false" />
-      <JFXComboBox fx:id="comboBoxSocialworker" layoutX="463.0" layoutY="361.0" prefHeight="25.0" prefWidth="150.0" visible="false" />
+      <Label fx:id="careWorker_Lb" layoutX="458.0" layoutY="196.0" prefHeight="17.0" prefWidth="203.0" text="Pædagog:" />
+      <Label fx:id="socialWorker_Lb" layoutX="458.0" layoutY="350.0" prefHeight="17.0" prefWidth="203.0" text="Sagsudreder: " />
+      <JFXComboBox fx:id="comboBoxCareworker" layoutX="452.0" layoutY="252.0" prefHeight="25.0" prefWidth="150.0" visible="false" />
+      <JFXComboBox fx:id="comboBoxSocialworker" layoutX="452.0" layoutY="411.0" prefHeight="25.0" prefWidth="150.0" visible="false" />
       <JFXButton fx:id="updateInfoDB" layoutX="151.0" layoutY="564.0" onAction="#updateInfoAction" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Gem Ændringer" textFill="WHITE" />
       <Label fx:id="passwordError" alignment="TOP_CENTER" layoutX="56.0" layoutY="527.0" prefHeight="17.0" prefWidth="196.0" text="Kodeordene er ikke ens" textFill="RED" visible="false" />
       <JFXButton fx:id="savePasswordBtn" layoutX="53.0" layoutY="493.0" onAction="#savePasswordAction" prefHeight="25.0" prefWidth="196.0" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Gem" textFill="WHITE" />
+      <JFXButton fx:id="newSocialBtn" layoutX="463.0" layoutY="374.0" onAction="#newSocialworkerAction" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Vælg ny sagsudreder" textFill="WHITE" />
+      <JFXButton fx:id="newCareBtn" layoutX="462.0" layoutY="219.0" onAction="#newCareworkerAction" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Vælg ny pædagog" textFill="WHITE" />
+      <JFXButton fx:id="saveCareBtn" layoutX="498.0" layoutY="290.0" onAction="#saveNewCareAction" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Gem" textFill="WHITE" visible="false" />
+      <JFXButton fx:id="saceSocialBtn" layoutX="498.0" layoutY="447.0" onAction="#saveNewSocialAction" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Gem" textFill="WHITE" visible="false" />
    </children>
 </AnchorPane>

@@ -115,6 +115,14 @@ public class FXMLAdministrationController implements Initializable {
     private int careworkerID;
 
     private int socialworkerID;
+    @FXML
+    private JFXButton newSocialBtn;
+    @FXML
+    private JFXButton newCareBtn;
+    @FXML
+    private JFXButton saveCareBtn;
+    @FXML
+    private JFXButton saceSocialBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -128,11 +136,17 @@ public class FXMLAdministrationController implements Initializable {
         NewUserBtn.setVisible(true);
         createUserBtn.setVisible(false);
 
+        careWorker_Lb.setVisible(false);
+
+        socialWorker_Lb.setVisible(false);
+
         makeStageDragable();
         tempUsers = UserManager.getAllUsersWithOutRoleID();
         usersObs = FXCollections.observableArrayList(tempUsers);
         listview_users.setItems(usersObs);
 
+        newSocialBtn.setVisible(false);
+        newCareBtn.setVisible(false);
         //Laver en arrayliste med brugere af typen careworker og ligger den ind i listen under choiceboxen careworker_pricker
         tempCareworkers = UserManager.getAllUsersWithRoleID(1);
         careworkersObs = FXCollections.observableArrayList(tempCareworkers);
@@ -191,6 +205,8 @@ public class FXMLAdministrationController implements Initializable {
         if (selectedUser != null) {
             comboBoxCareworker.setVisible(false);
             comboBoxSocialworker.setVisible(false);
+            newSocialBtn.setVisible(false);
+            newCareBtn.setVisible(false);
             infoFillOut();
             NewUserBtn.setVisible(true);
             createUserBtn.setVisible(false);
@@ -199,20 +215,22 @@ public class FXMLAdministrationController implements Initializable {
             socialWorker_Lb.setVisible(false);
             setPasswordBtn.setVisible(true);
             deleteUserBtn.setVisible(true);
-            System.out.println("FIRST IF");
+            saveCareBtn.setVisible(false);
+            saceSocialBtn.setVisible(false);
 
             if (selectedUser.getRoleName().equals("resident")) {
 
-                System.out.println(" lige efter ");
-                comboBoxCareworker.setVisible(true);
-                comboBoxSocialworker.setVisible(true);
+                careWorker_Lb.setText("Pædagog: " + " " + UserManager.getCareworkerFromResidents(selectedUser.getID()).getFullName());
+                socialWorker_Lb.setText("Sagsudreder: " + " " + UserManager.getSocialworkerFromResidents(selectedUser.getID()).getFullName());
+
+                newSocialBtn.setVisible(true);
+                newCareBtn.setVisible(true);
+
                 comboBoxCareworker.setPromptText(UserManager.getCareworkerFromResidents(selectedUser.getID()).toString());
                 careworkerID = UserManager.getCareworkerFromResidents(selectedUser.getID()).getID();
-                System.out.println("get coworker" + careworkerID);
 
                 comboBoxSocialworker.setPromptText(UserManager.getSocialworkerFromResidents(selectedUser.getID()).toString());
                 socialworkerID = UserManager.getSocialworkerFromResidents(selectedUser.getID()).getID();
-                System.out.println("get socialworker" + socialworkerID);
 
                 careWorker_Lb.setVisible(true);
                 socialWorker_Lb.setVisible(true);
@@ -438,21 +456,13 @@ public class FXMLAdministrationController implements Initializable {
                 System.out.println("Det kan du ikke:");
             }//Hvis en beboers rolletype ikke er ændret, opdateres de gemte oplysninger
             else if (selectedUser.getRoleName().equals("resident") && checkUserType() == 4) {
-                if (careworkerID != comboBoxCareworker.getSelectionModel().getSelectedItem().getID() || socialworkerID != comboBoxSocialworker.getSelectionModel().getSelectedItem().getID()) {
-                    careworkerID = comboBoxCareworker.getSelectionModel().getSelectedItem().getID();
-                    socialworkerID = comboBoxSocialworker.getSelectionModel().getSelectedItem().getID();
-                    UserManager.updateUserInUsers(firstNameField.getText(), lastNameField.getText(), userNameField.getText(), checkUserType(), selectedUser.getID());
-                    UserManager.updateUserInResidents(selectedUser.getID(), careworkerID, socialworkerID);
-                    tempUsers = UserManager.getAllUsersWithOutRoleID();
-                    usersObs = FXCollections.observableArrayList(tempUsers);
-                    listview_users.setItems(usersObs);
-                } else {
-                    UserManager.updateUserInUsers(firstNameField.getText(), lastNameField.getText(), userNameField.getText(), checkUserType(), selectedUser.getID());
-                    UserManager.updateUserInResidents(selectedUser.getID(), careworkerID, socialworkerID);
-                    tempUsers = UserManager.getAllUsersWithOutRoleID();
-                    usersObs = FXCollections.observableArrayList(tempUsers);
-                    listview_users.setItems(usersObs);
-                }
+//
+                UserManager.updateUserInUsers(firstNameField.getText(), lastNameField.getText(), userNameField.getText(), checkUserType(), selectedUser.getID());
+
+                tempUsers = UserManager.getAllUsersWithOutRoleID();
+                usersObs = FXCollections.observableArrayList(tempUsers);
+                listview_users.setItems(usersObs);
+//
             }
         }
     }
@@ -499,6 +509,44 @@ public class FXMLAdministrationController implements Initializable {
 
         }
 
+    }
+
+    @FXML
+    private void newSocialworkerAction(ActionEvent event) {
+        comboBoxSocialworker.setVisible(true);
+        saceSocialBtn.setVisible(true);
+        newSocialBtn.setVisible(false);
+
+    }
+
+    @FXML
+    private void newCareworkerAction(ActionEvent event) {
+        comboBoxCareworker.setVisible(true);
+        saveCareBtn.setVisible(true);
+        newCareBtn.setVisible(false);
+
+    }
+
+    @FXML
+    private void saveNewCareAction(ActionEvent event) {
+        if (selectedUser != null) {
+            careworkerID = comboBoxCareworker.getSelectionModel().getSelectedItem().getID();
+            UserManager.updateCareWorkerOnResident(selectedUser.getID(), comboBoxCareworker.getSelectionModel().getSelectedItem().getID());
+            comboBoxCareworker.setVisible(false);
+            saveCareBtn.setVisible(false);
+            newCareBtn.setVisible(true);
+        }
+    }
+
+    @FXML
+    private void saveNewSocialAction(ActionEvent event) {
+        if (selectedUser != null) {
+            socialworkerID = comboBoxSocialworker.getSelectionModel().getSelectedItem().getID();
+            UserManager.updateSocialWorkerOnResident(selectedUser.getID(), comboBoxSocialworker.getSelectionModel().getSelectedItem().getID());
+            comboBoxSocialworker.setVisible(false);
+            saceSocialBtn.setVisible(false);
+            newSocialBtn.setVisible(true);
+        }
     }
 
 }
