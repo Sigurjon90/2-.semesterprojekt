@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.scene.control.Accordion?>
@@ -112,9 +113,9 @@
                   <JFXTextField fx:id="titleTextField" editable="false" layoutX="21.0" layoutY="44.0" />
                   <JFXTextField fx:id="typeComboBox" editable="false" layoutX="22.0" layoutY="245.0" />
                   <JFXTextField fx:id="placeTextField" editable="false" layoutX="22.0" layoutY="285.0" />
-                  <JFXTextField fx:id="descriptionTextField" alignment="TOP_LEFT" editable="false" layoutX="21.0" layoutY="334.0" prefHeight="248.0" prefWidth="395.0" />
                   <JFXRadioButton fx:id="entryYes" disable="true" layoutX="22.0" layoutY="207.0" prefHeight="17.0" prefWidth="53.0" text="Ja" />
                   <JFXRadioButton fx:id="sharedYes" disable="true" layoutX="22.0" layoutY="167.0" prefHeight="17.0" prefWidth="53.0" text="Ja" />
+                  <JFXTextArea fx:id="descriptionTextField" editable="false" layoutX="20.0" layoutY="332.0" prefHeight="224.0" prefWidth="382.0" wrapText="true" />
                     </children>
                 </AnchorPane>
             </items>

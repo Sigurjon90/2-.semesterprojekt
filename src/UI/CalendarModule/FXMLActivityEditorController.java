@@ -29,6 +29,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
@@ -55,7 +56,7 @@ public class FXMLActivityEditorController implements Initializable {
     @FXML
     private TextField placeTextField;
     @FXML
-    private TextField descriptionTextField;
+    private TextArea descriptionTextField;
     @FXML
     private RadioButton sharedYes;
     @FXML
@@ -98,21 +99,22 @@ public class FXMLActivityEditorController implements Initializable {
                 startDate = startTextField.getValue().atTime(startTimeField.getValue());
                 endDate = startTextField.getValue().atTime(endTimeField.getValue());
 
-                Calendar.getCurrentCalendar().createActivity(titleTextField.getText(), 
-                        UserManager.getCurrentUser().getFullName(), placeTextField.getText(), startDate, endDate, 
+                Calendar.getCurrentCalendar().createActivity(titleTextField.getText(),
+                        UserManager.getCurrentUser().getFullName(), placeTextField.getText(), startDate, endDate,
                         descriptionTextField.getText(), typeComboBox.getValue(), sharedYes.isSelected(), entryYes.isSelected());
-               
-                if(entryYes.isSelected()){
+
+                if (entryYes.isSelected()) {
                     String shared;
-                    if(sharedYes.isSelected())
+                    if (sharedYes.isSelected()) {
                         shared = "Er en fællesaktivitet";
-                    else
+                    } else {
                         shared = "Er ikke en fællesaktivitet";
-                    String entryString = "Titel: " + titleTextField.getText() + "\n\n" + "Startdato: " + startDate + "\n\n" + "Slutdato: " + endDate + "\n\n"  + shared + "\n\n"
-                           + "Type: " +  typeComboBox.getValue() + "\n\n" + "Sted: " + placeTextField.getText() + "\n\n\n" + descriptionTextField.getText();
+                    }
+                    String entryString = "Titel: " + titleTextField.getText() + "\n\n" + "Startdato: " + startDate + "\n\n" + "Slutdato: " + endDate + "\n\n" + shared + "\n\n"
+                            + "Type: " + typeComboBox.getValue() + "\n\n" + "Sted: " + placeTextField.getText() + "\n\n\n" + descriptionTextField.getText();
                     DiaryRepository.storeEntry(new Entry(startDate.toLocalDate(), entryString));
                 }
-                
+
                 Parent root = FXMLLoader.load(getClass().getResource("FXMLCalendar.fxml"));
                 Scene scene = new Scene(root);
                 stage.setScene(scene);

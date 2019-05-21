@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.scene.control.Label?>
@@ -35,9 +36,9 @@
                 <JFXTextField fx:id="titleTextField" layoutX="17.0" layoutY="44.0" />
                 <JFXComboBox fx:id="typeComboBox" layoutX="20.0" layoutY="246.0" onAction="#comboAction" prefHeight="25.0" prefWidth="135.0" />
                 <JFXTextField fx:id="placeTextField" layoutX="19.0" layoutY="290.0" />
-                <JFXTextField fx:id="descriptionTextField" alignment="TOP_LEFT" layoutX="17.0" layoutY="339.0" prefHeight="182.0" prefWidth="400.0" />
                 <JFXRadioButton fx:id="sharedYes" layoutX="20.0" layoutY="167.0" text="Ja" />
                 <JFXRadioButton fx:id="entryYes" layoutX="20.0" layoutY="211.0" text="Ja" />
+            <JFXTextArea fx:id="descriptionTextField" layoutX="18.0" layoutY="345.0" prefHeight="188.0" prefWidth="405.0" wrapText="true" />
             </children>
         </AnchorPane>
         <AnchorPane prefHeight="46.0" prefWidth="929.0" style="-fx-background-color: #2d2d2d;">

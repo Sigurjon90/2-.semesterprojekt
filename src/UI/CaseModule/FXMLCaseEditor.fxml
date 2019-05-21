@@ -31,7 +31,7 @@
             <Image url="@../../icons/logo.png" />
          </image>
       </ImageView>
-      <JFXTextArea fx:id="descriptionArea" layoutX="79.0" layoutY="158.0" prefHeight="362.0" prefWidth="580.0" />
+      <JFXTextArea fx:id="descriptionArea" layoutX="79.0" layoutY="158.0" prefHeight="362.0" prefWidth="580.0" wrapText="true" />
       <Line endX="470.5" layoutX="189.0" layoutY="148.0" startX="-110.0" />
       <Line endX="-154.0" endY="346.0" layoutX="233.0" layoutY="174.0" startX="-154.0" startY="-24.0" />
       <JFXTextField fx:id="serviceField" layoutX="696.0" layoutY="168.0" prefHeight="25.0" prefWidth="150.0" />
