@@ -3,27 +3,24 @@ package Domain.DiaryModule;
 import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 public class Entry {
 
     private LocalDate date;
     private String description;
-    private List<Integer> accessType;
     private List<File> files;
     private int id;
-
 
     public Entry(LocalDate date, String description, int id) {
         this.date = date;
         this.description = description;
         this.id = id;
     }
-     public Entry(LocalDate date, String description) {
-        //this.entryID = UUID.randomUUID().toString();
+
+    public Entry(LocalDate date, String description) {
         this.date = date;
         this.description = description;
-        //System.out.println("udprint af entryid:" + entryID);
+
     }
 
     public Entry(LocalDate date, String description, List<File> files) {
@@ -31,13 +28,8 @@ public class Entry {
         this.date = date;
         this.description = description;
     }
-    public void editEntry(String description, LocalDate date, List<File> files) {
-        this.description = description;
-        this.date = date;
-        this.files = files;
-    }
 
-    public void deleteEntry() {
+    public void editEntry(String description, LocalDate date, List<File> files) {
         this.description = description;
         this.date = date;
         this.files = files;

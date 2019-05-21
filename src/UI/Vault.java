@@ -2,7 +2,7 @@ package UI;
 
 import Domain.CalendarModule.Activity;
 import Domain.CalendarModule.Calendar;
-import Domain.User.Resident;
+
 import Persistence.Connector;
 import Persistence.DiaryRepository;
 import Persistence.UserManager;
@@ -18,7 +18,6 @@ public class Vault extends Application {
     public static Stage stage;
 //    public static User currentLoggedOn = new CareWorker("care", "carer");
 
-    public static Resident resident = new Resident();
     public static Activity currentActivity;
     public static boolean newAction;
 

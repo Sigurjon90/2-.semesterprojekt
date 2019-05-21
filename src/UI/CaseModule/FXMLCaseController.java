@@ -1,7 +1,7 @@
 package UI.CaseModule;
 
 import Domain.CaseModule.Case;
-import Domain.User.SocialWorker;
+
 import Persistence.CaseRepository;
 import Persistence.UserManager;
 import UI.Vault;
@@ -32,7 +32,6 @@ import javafx.stage.Stage;
 
 public class FXMLCaseController implements Initializable {
 
-    private static SocialWorker currentLoggedOn;
     private double xOffset = 0;
     private double yOffset = 0;
     private ArrayList<Case> tempCases;

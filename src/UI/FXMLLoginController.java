@@ -5,8 +5,6 @@
  */
 package UI;
 
-import Domain.User.CareWorker;
-import Domain.User.Resident;
 import Domain.User.SocialWorker;
 import Domain.User.User;
 import Persistence.UserManager;

@@ -23,13 +23,9 @@ public class Calendar {
     public static Calendar getCurrentCalendar() {
         return currentCalendar;
     }
-    
-    public static void enableCurrentCalendar(){
-         currentCalendar =  new Calendar(UserManager.getCurrentResident());
-    }
 
-    public void deleteActivity(Activity activity) {
-        calendar.remove(activity.getActivityID(), activity);
+    public static void enableCurrentCalendar() {
+        currentCalendar = new Calendar(UserManager.getCurrentResident());
     }
 
     public void createActivity(String title, String creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry) {
@@ -37,7 +33,7 @@ public class Calendar {
         int newID = ActivityManager.storeActivity(activity);
         calendar.put(newID, activity);
         System.out.println(startDate.toString());
-        
+
     }
 
     public void putInCalendar(Activity activity) {

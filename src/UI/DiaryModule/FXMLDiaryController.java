@@ -1,6 +1,5 @@
 package UI.DiaryModule;
 
-import Domain.User.Resident;
 import static UI.Vault.stage;
 import UI.Vault;
 import Domain.DiaryModule.Entry;
@@ -66,14 +65,8 @@ public class FXMLDiaryController implements Initializable {
     public ObservableList<Entry> tempList;
     private ArrayList<Entry> tempEntries;
 
-    Resident resident = new Resident();
-
     public void setList(ObservableList<Entry> list) {
         this.obsEntryList = list;
-    }
-
-    public Resident getResident() {
-        return resident;
     }
 
     @Override

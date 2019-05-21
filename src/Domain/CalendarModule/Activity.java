@@ -1,8 +1,5 @@
 package Domain.CalendarModule;
 
-import Domain.User.User;
-import Persistence.ActivityManager;
-import java.awt.Image;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -12,7 +9,6 @@ public class Activity {
     private String place;
     private String description;
     private String type;
-    private Image pictogram = null;
     private LocalDateTime endDate;
     private LocalDateTime startDate;
     private Boolean shared;
@@ -33,7 +29,7 @@ public class Activity {
         this.activityID = activityID;
         this.entry = entry;
     }
-    
+
     public Activity(String title, String creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry) {
         this.title = title;
         this.creator = creator;
@@ -73,13 +69,15 @@ public class Activity {
     public String getType() {
         return type;
     }
-    public String getStartTimeAndDate(){
+
+    public String getStartTimeAndDate() {
         return startDate.toString();
     }
-    public String getEndTimeAndDate(){
-        return endDate.toString();        
+
+    public String getEndTimeAndDate() {
+        return endDate.toString();
     }
-    
+
     public LocalDate getEndDate() {
         return endDate.toLocalDate();
     }
