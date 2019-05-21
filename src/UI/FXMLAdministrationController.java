@@ -329,6 +329,8 @@ public class FXMLAdministrationController implements Initializable {
             User user = new User(firstNameField.getText(), lastNameField.getText(), userNameField.getText(), password, roleid);
             //Opret
             UserManager.createUserInUsers(user);
+            
+            updateInfoDB.setVisible(true);
 
             //Hvis der er tale om en beboer, skal den også oprettes i resident-table i databasen.
             if (roleid == 4) {
@@ -367,6 +369,11 @@ public class FXMLAdministrationController implements Initializable {
         comboBoxSocialworker.setVisible(false);
         setPasswordBtn.setVisible(false);
         deleteUserBtn.setVisible(false);
+        updateInfoDB.setVisible(false);
+        newCareBtn.setVisible(false);
+        newSocialBtn.setVisible(false);
+        saveCareBtn.setVisible(false);
+        saceSocialBtn.setVisible(false);
     }
 
     private void clearFields() {
