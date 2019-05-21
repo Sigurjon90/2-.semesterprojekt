@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
@@ -8,7 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Polygon?>
 
-<AnchorPane id="AnchorPane" fx:id="loginPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="453.0" prefWidth="465.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.FXMLLoginController">
+<AnchorPane id="AnchorPane" fx:id="loginPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="453.0" prefWidth="465.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.FXMLLoginController">
    <children>
       <ImageView fitHeight="480.0" fitWidth="465.0" layoutY="-8.0" opacity="0.23" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -39,5 +45,6 @@
             <Image url="@../icons/logo.png" />
          </image>
       </ImageView>
+      <Label fx:id="label_error" layoutX="89.0" layoutY="122.0" prefHeight="17.0" prefWidth="287.0" text="Forkert brugernavn eller password, prøv venligst igen" textFill="RED" />
    </children>
 </AnchorPane>
