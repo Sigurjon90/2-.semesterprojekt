@@ -189,7 +189,7 @@ public class FXMLCaseCreatorController implements Initializable {
 
                     User tempUser = new User(residentFirstNameField.getText(), residentLastNameField.getText(), residentUsernameField.getText());
                     UserManager.createUserInUsers(tempUser);
-                    UserManager.createUserInResidents(UserManager.getCurrentUser().getID(), 50, UserManager.getUserIDByUsername(tempUser.getUsername()));
+                    UserManager.createUserInResidents(UserManager.getCurrentUser().getID(), 95, UserManager.getUserIDByUsername(tempUser.getUsername()));
                     createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceComboBox.getSelectionModel().getSelectedItem(), sqlDate, false, UserManager.getUserIDByUsername(tempUser.getUsername()), null);
                     CaseRepository.createCase(createdCase);
                     if (!obsFileList.isEmpty()) {

@@ -77,14 +77,6 @@ public class FXMLVaultController implements Initializable {
             residentsObs = FXCollections.observableArrayList(tempResidents);
             listview_residents.setItems(residentsObs);
 
-        } else if (UserManager.getCurrentUser().checkForPermission("delete_user") || UserManager.getCurrentUser().checkForPermission("create_user")) {
-            btn_diary.setDisable(true);
-            btn_calendar.setDisable(true);
-            btn_case.setDisable(true);
-            btn_admin.setVisible(true);
-            btn_admin.setDisable(false);
-            lastLine.setVisible(true);
-
         } else {
             listview_residents.setVisible(false);
             lb_residents.setVisible(false);
@@ -103,6 +95,13 @@ public class FXMLVaultController implements Initializable {
         }
         if (!UserManager.getCurrentUser().checkForPermission("view_case")) {
             btn_case.setDisable(true);
+        }
+        if (UserManager.getCurrentUser().checkForPermission("delete_user") || UserManager.getCurrentUser().checkForPermission("create_user")) {
+
+            btn_admin.setVisible(true);
+            btn_admin.setDisable(false);
+            lastLine.setVisible(true);
+
         }
     }
 

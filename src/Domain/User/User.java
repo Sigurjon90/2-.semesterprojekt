@@ -22,7 +22,7 @@ public class User {
         this.lastName = lastName;
         this.username = username;
 
-        this.password = null;
+        this.password = "initial";
         this.roleid = 4;
 
         role = new Role(4, "resident");
