@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -27,7 +28,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
 import javafx.stage.Stage;
 
 public class FXMLCaseController implements Initializable {
@@ -66,7 +66,6 @@ public class FXMLCaseController implements Initializable {
         obsCaseList = FXCollections.observableArrayList(tempCases);
         caseList.setItems(obsCaseList);
         makeStageDragable();
-        testColor();
 
     }
 
@@ -86,14 +85,6 @@ public class FXMLCaseController implements Initializable {
         caseModulePane.setOnMouseReleased((event) -> {
             Vault.stage.setOpacity(1.0f);
         });
-    }
-
-    private void testColor() {
-        for (Case c : tempCases) {
-            if (c.isClosed()) {
-                caseList.setStyle("-fx-background-color: #dd0808");
-            }
-        }
     }
 
     @FXML

@@ -16,7 +16,7 @@
          </image>
       </ImageView>
       <JFXPasswordField fx:id="text_password" layoutX="126.0" layoutY="225.0" prefHeight="25.0" prefWidth="213.0" promptText="Password" />
-      <JFXButton fx:id="btn_login" layoutX="126.0" layoutY="274.0" onAction="#loginHandler" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Log in" textFill="WHITE" />
+      <JFXButton fx:id="btn_login" defaultButton="true" layoutX="126.0" layoutY="274.0" onAction="#loginHandler" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Log in" textFill="WHITE" />
       <JFXButton fx:id="btn_cancel" layoutX="278.0" layoutY="274.0" onAction="#cancelHandler" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Annuller" textFill="WHITE" />
       <JFXTextField fx:id="text_username" layoutX="126.0" layoutY="147.0" prefHeight="25.0" prefWidth="213.0" promptText="Brugernavn" />
       <Polygon fill="#2d2d2d" layoutX="63.0" layoutY="74.0" points="-64.0, 39.0, 199.0, -74.0, -64.0, -74.0" stroke="#2d2d2d" strokeType="INSIDE" />

@@ -198,7 +198,7 @@ public class UserManager {
             //Tilføjer rollens permissions til Arraylisten
             if (result.next()) {
                 user = getUser(result.getInt("social_worker_id"));
-                //user = new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), result.getInt("roleid"), getRoleType(result.getInt("roleid")), result.getInt("id"));
+
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -409,6 +409,40 @@ public class UserManager {
             pre.setInt(1, socialworkerID);
             pre.setInt(2, careworkerID);
             pre.setInt(3, userID);
+
+            pre.executeUpdate();
+            pre.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+        }
+
+    }
+
+    public static void updateSocialWorkerOnResident(int userID, int socialworkerID) {
+        String SQL = "update residents set social_worker_id =? where resident_id =?";
+        try {
+            pre = Connector.getCon().prepareStatement(SQL);
+            pre.setInt(1, socialworkerID);
+            pre.setInt(2, userID);
+
+            pre.executeUpdate();
+            pre.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    public static void updateCareWorkerOnResident(int userID, int careworkerID) {
+        String SQL = "update residents set care_worker_id =? where resident_id =?";
+        try {
+            pre = Connector.getCon().prepareStatement(SQL);
+
+            pre.setInt(1, careworkerID);
+            pre.setInt(2, userID);
 
             pre.executeUpdate();
             pre.close();

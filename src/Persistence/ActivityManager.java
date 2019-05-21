@@ -11,8 +11,8 @@ import UI.CalendarModule.FXMLCalendarController;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-/**
- *
+/*
+
  * @author morte
  */
 public class ActivityManager {
@@ -63,7 +63,7 @@ public class ActivityManager {
         ArrayList<Integer> activities = ActivityRepository.getActivityIDs(residentID);
         for (Integer id : activities) {
             ArrayList<Object> activityInfo = ActivityRepository.getActivityInfo(id);
-            Calendar.getCurrentCalendar().putInCalendar(new Activity((String) activityInfo.get(0), (String) activityInfo.get(1), (String) activityInfo.get(2), getLocalDateTime((String) activityInfo.get(3)), getLocalDateTime((String) activityInfo.get(4)), (String) activityInfo.get(5), (String) activityInfo.get(6), (Boolean) activityInfo.get(7), (Boolean) activityInfo.get(8), (int)(activityInfo.get(10))));
+            Calendar.getCurrentCalendar().putInCalendar(new Activity((String) activityInfo.get(0), (String) activityInfo.get(1), (String) activityInfo.get(2), getLocalDateTime((String) activityInfo.get(3)), getLocalDateTime((String) activityInfo.get(4)), (String) activityInfo.get(5), (String) activityInfo.get(6), (Boolean) activityInfo.get(7), (Boolean) activityInfo.get(8), (int) (activityInfo.get(10))));
         }
     }
 
