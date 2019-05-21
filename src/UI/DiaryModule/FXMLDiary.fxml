@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextArea?>
@@ -12,38 +19,38 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="DiaryPane" prefHeight="611.0" prefWidth="832.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.DiaryModule.FXMLDiaryController">
+<AnchorPane id="AnchorPane" fx:id="DiaryPane" prefHeight="611.0" prefWidth="832.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.DiaryModule.FXMLDiaryController">
    <children>
-      <AnchorPane prefHeight="46.0" prefWidth="929.0" style="-fx-background-color: #2d2d2d;">
+      <AnchorPane prefHeight="46.0" prefWidth="944.0" style="-fx-background-color: #2d2d2d;">
          <children>
-            <ImageView fx:id="exitBtn" fitHeight="32.0" fitWidth="46.0" layoutX="883.0" layoutY="7.0" onMouseClicked="#exitAction" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="exitBtn" fitHeight="32.0" fitWidth="46.0" layoutX="906.0" layoutY="7.0" onMouseClicked="#exitAction" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../icons/exit.png" />
                </image></ImageView>
-            <ImageView fx:id="minimizeBtn" fitHeight="25.0" fitWidth="30.0" layoutX="848.0" layoutY="10.0" onMouseClicked="#minimizeAction" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="minimizeBtn" fitHeight="25.0" fitWidth="30.0" layoutX="874.0" layoutY="11.0" onMouseClicked="#minimizeAction" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../icons/minimize.png" />
                </image></ImageView>
          </children></AnchorPane>
-      <JFXButton fx:id="btn_edit" buttonType="RAISED" layoutX="817.0" layoutY="541.0" onAction="#displayEntryEditor" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Rediger Indlæg" textFill="WHITE" />
-      <JFXButton fx:id="searchCaseBtn" buttonType="RAISED" layoutX="849.0" layoutY="78.0" onAction="#searchEntryButtonHandler" prefHeight="25.0" prefWidth="66.0" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Søg Dato" textFill="WHITE" />
+      <JFXButton fx:id="btn_edit" buttonType="RAISED" layoutX="808.0" layoutY="541.0" onAction="#displayEntryEditor" prefHeight="31.0" prefWidth="127.0" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Rediger Indlæg" textFill="WHITE" />
+      <JFXButton fx:id="searchCaseBtn" buttonType="RAISED" layoutX="849.0" layoutY="78.0" onAction="#searchEntryButtonHandler" prefHeight="31.0" prefWidth="87.0" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Søg Dato" textFill="WHITE" />
       <Polygon fill="#2d2d2d" layoutX="64.0" layoutY="74.0" points="-64.0, 39.0, 199.0, -74.0, -64.0, -74.0" stroke="#2d2d2d" strokeType="INSIDE" />
       <ImageView fitHeight="53.0" fitWidth="60.0" layoutX="14.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../icons/logo.png" />
          </image>
       </ImageView>
-      <JFXButton fx:id="btn_newEntry" buttonType="RAISED" layoutX="715.0" layoutY="541.0" onAction="#displayEntryCreator" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Opret Indlæg" textFill="WHITE" />
+      <JFXButton fx:id="btn_newEntry" buttonType="RAISED" layoutX="671.0" layoutY="541.0" onAction="#displayEntryCreator" prefHeight="31.0" prefWidth="127.0" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Opret Indlæg" textFill="WHITE" />
      
       <Label fx:id="warningLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="683.0" layoutY="57.0" opacity="0.0" prefHeight="17.0" prefWidth="188.0" text="Ilegal søgeord" textFill="RED">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Label>
-      <JFXListView fx:id="list_entrys" editable="true" layoutX="671.0" layoutY="113.0" onMouseClicked="#showEntry" prefHeight="418.0" prefWidth="244.0" styleClass="jfx-list-view" stylesheets="@CaseUI.css" verticalGap="10.0" />
+      <JFXListView fx:id="list_entrys" editable="true" layoutX="671.0" layoutY="118.0" onMouseClicked="#showEntry" prefHeight="418.0" prefWidth="244.0" styleClass="jfx-list-view" stylesheets="@CaseUI.css" verticalGap="10.0" />
       <JFXTextArea fx:id="textarea_entry" editable="false" focusColor="#3a7077" layoutX="28.0" layoutY="113.0" prefHeight="418.0" prefWidth="584.0" />
       <Line endX="478.0" layoutX="132.0" layoutY="117.0" startX="-100.0" />
-      <JFXButton fx:id="btn_back" layoutX="817.0" layoutY="573.0" onAction="#backToMenu" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Tilbage" textFill="WHITE" />
-      <JFXButton fx:id="btn_delete" layoutX="715.0" layoutY="573.0" onAction="#deleteEntry" prefHeight="25.0" prefWidth="87.0" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Slet Indlæg" textFill="WHITE" />
+      <JFXButton fx:id="btn_back" layoutX="808.0" layoutY="573.0" onAction="#backToMenu" prefHeight="31.0" prefWidth="127.0" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Tilbage" textFill="WHITE" />
+      <JFXButton fx:id="btn_delete" layoutX="671.0" layoutY="573.0" onAction="#deleteEntry" prefHeight="31.0" prefWidth="127.0" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Slet Indlæg" textFill="WHITE" />
       <Label fx:id="lb_file" layoutX="27.0" layoutY="552.0" prefHeight="17.0" prefWidth="426.0" />
       <DatePicker fx:id="dp_search" layoutX="671.0" layoutY="78.0" prefHeight="25.0" prefWidth="169.0" styleClass="jfx-hand" stylesheets="@CaseUI.css" />
    </children>
