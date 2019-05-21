@@ -43,6 +43,11 @@ public class FXMLCaseCreatorController implements Initializable {
     private String attachedFile = null;
     private FileChooser chooser = new FileChooser();
     private ArrayList<String> attachedFiles;
+    private ObservableList<String> serviceObs;
+    private ArrayList<String> tempService;
+    private ObservableList<User> residentObs;
+    private ArrayList<User> tempResidents;
+    private ObservableList<String> obsFileList;
 
     @FXML
     private AnchorPane caseModulePane;
@@ -58,7 +63,6 @@ public class FXMLCaseCreatorController implements Initializable {
     private Label warningCreateLabel;
     @FXML
     private JFXListView<String> fileView;
-    private ObservableList<String> obsFileList;
     @FXML
     private ImageView exitBtn;
     @FXML
@@ -73,10 +77,6 @@ public class FXMLCaseCreatorController implements Initializable {
     private JFXTextField residentUsernameField;
     @FXML
     private JFXComboBox<String> serviceComboBox;
-    private ObservableList<String> serviceObs;
-    private ArrayList<String> tempService;
-    private ObservableList<User> residentObs;
-    private ArrayList<User> tempResidents;
     @FXML
     private JFXRadioButton ExistingUserBtn;
     @FXML
@@ -89,20 +89,6 @@ public class FXMLCaseCreatorController implements Initializable {
     private Label LastnameLb;
     @FXML
     private Label UsernameLb;
-
-    @FXML
-    void exitAction(MouseEvent event) {
-        final Node source = (Node) event.getSource();
-        final Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
-
-    }
-
-    @FXML
-    void minimizeAction(MouseEvent event) {
-        Stage stage = (Stage) caseModulePane.getScene().getWindow();
-        stage.setIconified(true);
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -129,6 +115,20 @@ public class FXMLCaseCreatorController implements Initializable {
         tempResidents = UserManager.getAllUsersWithRoleID(4);
         residentObs = FXCollections.observableArrayList(tempResidents);
         residentComboBox.setItems(residentObs);
+    }
+
+    @FXML
+    private void exitAction(MouseEvent event) {
+        final Node source = (Node) event.getSource();
+        final Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
+
+    }
+
+    @FXML
+    private void minimizeAction(MouseEvent event) {
+        Stage stage = (Stage) caseModulePane.getScene().getWindow();
+        stage.setIconified(true);
     }
 
     private ArrayList<String> fillWithDummyValues() {
@@ -206,8 +206,7 @@ public class FXMLCaseCreatorController implements Initializable {
     }
 
     @FXML
-    private void backToCaseModule(ActionEvent event
-    ) throws IOException {
+    private void backToCaseModule(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLCase.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);

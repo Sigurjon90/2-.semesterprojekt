@@ -1,12 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package UI;
 
-import Domain.User.SocialWorker;
-import Domain.User.User;
 import Persistence.UserManager;
 import static UI.Vault.stage;
 import com.jfoenix.controls.JFXButton;
@@ -14,9 +7,6 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -30,11 +20,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author jens
- */
 public class FXMLLoginController implements Initializable {
 
     @FXML
@@ -64,7 +49,7 @@ public class FXMLLoginController implements Initializable {
     private void loginHandler(ActionEvent event) throws IOException, SQLException {
 
         if (UserManager.login(text_username.getText(), text_password.getText())) {
-            System.out.println(UserManager.getCurrentUser().toString());
+
             Parent root = FXMLLoader.load(getClass().getResource("FXMLVault.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -73,7 +58,7 @@ public class FXMLLoginController implements Initializable {
     }
 
     @FXML
-    void cancelHandler(ActionEvent event) {
+    private void cancelHandler(ActionEvent event) {
         System.exit(1);
     }
 

@@ -13,8 +13,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,6 +32,10 @@ public class FXMLDiaryController implements Initializable {
 
     private double xOffset = 0;
     private double yOffset = 0;
+    public static Entry selectedEntryForEdit;
+    public ObservableList<Entry> obsEntryList;
+    public ObservableList<Entry> tempList;
+    private ArrayList<Entry> tempEntries;
 
     @FXML
     private JFXListView<Entry> list_entrys;
@@ -60,15 +62,6 @@ public class FXMLDiaryController implements Initializable {
     @FXML
     private JFXButton btn_newEntry;
 
-    public static Entry selectedEntryForEdit;
-    public ObservableList<Entry> obsEntryList;
-    public ObservableList<Entry> tempList;
-    private ArrayList<Entry> tempEntries;
-
-    public void setList(ObservableList<Entry> list) {
-        this.obsEntryList = list;
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         updateList();
@@ -76,7 +69,11 @@ public class FXMLDiaryController implements Initializable {
         checkPermissions();
     }
 
-    void checkPermissions() {
+    private void setList(ObservableList<Entry> list) {
+        this.obsEntryList = list;
+    }
+
+    private void checkPermissions() {
         if (!UserManager.getCurrentUser().checkForPermission("edit_entry")) {
             btn_edit.setDisable(true);
         }
@@ -93,14 +90,14 @@ public class FXMLDiaryController implements Initializable {
         return obsEntryList;
     }
 
-    public void updateList() {
+    private void updateList() {
         tempEntries = DiaryRepository.getEntrys(UserManager.getCurrentResident().getID());
         obsEntryList = FXCollections.observableArrayList(tempEntries);
         list_entrys.setItems(obsEntryList.sorted());
     }
 
     @FXML
-    void searchEntryButtonHandler(ActionEvent event) throws IOException {
+    private void searchEntryButtonHandler(ActionEvent event) throws IOException {
         tempList = FXCollections.observableArrayList();
         if (dp_search.getValue() == null) {
             list_entrys.setItems(obsEntryList);
@@ -115,7 +112,7 @@ public class FXMLDiaryController implements Initializable {
     }
 
     @FXML
-    void showEntry(MouseEvent event) {
+    private void showEntry(MouseEvent event) {
         selectedEntryForEdit = list_entrys.getSelectionModel().getSelectedItem();
         if (!obsEntryList.isEmpty()) {
             try {
@@ -123,7 +120,7 @@ public class FXMLDiaryController implements Initializable {
                 if (list_entrys.getSelectionModel().getSelectedItem().fileNames() != null) {
                     lb_file.setText(list_entrys.getSelectionModel().getSelectedItem().fileNames());
                 }
-                //lb_file.setText(filenames);
+                
             } catch (NullPointerException ex) {
             }
 
@@ -142,16 +139,8 @@ public class FXMLDiaryController implements Initializable {
         }
     }
 
-    public void updateMap() {
-        UserManager.getCurrentResident().getResidentDiary().getMap().clear();
-        System.out.println(UserManager.getCurrentResident().getResidentDiary().getMap());
-        for (int i = 0; i < obsEntryList.size(); i++) {
-            //UserManager.getCurrentResident().getResidentDiary().getMap().put(obsEntryList.get(i).getEntryID(), obsEntryList.get(i));
-        }
-    }
-
     @FXML
-    void deleteEntry(ActionEvent event) {
+    private void deleteEntry(ActionEvent event) {
         if (selectedEntryForEdit != null) {
             DiaryRepository.deleteEntry(list_entrys.getSelectionModel().getSelectedItem().getid());
             updateList();
@@ -162,7 +151,7 @@ public class FXMLDiaryController implements Initializable {
     }
 
     @FXML
-    void displayEntryCreator(ActionEvent event) throws IOException {
+    private void displayEntryCreator(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLEntryCreator.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -170,7 +159,7 @@ public class FXMLDiaryController implements Initializable {
     }
 
     @FXML
-    void backToMenu(ActionEvent event) throws IOException {
+    private void backToMenu(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/UI/FXMLVault.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);

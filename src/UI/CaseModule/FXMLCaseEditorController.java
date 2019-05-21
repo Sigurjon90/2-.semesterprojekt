@@ -37,6 +37,7 @@ public class FXMLCaseEditorController implements Initializable {
     private FileChooser chooser = new FileChooser();
     private ArrayList<String> attachedFiles;
     private ObservableList<String> obsFileList = FXCollections.observableArrayList();
+    
     @FXML
     private JFXListView<String> fileView;
     @FXML

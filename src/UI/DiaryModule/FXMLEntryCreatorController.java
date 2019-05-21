@@ -26,6 +26,12 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class FXMLEntryCreatorController implements Initializable {
+    
+    private double xOffset = 0;
+    private double yOffset = 0;
+    private File file = null;
+    private FileChooser chooser = new FileChooser();
+    private List<File> fileList;
 
     @FXML
     private AnchorPane DiaryPane;
@@ -46,12 +52,6 @@ public class FXMLEntryCreatorController implements Initializable {
     @FXML
     private Label errorLabel;
 
-    private double xOffset = 0;
-    private double yOffset = 0;
-
-    private File file = null;
-    private FileChooser chooser = new FileChooser();
-    private List<File> fileList;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -61,18 +61,15 @@ public class FXMLEntryCreatorController implements Initializable {
     }
 
     @FXML
-    void saveFile(ActionEvent event) {
+    private void saveFile(ActionEvent event) {
         chooser.setTitle("Vedhæft fil");
         file = chooser.showOpenDialog(new Stage());
         fileList.add(file);
     }
 
     @FXML
-    void saveNewEntryHandler(ActionEvent event) throws IOException {
-        //if(dp_date.getValue()==null){
-        //    lb_error.setText("Indsæt venligst en dato!");
-        //}
-        //else{
+    private void saveNewEntryHandler(ActionEvent event) throws IOException {
+
         if (dp_date.getValue() != null && !textarea_des.getText().isEmpty()) {
             Entry entry = null;
             if (fileList == null) {
@@ -80,7 +77,6 @@ public class FXMLEntryCreatorController implements Initializable {
             } else {
                 entry = new Entry(dp_date.getValue(), textarea_des.getText(), fileList);
             }
-            System.out.println(entry.getFiles());
             DiaryRepository.storeEntry(entry);
             DiaryRepository.storeEntryFile(entry);
 
@@ -125,7 +121,7 @@ public class FXMLEntryCreatorController implements Initializable {
     }
 
     @FXML
-    void showDiaryDisplay(ActionEvent event) throws IOException {
+    private void showDiaryDisplay(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/UI/DiaryModule/FXMLDiary.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);

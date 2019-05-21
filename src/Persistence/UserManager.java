@@ -2,9 +2,7 @@ package Persistence;
 
 import Domain.User.Permission;
 
-import Domain.User.Role;
 import Domain.User.User;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

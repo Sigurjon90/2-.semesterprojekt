@@ -6,7 +6,6 @@ import Persistence.DiaryRepository;
 import Persistence.UserManager;
 import UI.Vault;
 import static UI.Vault.stage;
-import UI.CalendarModule.FXMLCalendarController;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTimePicker;
 import java.io.IOException;
@@ -39,12 +38,12 @@ import javafx.stage.Stage;
 
 public class FXMLActivityEditorController implements Initializable {
 
-    ObservableList<String> typestatus = FXCollections.observableArrayList("Medicin", "Udendørsaktivitet", "Indendørsaktivitet");
-    ObservableList<String> typeComboBoxList = FXCollections.observableArrayList();
+    private ObservableList<String> typestatus = FXCollections.observableArrayList("Medicin", "Udendørsaktivitet", "Indendørsaktivitet");
+    private ObservableList<String> typeComboBoxList = FXCollections.observableArrayList();
     private boolean newActivity;
-
     private double xOffset = 0;
     private double yOffset = 0;
+
     @FXML
     private AnchorPane calendarModulePane;
     @FXML
@@ -77,6 +76,33 @@ public class FXMLActivityEditorController implements Initializable {
     private JFXTimePicker startTimeField;
     @FXML
     private Label errorLabel;
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        typeComboBox.setItems(typestatus);
+        startTimeField.set24HourView(true);
+        endTimeField.set24HourView(true);
+        if (Vault.currentActivity != null && !Vault.newAction) {
+            saveActivityBtn.setDisable(true);
+            updateActivityBtn.setDisable(false);
+            titleTextField.setText(Vault.currentActivity.getTitle());
+            startTextField.setValue(Vault.currentActivity.getStartDate());
+            endTextField.setValue(Vault.currentActivity.getEndDate());
+            startTimeField.setValue(Vault.currentActivity.getStartTime());
+            endTimeField.setValue(Vault.currentActivity.getEndTime());
+            placeTextField.setText(Vault.currentActivity.getPlace());
+            sharedYes.setSelected(Vault.currentActivity.getShared());
+            entryYes.setSelected(Vault.currentActivity.getEntry());
+            descriptionTextField.setText(Vault.currentActivity.getDescription());
+
+        } else {
+            saveActivityBtn.setDisable(false);
+            updateActivityBtn.setDisable(true);
+        }
+
+        makeStageDragable();
+        errorLabel.setOpacity(0);
+    }
 
     @FXML
     public void comboAction(ActionEvent event) {
@@ -149,7 +175,7 @@ public class FXMLActivityEditorController implements Initializable {
     }
 
     @FXML
-    public void annullerActivity(ActionEvent event) throws IOException {
+    public void cancelActivity(ActionEvent event) throws IOException {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Bekræftigelse");
         alert.setHeaderText(null);
@@ -161,34 +187,6 @@ public class FXMLActivityEditorController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
         }
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        typeComboBox.setItems(typestatus);
-        startTimeField.set24HourView(true);
-        endTimeField.set24HourView(true);
-        if (Vault.currentActivity != null && !Vault.newAction) {
-            //newActivity = false;
-            saveActivityBtn.setDisable(true);
-            updateActivityBtn.setDisable(false);
-            titleTextField.setText(Vault.currentActivity.getTitle());
-            startTextField.setValue(Vault.currentActivity.getStartDate());
-            endTextField.setValue(Vault.currentActivity.getEndDate());
-            startTimeField.setValue(Vault.currentActivity.getStartTime());
-            endTimeField.setValue(Vault.currentActivity.getEndTime());
-            placeTextField.setText(Vault.currentActivity.getPlace());
-            sharedYes.setSelected(Vault.currentActivity.getShared());
-            entryYes.setSelected(Vault.currentActivity.getEntry());
-            descriptionTextField.setText(Vault.currentActivity.getDescription());
-
-        } else {
-            saveActivityBtn.setDisable(false);
-            updateActivityBtn.setDisable(true);
-        }
-
-        makeStageDragable();
-        errorLabel.setOpacity(0);
     }
 
     @FXML

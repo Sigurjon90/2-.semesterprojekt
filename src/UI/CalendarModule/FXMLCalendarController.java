@@ -51,9 +51,7 @@ public class FXMLCalendarController implements Initializable {
 
     private ObservableList<Activity> obList;
     private ListProperty<Activity> listProperty = new SimpleListProperty<>();
-    ObservableList<String> typestatus = FXCollections.observableArrayList("Medicin", "udendørsaktivitet", "indendørsaktivitet");
-    private boolean newActivity;
-
+    private ObservableList<String> typestatus = FXCollections.observableArrayList("Medicin", "udendørsaktivitet", "indendørsaktivitet");
     private double xOffset = 0;
     private double yOffset = 0;
 
@@ -137,7 +135,7 @@ public class FXMLCalendarController implements Initializable {
         errorLabel.setOpacity(0);
     }
 
-    void checkPermissions() {
+    private void checkPermissions() {
         if (!UserManager.getCurrentUser().checkForPermission("create_activity")) {
             planBtn.setDisable(true);
         }
@@ -183,7 +181,7 @@ public class FXMLCalendarController implements Initializable {
 
     }
 
-    public void clearAllFields() {
+    private void clearAllFields() {
         titleTextField.setText("");
         startTextField.setValue(LocalDate.now());
         endTextField.setValue(LocalDate.now());
@@ -220,7 +218,7 @@ public class FXMLCalendarController implements Initializable {
         }
     }
 
-    public void updateListView(String day) {
+    private void updateListView(String day) {
         obList = FXCollections.observableArrayList(new ArrayList<>());
         Set<Integer> keyList = Calendar.getCurrentCalendar().getKeySet();
 
@@ -332,7 +330,6 @@ public class FXMLCalendarController implements Initializable {
                     show();
                     deleteBtn.setDisable(false);
                     typeComboBox.setText(Vault.currentActivity.getType());
-                    newActivity = false;
                     titleTextField.setText(Vault.currentActivity.getTitle());
                     startTextField.setValue(Vault.currentActivity.getStartDate());
                     endTextField.setValue(Vault.currentActivity.getEndDate());
@@ -344,7 +341,6 @@ public class FXMLCalendarController implements Initializable {
                     descriptionTextField.setText(Vault.currentActivity.getDescription());
                     if (Vault.currentActivity.getType() != null) {
                         String imageToGet = Vault.currentActivity.getType();
-                        System.out.println(imageToGet);
                         pictoView.setImage(new Image("/icons/" + imageToGet + ".png"));
                     } else {
                         pictoView.setImage(null);
@@ -381,7 +377,7 @@ public class FXMLCalendarController implements Initializable {
 
     }
 
-    public void show() {
+    private void show() {
         titleTextField.setOpacity(1);
         startTextField.setOpacity(1);
         endTextField.setOpacity(1);
@@ -404,7 +400,7 @@ public class FXMLCalendarController implements Initializable {
 
     }
 
-    public void hide() {
+    private void hide() {
         titleTextField.setOpacity(0);
         startTextField.setOpacity(0);
         endTextField.setOpacity(0);
@@ -428,7 +424,7 @@ public class FXMLCalendarController implements Initializable {
     }
 
     @FXML
-    void backToMenu(ActionEvent event) throws IOException {
+    public void backToMenu(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/UI/FXMLVault.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);

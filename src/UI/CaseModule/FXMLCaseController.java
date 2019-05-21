@@ -10,7 +10,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
-import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -34,7 +33,9 @@ public class FXMLCaseController implements Initializable {
 
     private double xOffset = 0;
     private double yOffset = 0;
+    private ObservableList<Case> obsCaseList;
     private ArrayList<Case> tempCases;
+    
     @FXML
     private ImageView exitBtn;
     @FXML
@@ -47,7 +48,6 @@ public class FXMLCaseController implements Initializable {
     private JFXButton createCaseBtn;
     @FXML
     private JFXListView<Case> caseList;
-    private ObservableList<Case> obsCaseList;
     @FXML
     private JFXButton searchCaseBtn;
     @FXML
@@ -65,7 +65,6 @@ public class FXMLCaseController implements Initializable {
         obsCaseList = FXCollections.observableArrayList(tempCases);
         caseList.setItems(obsCaseList);
         makeStageDragable();
-
     }
 
     private void makeStageDragable() {
@@ -177,5 +176,4 @@ public class FXMLCaseController implements Initializable {
         stage.setScene(scene);
     }
 
-//
 }

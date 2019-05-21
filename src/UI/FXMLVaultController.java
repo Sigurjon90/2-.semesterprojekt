@@ -31,29 +31,22 @@ public class FXMLVaultController implements Initializable {
 
     private double xOffset = 0;
     private double yOffset = 0;
+    private ObservableList<User> residentsObs;
+    private ArrayList<User> tempResidents;
+    private ListProperty<Entry> listProperty = new SimpleListProperty<>();
+    
     @FXML
     private Label lb_residents;
-
     @FXML
     private Button btn_calendar;
-
     @FXML
     private Button btn_logout;
-
     @FXML
     private JFXListView<User> listview_residents;
-
     @FXML
     private AnchorPane vaultPane;
-
     @FXML
     private Label errorLabel;
-
-    private ObservableList<User> residentsObs;
-
-    private ArrayList<User> tempResidents;
-
-    private ListProperty<Entry> listProperty = new SimpleListProperty<>();
     @FXML
     private ImageView exitBtn;
     @FXML
@@ -86,7 +79,7 @@ public class FXMLVaultController implements Initializable {
 
     }
 
-    void checkPermissions() {
+    private void checkPermissions() {
         if (!UserManager.getCurrentUser().checkForPermission("view_diary")) {
             btn_diary.setDisable(true);
         }
@@ -106,21 +99,21 @@ public class FXMLVaultController implements Initializable {
     }
 
     @FXML
-    void setCurrentResident() {
+    private void setCurrentResident() {
         User tempUser = listview_residents.getSelectionModel().getSelectedItem();
         UserManager.setCurrentResident(tempUser);
-        System.out.println(UserManager.getCurrentResident());
+        
     }
 
     @FXML
-    void logoutHandler(ActionEvent event) throws IOException {
+    private void logoutHandler(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/UI/FXMLLogin.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
 
     @FXML
-    void diaryHandler(ActionEvent event) throws IOException {
+    private void diaryHandler(ActionEvent event) throws IOException {
         if (UserManager.getCurrentResident() != null) {
             Parent root = FXMLLoader.load(getClass().getResource("/UI/DiaryModule/FXMLDiary.fxml"));
             Scene scene = new Scene(root);
@@ -132,7 +125,7 @@ public class FXMLVaultController implements Initializable {
     }
 
     @FXML
-    void calendarHandler(ActionEvent event) throws IOException {
+    private void calendarHandler(ActionEvent event) throws IOException {
         if (UserManager.getCurrentResident() != null) {
             Parent root = FXMLLoader.load(getClass().getResource("/UI/CalendarModule/FXMLCalendar.fxml"));
             Scene scene = new Scene(root);
@@ -144,7 +137,7 @@ public class FXMLVaultController implements Initializable {
     }
 
     @FXML
-    void caseHandler(ActionEvent event) throws IOException {
+    private void caseHandler(ActionEvent event) throws IOException {
 
         Parent root = FXMLLoader.load(getClass().getResource("/UI/CaseModule/FXMLCase.fxml"));
         Scene scene = new Scene(root);

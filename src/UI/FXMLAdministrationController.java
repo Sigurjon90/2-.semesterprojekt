@@ -37,11 +37,6 @@ public class FXMLAdministrationController implements Initializable {
 
     private double xOffset = 0;
     private double yOffset = 0;
-    private AnchorPane vaultPane;
-
-    @FXML
-    private JFXListView<User> listview_users;
-
     private ObservableList<User> usersObs;
     private ArrayList<User> tempUsers;
     private ObservableList<User> careworkersObs;
@@ -49,7 +44,14 @@ public class FXMLAdministrationController implements Initializable {
     private ObservableList<User> socialworkersObs;
     private ArrayList<User> tempSocialworkers;
     private User selectedUser = null;
-
+    private String password = "initial";
+    private AnchorPane passwordAnchor;
+    private Label passwordErrorLabel;
+    private int careworkerID;
+    private int socialworkerID;
+    
+    @FXML
+    private JFXListView<User> listview_users;
     @FXML
     private ImageView exitBtn;
     @FXML
@@ -68,7 +70,6 @@ public class FXMLAdministrationController implements Initializable {
     private JFXButton createUserBtn;
     @FXML
     private JFXTextField userNameField;
-    private JFXTextField passwordField;
     @FXML
     private JFXRadioButton residentRadioBtn;
     @FXML
@@ -93,16 +94,12 @@ public class FXMLAdministrationController implements Initializable {
     private JFXComboBox<User> comboBoxSocialworker;
     @FXML
     private JFXButton updateInfoDB;
-
-    private String password = "initial";
-    private AnchorPane passwordAnchor;
     @FXML
     private JFXButton setPasswordBtn;
     @FXML
     private JFXPasswordField password1;
     @FXML
     private JFXPasswordField password2;
-    private Label passwordErrorLabel;
     @FXML
     private JFXButton savePasswordBtn;
     @FXML
@@ -111,10 +108,6 @@ public class FXMLAdministrationController implements Initializable {
     private Label pas1;
     @FXML
     private Label pas2;
-
-    private int careworkerID;
-
-    private int socialworkerID;
     @FXML
     private JFXButton newSocialBtn;
     @FXML
@@ -185,7 +178,7 @@ public class FXMLAdministrationController implements Initializable {
 
     @FXML
     private void minimizeAction(MouseEvent event) {
-        Stage stage = (Stage) vaultPane.getScene().getWindow();
+        Stage stage = (Stage) administrationPane.getScene().getWindow();
         stage.setIconified(true);
     }
 
@@ -245,7 +238,6 @@ public class FXMLAdministrationController implements Initializable {
         lastNameField.setText(selectedUser.getLastName());
         userNameField.setText(selectedUser.getUsername());
 
-        //    passwordField.setText("Ingen information");
         switch (selectedUser.getRoleName()) {
             case "careworker":
                 careWorkerRadioBtn.setSelected(true);
@@ -297,7 +289,7 @@ public class FXMLAdministrationController implements Initializable {
                 listview_users.setItems(usersObs);
             }
         } else {
-            System.out.println("Please select a user");
+            //indsæt label
         }
 
     }
@@ -381,7 +373,6 @@ public class FXMLAdministrationController implements Initializable {
         firstNameField.setText("");
         lastNameField.setText("");
         userNameField.setText("");
-        //passwordField.setText("");
         adminRadioBtn.setSelected(false);
         careWorkerRadioBtn.setSelected(false);
         socialWorkerRadioBtn.setSelected(false);
@@ -395,11 +386,11 @@ public class FXMLAdministrationController implements Initializable {
                 || lastNameField.getText().isEmpty()
                 || userNameField.getText().isEmpty()
                 || isRadiobuttonsFilledOut() == false) {
-            System.out.println("returned false");
+            
             return false;
 
         } else {
-            System.out.println("returned true");
+            
             return true;
         }
 
@@ -460,16 +451,15 @@ public class FXMLAdministrationController implements Initializable {
                 listview_users.setItems(usersObs);
                 //Hvis der prøves at ændre rolletypen på en beboer kommer der en fejlmeddelelse
             } else if (selectedUser.getRoleName().equals("resident") && checkUserType() != 4) {
-                System.out.println("Det kan du ikke:");
+                //INDSÆT LABEL/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             }//Hvis en beboers rolletype ikke er ændret, opdateres de gemte oplysninger
             else if (selectedUser.getRoleName().equals("resident") && checkUserType() == 4) {
-//
                 UserManager.updateUserInUsers(firstNameField.getText(), lastNameField.getText(), userNameField.getText(), checkUserType(), selectedUser.getID());
 
                 tempUsers = UserManager.getAllUsersWithOutRoleID();
                 usersObs = FXCollections.observableArrayList(tempUsers);
                 listview_users.setItems(usersObs);
-//
+
             }
         }
     }
