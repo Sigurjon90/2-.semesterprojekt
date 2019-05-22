@@ -75,10 +75,10 @@ public class FXMLEntryCreatorController implements Initializable {
             if (fileList == null) {
                 entry = new Entry(dp_date.getValue(), textarea_des.getText());
             } else {
-                entry = new Entry(dp_date.getValue(), textarea_des.getText(), fileList);
+                entry = new Entry(dp_date.getValue(), textarea_des.getText(), file);
             }
             DiaryRepository.storeEntry(entry);
-            DiaryRepository.storeEntryFile(entry);
+//            DiaryRepository.storeEntryFile(entry);
 
             Parent root = FXMLLoader.load(getClass().getResource("FXMLDiary.fxml"));
             Scene scene = new Scene(root);

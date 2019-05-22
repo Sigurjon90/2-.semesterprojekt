@@ -8,7 +8,7 @@ public class Entry {
 
     private LocalDate date;
     private String description;
-    private List<File> files;
+    private File file;
     private int id;
 
     public Entry(LocalDate date, String description, int id) {
@@ -23,16 +23,16 @@ public class Entry {
 
     }
 
-    public Entry(LocalDate date, String description, List<File> files) {
-        this.files = files;
+    public Entry(LocalDate date, String description, File file) {
+        this.file = file;
         this.date = date;
         this.description = description;
     }
 
-    public void editEntry(String description, LocalDate date, List<File> files) {
+    public void editEntry(String description, LocalDate date, File file) {
         this.description = description;
         this.date = date;
-        this.files = files;
+        this.file = file;
     }
 
     public String getEntryDescription() {
@@ -51,19 +51,14 @@ public class Entry {
         return date;
     }
 
-    public List<File> getFiles() {
-        return files;
-    }
+//    public List<File> getFiles() {
+//        return file;
+//    }
 
     public String fileNames() {
         String result = "";
-
-        for (File file : files) {
-            if (files.size() == 1) {
-                result += file.getName();
-            } else {
-                result += file.getName() + ", ";
-            }
+        if (file != null) {
+             result += file.getName();
         }
         return result;
     }

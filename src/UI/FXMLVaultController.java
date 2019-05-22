@@ -113,6 +113,7 @@ public class FXMLVaultController implements Initializable {
 
     @FXML
     private void logoutHandler(ActionEvent event) throws IOException {
+        UserManager.currentResident = null;
         Parent root = FXMLLoader.load(getClass().getResource("/UI/FXMLLogin.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
