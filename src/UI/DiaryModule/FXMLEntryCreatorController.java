@@ -8,6 +8,7 @@ import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -68,7 +69,7 @@ public class FXMLEntryCreatorController implements Initializable {
     }
 
     @FXML
-    private void saveNewEntryHandler(ActionEvent event) throws IOException {
+    private void saveNewEntryHandler(ActionEvent event) throws IOException, SQLException {
 
         if (dp_date.getValue() != null && !textarea_des.getText().isEmpty()) {
             Entry entry = null;

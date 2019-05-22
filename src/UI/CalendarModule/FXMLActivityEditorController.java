@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTimePicker;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -94,6 +95,7 @@ public class FXMLActivityEditorController implements Initializable {
             sharedYes.setSelected(Vault.currentActivity.getShared());
             entryYes.setSelected(Vault.currentActivity.getEntry());
             descriptionTextField.setText(Vault.currentActivity.getDescription());
+            typeComboBox.setValue(Vault.currentActivity.getType());
 
         } else {
             saveActivityBtn.setDisable(false);
@@ -111,7 +113,7 @@ public class FXMLActivityEditorController implements Initializable {
     }
 
     @FXML
-    public void saveActivity(ActionEvent event) throws IOException {
+    public void saveActivity(ActionEvent event) throws IOException, SQLException {
         if (!titleTextField.getText().isEmpty() && startTextField.getValue() != null && endTextField.getValue() != null && !placeTextField.getText().isEmpty() && !descriptionTextField.getText().isEmpty() && !typeComboBox.getValue().isEmpty() && startTimeField.getValue() != null && endTimeField.getValue() != null) {
             LocalDateTime startDate, endDate;
 
@@ -151,7 +153,7 @@ public class FXMLActivityEditorController implements Initializable {
         }
     }
 
-    public void updateActivity(ActionEvent event) throws IOException {
+    public void updateActivity(ActionEvent event) throws IOException, SQLException {
 
         LocalDateTime startDate, endDate;
 

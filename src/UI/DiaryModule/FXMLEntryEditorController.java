@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -59,7 +60,7 @@ public class FXMLEntryEditorController implements Initializable {
     }
 
     @FXML
-    private void saveEntryHandler(ActionEvent event) throws IOException {
+    private void saveEntryHandler(ActionEvent event) throws IOException, SQLException {
 
         FXMLDiaryController.selectedEntryForEdit.editEntry(textarea_des.getText(), dp_date.getValue(), fileList);
         DiaryRepository.updateEntry(textarea_des.getText(), dp_date.getValue().toString(), FXMLDiaryController.selectedEntryForEdit.getid());

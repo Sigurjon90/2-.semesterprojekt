@@ -132,7 +132,7 @@ public class FXMLCaseEditorController implements Initializable {
     }
 
     @FXML
-    private void closeCaseAction(ActionEvent event) throws IOException {
+    private void closeCaseAction(ActionEvent event) throws IOException, SQLException {
         if (!closeReasonField.getText().isEmpty() && UserManager.getCurrentUser().checkForPermission("close_case")) {
 
             CaseRepository.closeCase(CaseRepository.getSelectedCase().getCaseID());

@@ -27,7 +27,7 @@
                 <Label layoutX="19.0" layoutY="316.0" prefHeight="17.0" prefWidth="87.0" text="Beskrivelse" />
                 <ImageView fx:id="pictoView" fitHeight="150.0" fitWidth="150.0" layoutX="200.0" layoutY="158.0" pickOnBounds="false" preserveRatio="false" />
                 <JFXButton fx:id="saveActivityBtn" buttonType="RAISED" layoutX="300.0" layoutY="545.0" mnemonicParsing="false" onAction="#saveActivity" style="-fx-background-color: #3a7077;" text="Gem" textFill="WHITE" />
-                <JFXButton fx:id="cancelActivity" buttonType="RAISED" layoutX="352.0" layoutY="545.0" mnemonicParsing="false" onAction="#annullerActivity" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Annuller" textFill="WHITE" />
+                <JFXButton fx:id="cancelActivity" buttonType="RAISED" layoutX="352.0" layoutY="545.0" mnemonicParsing="false" onAction="#cancelActivity" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Annuller" textFill="WHITE" />
                 <JFXTimePicker fx:id="endTimeField" layoutX="214.0" layoutY="125.0" styleClass="jfx-hand" stylesheets="@CaseUI.css" />
                 <JFXTimePicker fx:id="startTimeField" layoutX="214.0" layoutY="86.0" styleClass="jfx-hand" stylesheets="@CaseUI.css" />
                 <JFXDatePicker fx:id="endTextField" layoutX="22.0" layoutY="125.0" styleClass="jfx-hand" stylesheets="@CaseUI.css" />

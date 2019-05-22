@@ -2,6 +2,7 @@ package Persistence;
 
 import Domain.CalendarModule.Activity;
 import Domain.CalendarModule.Calendar;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -35,7 +36,7 @@ public class ActivityManager {
         residentID = UserManager.getCurrentResident().getID();
     }
 
-    public static int storeActivity(Activity activity) {
+    public static int storeActivity(Activity activity) throws SQLException {
         ActivityManager.getActivityInfo(activity);
         ActivityManager.getResidentID();
         System.out.println(startDate);
@@ -45,7 +46,7 @@ public class ActivityManager {
         return 0;
     }
 
-    public static void getActivities(int residentID) {
+    public static void getActivities(int residentID) throws SQLException {
 
         ArrayList<Integer> activities = ActivityRepository.getActivityIDs(residentID);
         for (Integer id : activities) {
@@ -56,6 +57,10 @@ public class ActivityManager {
 
     private static LocalDateTime getLocalDateTime(String date) {
         return LocalDateTime.parse(date);
+    }
+    
+    public static void deleteActivity(int id) throws SQLException {
+        ActivityRepository.deleteActivity(id);
     }
 
 }

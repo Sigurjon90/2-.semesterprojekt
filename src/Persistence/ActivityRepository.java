@@ -104,5 +104,18 @@ public class ActivityRepository {
         }
         return highestID;
     }
+    
+    public static void deleteActivity (int id) throws SQLException{
+        String sql = "DELETE FROM activity WHERE id = " + id;
+        PreparedStatement deleteRows = null;
+        try{
+            deleteRows= Connector.getCon().prepareStatement(sql);
+            deleteRows.execute();
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        } finally {
+            deleteRows.close();
+        }
+    }
 
 }

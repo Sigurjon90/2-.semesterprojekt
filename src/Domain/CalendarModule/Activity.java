@@ -1,8 +1,11 @@
 package Domain.CalendarModule;
 
+import Persistence.ActivityManager;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import UI.Vault;
+import java.sql.SQLException;
 
 public class Activity {
 
@@ -42,7 +45,7 @@ public class Activity {
         this.entry = entry;
     }
 
-    public void updateActivity(String title, String creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry) {
+    public void updateActivity(String title, String creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry) throws SQLException {
         this.title = title;
         this.creator = creator;
         this.place = place;
@@ -52,6 +55,8 @@ public class Activity {
         this.type = type;
         this.shared = shared;
         this.entry = entry;
+        ActivityManager.deleteActivity(Vault.currentActivity.getActivityID());
+        ActivityManager.storeActivity(this);
     }
 
     public String getCreator() {

@@ -12,6 +12,7 @@ import com.jfoenix.controls.JFXTimePicker;
 import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -113,20 +114,28 @@ public class FXMLCalendarController implements Initializable {
     private ImageView pictoView;
     @FXML
     private Label errorLabel;
+    @FXML
+    private JFXButton editBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Opretter kalender til valgte beboer.
         enableCurrentCalendar();
         //Opdaterer kalenderen med beboerens aktiviteter.
-        if (UserManager.getCurrentUser().checkForPermission("view_residents")) {
-            ActivityManager.getActivities(UserManager.getCurrentResident().getID());
-        } else {
-            ActivityManager.getActivities(UserManager.getCurrentUser().getID());
+        try {
+            if (UserManager.getCurrentUser().checkForPermission("view_residents")) {
+                ActivityManager.getActivities(UserManager.getCurrentResident().getID());
+            } else {
+                ActivityManager.getActivities(UserManager.getCurrentUser().getID());
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
+
         hide();
         planBtn.setDisable(false);
         deleteBtn.setDisable(true);
+        editBtn.setDisable(true);
 
         makeStageDragable();
 
@@ -142,6 +151,10 @@ public class FXMLCalendarController implements Initializable {
 
         if (!UserManager.getCurrentUser().checkForPermission("delete_activity")) {
             deleteBtn.setDisable(true);
+        }
+        
+        if (!UserManager.getCurrentUser().checkForPermission("edit_activity")) {
+            editBtn.setDisable(true);
         }
     }
 
@@ -165,10 +178,17 @@ public class FXMLCalendarController implements Initializable {
         Optional<ButtonType> action = alert.showAndWait();
 
         if (action.get() == ButtonType.OK) {
+            try {
+                ActivityManager.deleteActivity(Vault.currentActivity.getActivityID());
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
             Calendar.getCurrentCalendar().getCalendar().remove(Vault.currentActivity.getActivityID());
+
         }
         Vault.currentActivity = null;
         deleteBtn.setDisable(true);
+        editBtn.setDisable(true);
         clearAllFields();
         hide();
         updateListView("Monday");
@@ -313,8 +333,7 @@ public class FXMLCalendarController implements Initializable {
                         stage.setScene(scene);
 
                     } catch (IOException ex) {
-                        Logger.getLogger(FXMLCalendarController.class
-                                .getName()).log(Level.SEVERE, null, ex);
+                        ex.printStackTrace();
                     }
                     errorLabel.setOpacity(0);
                 } else {
@@ -329,6 +348,8 @@ public class FXMLCalendarController implements Initializable {
                 if (myList.getSelectionModel().getSelectedItem() != null) {
                     show();
                     deleteBtn.setDisable(false);
+                    editBtn.setDisable(false);
+                    checkPermissions();
                     typeComboBox.setText(Vault.currentActivity.getType());
                     titleTextField.setText(Vault.currentActivity.getTitle());
                     startTextField.setValue(Vault.currentActivity.getStartDate());
@@ -373,6 +394,21 @@ public class FXMLCalendarController implements Initializable {
                 }
 
             }
+        }
+
+    }
+
+    @FXML
+    public void editActivity(ActionEvent event) throws IOException {
+        Parent currentParent;
+        Vault.newAction = false;
+        try {
+            currentParent = FXMLLoader.load(getClass().getResource("FXMLActivityEditor.fxml"));
+            Scene scene = new Scene(currentParent);
+            stage.setScene(scene);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
 
     }
