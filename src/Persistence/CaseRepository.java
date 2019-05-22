@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 public class CaseRepository {
 
     private static Case selectedCase;
+    private static PreparedStatement pre = null;
 
     public static Case getSelectedCase() {
         return selectedCase;
@@ -21,9 +22,7 @@ public class CaseRepository {
         CaseRepository.selectedCase = selectedCase;
     }
 
-    private static PreparedStatement pre = null;
-
-    public static ArrayList<Case> getAllCasesByID(int socialWorkerID) {
+    public static ArrayList<Case> getAllCasesByID(int socialWorkerID) throws SQLException {
         String SQL = "SELECT * FROM case_table WHERE socialworker_id = " + socialWorkerID;
         ArrayList<Case> caseArray = new ArrayList<>();
 
@@ -38,6 +37,8 @@ public class CaseRepository {
             return caseArray;
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            pre.close();
         }
         return null;
     }
@@ -67,7 +68,7 @@ public class CaseRepository {
 
     }
 
-    public static int getMaxCaseID() {
+    public static int getMaxCaseID() throws SQLException {
         String SQL = "SELECT * FROM  case_table WHERE id = (SELECT MAX(id) FROM case_table)";
 
         try {
@@ -76,29 +77,32 @@ public class CaseRepository {
             while (result.next()) {
                 return result.getInt("id");
             }
-            pre.close();
+
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            pre.close();
         }
         return 0;
 
     }
 
-    public static void closeCase(int caseID) {
+    public static void closeCase(int caseID) throws SQLException {
         String SQL = "update case_table set is_closed = true where id =" + caseID;
 
         try {
             pre = Connector.getCon().prepareStatement(SQL);
             pre.executeUpdate();
-            pre.close();
 
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            pre.close();
         }
 
     }
 
-    public static void updateCaseInDB(String description, int caseID) {
+    public static void updateCaseInDB(String description, int caseID) throws SQLException {
         String SQL = "update case_table set description =? where id =?";
         try {
 
@@ -107,9 +111,10 @@ public class CaseRepository {
             pre.setInt(2, caseID);
             pre.executeUpdate();
 
-            pre.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            pre.close();
         }
 
     }
@@ -118,7 +123,7 @@ public class CaseRepository {
         String SQL = "INSERT INTO case_file (filename,case_id) VALUES (?,?) ";
 
         try {
-            pre = pre = Connector.getCon().prepareStatement(SQL);
+            pre = Connector.getCon().prepareStatement(SQL);
             pre.setString(1, fileName);
             pre.setInt(2, caseID);
             pre.executeUpdate();
@@ -169,6 +174,8 @@ public class CaseRepository {
 
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            pre.close();
         }
         return null;
     }

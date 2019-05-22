@@ -1,20 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Persistence;
 
 import Domain.CalendarModule.Activity;
 import Domain.CalendarModule.Calendar;
-import UI.CalendarModule.FXMLCalendarController;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-/*
-
- * @author morte
- */
 public class ActivityManager {
 
     private static String place;
@@ -50,10 +40,7 @@ public class ActivityManager {
         ActivityManager.getResidentID();
         System.out.println(startDate);
         if (ActivityRepository.storeActivity(place, description, type, startDate, endDate, shared, entry, title, residentID, creator)) {
-            System.out.println("successful storing");
             return ActivityRepository.getHighestID();
-        } else {
-            System.out.println("unsuccessful storing");
         }
         return 0;
     }
