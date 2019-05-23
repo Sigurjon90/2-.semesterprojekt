@@ -36,6 +36,8 @@ public class FXMLLoginController implements Initializable {
     private JFXButton btn_cancel;
     @FXML
     private AnchorPane loginPane;
+    @FXML
+    private Label label_error;
 
     private double xOffset = 0;
     private double yOffset = 0;
@@ -43,16 +45,20 @@ public class FXMLLoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         makeStageDragable();
+        label_error.setOpacity(0);
     }
 
     @FXML
     private void loginHandler(ActionEvent event) throws IOException, SQLException {
+        label_error.setOpacity(0);
 
         if (UserManager.login(text_username.getText(), text_password.getText())) {
 
             Parent root = FXMLLoader.load(getClass().getResource("FXMLVault.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
+        } else {
+            label_error.setOpacity(1);
         }
 
     }

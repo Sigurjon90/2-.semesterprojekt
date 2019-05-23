@@ -24,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
 
@@ -34,7 +35,7 @@ public class FXMLVaultController implements Initializable {
     private ObservableList<User> residentsObs;
     private ArrayList<User> tempResidents;
     private ListProperty<Entry> listProperty = new SimpleListProperty<>();
-    
+
     @FXML
     private Label lb_residents;
     @FXML
@@ -59,6 +60,8 @@ public class FXMLVaultController implements Initializable {
     private Button btn_admin;
     @FXML
     private Line lastLine;
+    @FXML
+    private TextField text_info;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -77,6 +80,9 @@ public class FXMLVaultController implements Initializable {
 
         checkPermissions();
 
+        
+        text_info.setText("Du er logget ind som: " + "\n" + UserManager.getCurrentUser().getFirstName() + " \n " + UserManager.getCurrentUser().getLastName() + " \n " + UserManager.getCurrentUser().getRoleName() );
+        
     }
 
     private void checkPermissions() {
@@ -102,7 +108,7 @@ public class FXMLVaultController implements Initializable {
     private void setCurrentResident() {
         User tempUser = listview_residents.getSelectionModel().getSelectedItem();
         UserManager.setCurrentResident(tempUser);
-        
+
     }
 
     @FXML
