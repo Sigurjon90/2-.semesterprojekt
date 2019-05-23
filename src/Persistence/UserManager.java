@@ -84,14 +84,14 @@ public class UserManager {
             //Query resultater hentes
             ResultSet result = pre.executeQuery();
             //Tilføjer rollens permissions til Arraylisten
-            System.out.println("Start loop");
+            
             while (result.next()) {
-                System.out.println("ran once");
+                
                 int temp = result.getInt("permisson_id");
                 String tempInfo = getPermissionInfo(temp);
                 permissions.add(new Permission(tempInfo, temp));
             }
-            System.out.println("end loop");
+            
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -133,7 +133,7 @@ public class UserManager {
             ResultSet result = pre.executeQuery();
             //Tilføjer rollens permissions til Arraylisten
             while (result.next()) {
-                System.out.println("Added User from worker");
+                
                 residents.add(getUser(result.getInt("resident_id")));
             }
             return residents;
@@ -155,8 +155,8 @@ public class UserManager {
             ResultSet result = pre.executeQuery();
             //Tilføjer rollens permissions til Arraylisten
             if (result.next()) {
-                System.out.println(result.getString("first_name"));
-                user = new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), result.getInt("roleid"), getRoleType(result.getInt("roleid")), result.getInt("id"));
+                
+                user = new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), getRoleType(result.getInt("roleid")), result.getInt("id"));
 
             }
         } catch (SQLException ex) {
@@ -290,7 +290,7 @@ public class UserManager {
             pre.executeUpdate();
             pre.close();
         } catch (SQLException ex) {
-            System.out.println("Kunne ikke slettes fra residents");
+            
             ex.printStackTrace();
 
         }
@@ -305,7 +305,7 @@ public class UserManager {
             pre.executeUpdate();
             pre.close();
         } catch (SQLException ex) {
-            System.out.println("Kunne ikke slettes fra users");
+            
             ex.printStackTrace();
 
         }
@@ -333,10 +333,10 @@ public class UserManager {
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
-            System.out.println("bruger er oprettet i users. usermanager");
+            
             return "Brugeren er blevet oprettet";
         } else {
-            System.out.println("brugeren findes allerede i users");
+            
             return "Brugernavnet er optaget";
         }
 
@@ -358,7 +358,7 @@ public class UserManager {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        System.out.println("bruger er oprettet i residents. usermanager");
+        
         return "Brugeren er blevet oprettet";
 
     }

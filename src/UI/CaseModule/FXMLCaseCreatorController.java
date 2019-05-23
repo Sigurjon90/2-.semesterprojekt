@@ -147,7 +147,9 @@ public class FXMLCaseCreatorController implements Initializable {
     private void createCase(ActionEvent event) throws IOException, SQLException {
 
         if (ExistingUserBtn.isSelected()) {
-            if (!titleField.getText().isEmpty() && !descriptionArea.getText().isEmpty() && residentComboBox.getSelectionModel().getSelectedItem() != null) {
+            if (!titleField.getText().isEmpty() && !descriptionArea.getText().isEmpty() && 
+                residentComboBox.getSelectionModel().getSelectedItem() != null) {
+                
                 Case createdCase = null;
                 java.sql.Date sqlDate = new java.sql.Date(new Date().getTime());
 
@@ -159,7 +161,8 @@ public class FXMLCaseCreatorController implements Initializable {
 
                 if (action.get() == ButtonType.OK) {
 
-                    createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceComboBox.getSelectionModel().getSelectedItem(), sqlDate, false, residentComboBox.getSelectionModel().getSelectedItem().getID(), null);
+                    createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceComboBox.getSelectionModel().getSelectedItem(), 
+                            sqlDate, false, residentComboBox.getSelectionModel().getSelectedItem().getID(), null);
                     CaseRepository.createCase(createdCase);
                     if (!obsFileList.isEmpty()) {
                         CaseRepository.attachFilesToCase(attachedFile, CaseRepository.getMaxCaseID());
@@ -190,7 +193,8 @@ public class FXMLCaseCreatorController implements Initializable {
                     User tempUser = new User(residentFirstNameField.getText(), residentLastNameField.getText(), residentUsernameField.getText());
                     UserManager.createUserInUsers(tempUser);
                     UserManager.createUserInResidents(UserManager.getCurrentUser().getID(), 95, UserManager.getUserIDByUsername(tempUser.getUsername()));
-                    createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceComboBox.getSelectionModel().getSelectedItem(), sqlDate, false, UserManager.getUserIDByUsername(tempUser.getUsername()), null);
+                    createdCase = new Case(titleField.getText(), descriptionArea.getText(), serviceComboBox.getSelectionModel().getSelectedItem(), sqlDate, 
+                            false, UserManager.getUserIDByUsername(tempUser.getUsername()), null);
                     CaseRepository.createCase(createdCase);
                     if (!obsFileList.isEmpty()) {
                         CaseRepository.attachFilesToCase(attachedFile, CaseRepository.getMaxCaseID());
