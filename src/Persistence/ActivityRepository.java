@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Persistence;
 
 import java.sql.PreparedStatement;
@@ -13,14 +8,10 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author morte
- */
 public class ActivityRepository {
 
-    public static boolean storeActivity(String place, String description, String type, String startDate, String endDate, Boolean shared, Boolean entry, String title, int residentID, String creator) {
-        Statement storeStatement;
+    public static boolean storeActivity(String place, String description, String type, String startDate, String endDate, Boolean shared, Boolean entry, String title, int residentID, String creator) throws SQLException {
+        Statement storeStatement = null;
         String sql = "INSERT INTO activity " + "VALUES ('" + title + "', '" + description + "', '" + type + "', '" + place + "', '" + startDate + "', '" + endDate + "', " + shared + ", " + entry + ", " + residentID + ", '" + creator + "' )";
         System.out.println(sql);
         try {
@@ -30,15 +21,17 @@ public class ActivityRepository {
 
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            storeStatement.close();
         }
 
         return false;
     }
 
     // query til at hente id på aktiviteter forbundet til en resident
-    public static ArrayList<Integer> getActivityIDs(int residentID) {
+    public static ArrayList<Integer> getActivityIDs(int residentID) throws SQLException {
         String sql = "SELECT * FROM activity where residentid = " + residentID;
-        PreparedStatement getIDs;
+        PreparedStatement getIDs = null;
         ArrayList<Integer> activityIDs = new ArrayList<>();
 
         try {
@@ -51,13 +44,16 @@ public class ActivityRepository {
 
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            getIDs.close();
         }
+
         return activityIDs;
     }
 
-    public static ArrayList<Object> getActivityInfo(int activityID) {
+    public static ArrayList<Object> getActivityInfo(int activityID) throws SQLException {
         String sql = "SELECT * FROM activity where id = " + activityID;
-        PreparedStatement getIDs;
+        PreparedStatement getIDs = null;
         ArrayList<Object> activityInfo = new ArrayList<>();
 
         try {
@@ -82,27 +78,44 @@ public class ActivityRepository {
 
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            getIDs.close();
         }
         return activityInfo;
     }
-    
-    public static int getHighestID(){
+
+    public static int getHighestID() throws SQLException {
         String sql = "SELECT id FROM activity";
-        PreparedStatement getIDs;
+        PreparedStatement getIDs = null;
         int highestID = 1;
-        try{
+        try {
             getIDs = Connector.getCon().prepareStatement(sql);
             // Query resultater hentes
             ResultSet result = getIDs.executeQuery();
-            while(result.next()){
-                if(result.getInt("id")>highestID){
+            while (result.next()) {
+                if (result.getInt("id") > highestID) {
                     highestID = result.getInt("id");
                 }
             }
         } catch (SQLException ex) {
             Logger.getLogger(ActivityRepository.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            getIDs.close();
         }
         return highestID;
+    }
+    
+    public static void deleteActivity (int id) throws SQLException{
+        String sql = "DELETE FROM activity WHERE id = " + id;
+        PreparedStatement deleteRows = null;
+        try{
+            deleteRows= Connector.getCon().prepareStatement(sql);
+            deleteRows.execute();
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        } finally {
+            deleteRows.close();
+        }
     }
 
 }

@@ -11,8 +11,11 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -64,7 +67,11 @@ public class FXMLDiaryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        updateList();
+        try {
+            updateList();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
         makeStageDragable();
         checkPermissions();
     }
@@ -90,7 +97,7 @@ public class FXMLDiaryController implements Initializable {
         return obsEntryList;
     }
 
-    private void updateList() {
+    private void updateList() throws SQLException {
         tempEntries = DiaryRepository.getEntrys(UserManager.getCurrentResident().getID());
         obsEntryList = FXCollections.observableArrayList(tempEntries);
         list_entrys.setItems(obsEntryList.sorted());
@@ -140,7 +147,7 @@ public class FXMLDiaryController implements Initializable {
     }
 
     @FXML
-    private void deleteEntry(ActionEvent event) {
+    private void deleteEntry(ActionEvent event) throws SQLException {
         if (selectedEntryForEdit != null) {
             DiaryRepository.deleteEntry(list_entrys.getSelectionModel().getSelectedItem().getid());
             updateList();

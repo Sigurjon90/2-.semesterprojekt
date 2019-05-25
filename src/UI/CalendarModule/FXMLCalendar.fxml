@@ -20,6 +20,7 @@
     <children>
         <JFXButton fx:id="btn_back" buttonType="RAISED" layoutX="860.0" layoutY="608.0" onAction="#backToMenu" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Tilbage" textFill="WHITE" />
         <JFXButton fx:id="planBtn" buttonType="RAISED" disable="true" layoutX="685.0" layoutY="99.0" mnemonicParsing="false" onAction="#planAction" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Planlæg Aktivitet" textFill="WHITE" />
+        <JFXButton fx:id="editBtn" buttonType="RAISED" disable="true" layoutX="685.0" layoutY="185.0" mnemonicParsing="false" onAction="#editActivity" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Rediger Aktivitet" textFill="WHITE" />
         <SplitPane dividerPositions="0.3872113676731794" layoutY="46.0" prefHeight="601.0" prefWidth="677.0">
             <items>
                 <AnchorPane layoutY="46.0" minHeight="0.0" minWidth="0.0" prefHeight="628.0" prefWidth="257.0">
