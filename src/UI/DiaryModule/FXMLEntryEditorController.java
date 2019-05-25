@@ -63,7 +63,6 @@ public class FXMLEntryEditorController implements Initializable {
     private void saveEntryHandler(ActionEvent event) throws IOException, SQLException {
 
         FXMLDiaryController.selectedEntryForEdit.editEntry(textarea_des.getText(), dp_date.getValue(), file);
-        System.out.println(file.toString());
         DiaryRepository.updateEntry(textarea_des.getText(), dp_date.getValue().toString(),file.getName() , FXMLDiaryController.selectedEntryForEdit.getid());
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDiary.fxml"));
         Scene scene = new Scene(root);

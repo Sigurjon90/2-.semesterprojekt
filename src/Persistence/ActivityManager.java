@@ -39,7 +39,6 @@ public class ActivityManager {
     public static int storeActivity(Activity activity) throws SQLException {
         ActivityManager.getActivityInfo(activity);
         ActivityManager.getResidentID();
-        System.out.println(startDate);
         if (ActivityRepository.storeActivity(place, description, type, startDate, endDate, shared, entry, title, residentID, creator)) {
             return ActivityRepository.getHighestID();
         }

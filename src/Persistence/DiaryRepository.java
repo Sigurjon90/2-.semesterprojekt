@@ -62,29 +62,8 @@ public class DiaryRepository {
 
     }
 
-//    public static void storeEntryFile(Entry entry) {
-//        int entry_id = entry.getid();
-//        System.out.println("entty.getid: " +entry.getid()+" entty_id: " + entry_id);
-//        ArrayList<File> listOfFiles = new ArrayList<>(entry.getFiles());
-//        System.out.println("List of files: "+listOfFiles);
-//        String sql = "insert into entry_file(filename, entry_id) values (?,?)";
-//        
-//        for (int i = 0; i < listOfFiles.size(); i++) {
-//            String filename = listOfFiles.get(i).getName();
-//            try {
-//                pre = Connector.getCon().prepareStatement(sql);
-//                pre.setString(1, filename);
-//                pre.setInt(2, makeEntryid());
-//                pre.executeUpdate();
-//                pre.close();
-//            } catch (SQLException ex) {
-//                ex.printStackTrace();
-//                System.out.println("something went wrong with store entry file");
-//            }
-//        }
-//    }
     
-    public static void deleteEntry(int id) {
+    public static void deleteEntry(int id) throws SQLException {
         
         String sql = "DELETE FROM entry WHERE id = " + id;
 
@@ -99,7 +78,7 @@ public class DiaryRepository {
 
     }
     
-    public static void updateEntry(String description, String date,String file, int id) {
+    public static void updateEntry(String description, String date,String file, int id) throws SQLException {
         
         String sql = "UPDATE entry SET description = ?, dato = ?, file = ? WHERE id = " + id;
         

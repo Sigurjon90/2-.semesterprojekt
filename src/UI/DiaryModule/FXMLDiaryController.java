@@ -125,7 +125,7 @@ public class FXMLDiaryController implements Initializable {
             try {
                 textarea_entry.setText(list_entrys.getSelectionModel().getSelectedItem().getEntryDescription());
                 if (list_entrys.getSelectionModel().getSelectedItem().fileNames() != null) {
-                    lb_file.setText(list_entrys.getSelectionModel().getSelectedItem().fileNames());
+                    lb_file.setText(list_entrys.getSelectionModel().getSelectedItem().getFile().getName());
                 }
                 
             } catch (NullPointerException ex) {

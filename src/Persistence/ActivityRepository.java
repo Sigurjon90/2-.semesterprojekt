@@ -13,7 +13,6 @@ public class ActivityRepository {
     public static boolean storeActivity(String place, String description, String type, String startDate, String endDate, Boolean shared, Boolean entry, String title, int residentID, String creator) throws SQLException {
         Statement storeStatement = null;
         String sql = "INSERT INTO activity " + "VALUES ('" + title + "', '" + description + "', '" + type + "', '" + place + "', '" + startDate + "', '" + endDate + "', " + shared + ", " + entry + ", " + residentID + ", '" + creator + "' )";
-        System.out.println(sql);
         try {
             storeStatement = Connector.getCon().createStatement();
             storeStatement.executeUpdate(sql);

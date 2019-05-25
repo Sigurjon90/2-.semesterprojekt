@@ -35,6 +35,10 @@ public class Entry {
         this.file = file;
     }
 
+    public File getFile() {
+        return file;
+    }
+
     public String getEntryDescription() {
         return description;
     }
@@ -50,10 +54,6 @@ public class Entry {
     public LocalDate getDate() {
         return date;
     }
-
-//    public List<File> getFiles() {
-//        return file;
-//    }
 
     public String fileNames() {
         String result = "";

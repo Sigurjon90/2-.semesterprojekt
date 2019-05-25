@@ -117,7 +117,6 @@ public class User {
     }
 
     public boolean checkForPermission(String name) {
-        System.out.println("check");
         return role.checkForPermission(name);
     }
 

@@ -33,7 +33,6 @@ public class Calendar {
         Activity activity = new Activity(title, creator, place, startDate, endDate, description, type, shared, entry);
         int newID = ActivityManager.storeActivity(activity);
         calendar.put(newID, activity);
-        System.out.println(startDate.toString());
 
     }
 
