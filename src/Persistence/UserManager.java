@@ -15,7 +15,7 @@ public class UserManager {
     private static PreparedStatement pre = null;
 
     private static User currentUser;
-    private static User currentResident;
+    public static User currentResident;
 
     public static User getCurrentUser() {
         return currentUser;

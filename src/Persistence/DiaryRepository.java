@@ -25,16 +25,16 @@ public class DiaryRepository {
 
         String description = entry.getEntryDescription();
         String dato = entry.getDate().toString();
-        //  String entryid = UUID.randomUUID().toString();
-        String sql = "insert into entry(description, dato, residentid) values (?,?,?)";
-
+        String sql = "insert into entry(description, dato, residentid, file) values (?,?,?,?)";
+        
         try {
             pre = Connector.getCon().prepareStatement(sql);
 
             pre.setString(1, description);
             pre.setString(2, dato);
             pre.setInt(3, getResidentID());
-
+            pre.setString(4, entry.fileNames());
+            
             pre.executeUpdate();
 
         } catch (SQLException ex) {
@@ -62,29 +62,30 @@ public class DiaryRepository {
 
     }
 
-    public static void storeEntryFile(Entry entry) throws SQLException {
-        int entry_id = entry.getid();
-        ArrayList<File> listOfFiles = new ArrayList<>(entry.getFiles());
-        String sql = "insert into entry_file(filename, entry_id) values (?,?)";
-
-        for (int i = 0; i < listOfFiles.size(); i++) {
-            String filename = listOfFiles.get(i).getName();
-            try {
-                pre = Connector.getCon().prepareStatement(sql);
-                pre.setString(1, filename);
-                pre.setInt(2, makeEntryid());
-                pre.executeUpdate();
-                
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            } finally {
-                pre.close();
-            }
-        }
-    }
-
-    public static void deleteEntry(int id) throws SQLException {
-
+//    public static void storeEntryFile(Entry entry) {
+//        int entry_id = entry.getid();
+//        System.out.println("entty.getid: " +entry.getid()+" entty_id: " + entry_id);
+//        ArrayList<File> listOfFiles = new ArrayList<>(entry.getFiles());
+//        System.out.println("List of files: "+listOfFiles);
+//        String sql = "insert into entry_file(filename, entry_id) values (?,?)";
+//        
+//        for (int i = 0; i < listOfFiles.size(); i++) {
+//            String filename = listOfFiles.get(i).getName();
+//            try {
+//                pre = Connector.getCon().prepareStatement(sql);
+//                pre.setString(1, filename);
+//                pre.setInt(2, makeEntryid());
+//                pre.executeUpdate();
+//                pre.close();
+//            } catch (SQLException ex) {
+//                ex.printStackTrace();
+//                System.out.println("something went wrong with store entry file");
+//            }
+//        }
+//    }
+    
+    public static void deleteEntry(int id) {
+        
         String sql = "DELETE FROM entry WHERE id = " + id;
 
         try {
@@ -97,15 +98,16 @@ public class DiaryRepository {
         }
 
     }
-
-    public static void updateEntry(String description, String date, int id) throws SQLException {
-
-        String sql = "UPDATE entry SET description = ?, dato = ? WHERE id = " + id;
-
+    
+    public static void updateEntry(String description, String date,String file, int id) {
+        
+        String sql = "UPDATE entry SET description = ?, dato = ?, file = ? WHERE id = " + id;
+        
         try {
             pre = Connector.getCon().prepareStatement(sql);
             pre.setString(1, description);
             pre.setString(2, date);
+            pre.setString(3, file);
             pre.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
