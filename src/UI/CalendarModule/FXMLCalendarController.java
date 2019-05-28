@@ -19,10 +19,6 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -51,7 +47,6 @@ import javafx.stage.Stage;
 public class FXMLCalendarController implements Initializable {
 
     private ObservableList<Activity> obList;
-    private ListProperty<Activity> listProperty = new SimpleListProperty<>();
     private ObservableList<String> typestatus = FXCollections.observableArrayList("Medicin", "udendørsaktivitet", "indendørsaktivitet");
     private double xOffset = 0;
     private double yOffset = 0;
@@ -152,14 +147,14 @@ public class FXMLCalendarController implements Initializable {
         if (!UserManager.getCurrentUser().checkForPermission("delete_activity")) {
             deleteBtn.setDisable(true);
         }
-        
+
         if (!UserManager.getCurrentUser().checkForPermission("edit_activity")) {
             editBtn.setDisable(true);
         }
     }
 
     @FXML
-    public void planAction(ActionEvent event) throws IOException {
+    private void planAction(ActionEvent event) throws IOException {
 
         Vault.newAction = true;
         Parent currentParent = FXMLLoader.load(getClass().getResource("FXMLActivityEditor.fxml"));
@@ -169,7 +164,7 @@ public class FXMLCalendarController implements Initializable {
     }
 
     @FXML
-    public void deleteActivity(ActionEvent event) throws IOException {
+    private void deleteActivity(ActionEvent event) throws IOException {
 
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Bekræftigelse");
@@ -214,7 +209,7 @@ public class FXMLCalendarController implements Initializable {
     }
 
     @FXML
-    public void clickDay(MouseEvent event) {
+    private void clickDay(MouseEvent event) {
         if (event.getSource().toString().contains("Mandag")) {
             updateListView("Monday");
         }
@@ -315,7 +310,7 @@ public class FXMLCalendarController implements Initializable {
     }
 
     @FXML
-    public void openActivity(MouseEvent event) throws IOException {
+    private void openActivity(MouseEvent event) throws IOException {
         ListView myList;
         Activity myActivity;
 
@@ -399,7 +394,7 @@ public class FXMLCalendarController implements Initializable {
     }
 
     @FXML
-    public void editActivity(ActionEvent event) throws IOException {
+    private void editActivity(ActionEvent event) throws IOException {
         Parent currentParent;
         Vault.newAction = false;
         try {
@@ -460,7 +455,7 @@ public class FXMLCalendarController implements Initializable {
     }
 
     @FXML
-    public void backToMenu(ActionEvent event) throws IOException {
+    private void backToMenu(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/UI/FXMLVault.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);

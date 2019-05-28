@@ -3,7 +3,6 @@ package UI;
 import Domain.User.User;
 import Persistence.UserManager;
 import static UI.Vault.stage;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
@@ -232,7 +231,7 @@ public class FXMLAdministrationController implements Initializable {
         }
     }
 
-    public void infoFillOut() {
+    private void infoFillOut() {
         adminRadioBtn.setSelected(false);
         firstNameField.setText(selectedUser.getFirstName());
         lastNameField.setText(selectedUser.getLastName());

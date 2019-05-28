@@ -2,7 +2,6 @@ package Domain.DiaryModule;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.util.List;
 
 public class Entry {
 
