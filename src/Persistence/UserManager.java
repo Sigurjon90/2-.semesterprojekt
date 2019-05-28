@@ -1,10 +1,8 @@
 package Persistence;
 
 import Domain.User.Permission;
-import Domain.User.Resident;
-import Domain.User.Role;
+
 import Domain.User.User;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +15,7 @@ public class UserManager {
     private static PreparedStatement pre = null;
 
     private static User currentUser;
-    private static User currentResident;
+    public static User currentResident;
 
     public static User getCurrentUser() {
         return currentUser;
@@ -86,14 +84,14 @@ public class UserManager {
             //Query resultater hentes
             ResultSet result = pre.executeQuery();
             //Tilføjer rollens permissions til Arraylisten
-            System.out.println("Start loop");
+            
             while (result.next()) {
-                System.out.println("ran once");
+                
                 int temp = result.getInt("permisson_id");
                 String tempInfo = getPermissionInfo(temp);
                 permissions.add(new Permission(tempInfo, temp));
             }
-            System.out.println("end loop");
+            
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -135,7 +133,7 @@ public class UserManager {
             ResultSet result = pre.executeQuery();
             //Tilføjer rollens permissions til Arraylisten
             while (result.next()) {
-                System.out.println("Added User from worker");
+                
                 residents.add(getUser(result.getInt("resident_id")));
             }
             return residents;
@@ -157,8 +155,8 @@ public class UserManager {
             ResultSet result = pre.executeQuery();
             //Tilføjer rollens permissions til Arraylisten
             if (result.next()) {
-                System.out.println(result.getString("first_name"));
-                user = new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), result.getInt("roleid"), getRoleType(result.getInt("roleid")), result.getInt("id"));
+                
+                user = new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), getRoleType(result.getInt("roleid")), result.getInt("id"));
 
             }
         } catch (SQLException ex) {
@@ -198,7 +196,7 @@ public class UserManager {
             //Tilføjer rollens permissions til Arraylisten
             if (result.next()) {
                 user = getUser(result.getInt("social_worker_id"));
-                //user = new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), result.getInt("roleid"), getRoleType(result.getInt("roleid")), result.getInt("id"));
+
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -234,7 +232,7 @@ public class UserManager {
             ResultSet result = pre.executeQuery();
 
             while (result.next()) {
-                users.add(new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), result.getInt("roleid"), getRoleType(result.getInt("roleid")), result.getInt("id")));
+                users.add(new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), getRoleType(result.getInt("roleid")), result.getInt("id")));
             }
             return users;
         } catch (SQLException ex) {
@@ -263,9 +261,25 @@ public class UserManager {
         return null;
     }
 
-    public static void createUser() {
+    public static ArrayList<User> getAllUsersWithOutRoleID() {
+        ArrayList<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM users";
 
+        try {
+            pre = Connector.getCon().prepareStatement(sql);
+            ResultSet result = pre.executeQuery();
+
+            while (result.next()) {
+                users.add(new User(result.getString("first_name"), result.getString("last_name"), result.getString("username"), result.getString("password"), getRoleType(result.getInt("roleid")), result.getInt("id")));
+            }
+            return users;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
+
+
 
     public static String deleteUserFromResidents(int user_id) {
         String sql = "Delete from residents where resident_id = " + user_id;
@@ -274,7 +288,7 @@ public class UserManager {
             pre.executeUpdate();
             pre.close();
         } catch (SQLException ex) {
-            System.out.println("Kunne ikke slettes fra residents");
+            
             ex.printStackTrace();
 
         }
@@ -289,7 +303,7 @@ public class UserManager {
             pre.executeUpdate();
             pre.close();
         } catch (SQLException ex) {
-            System.out.println("Kunne ikke slettes fra users");
+            
             ex.printStackTrace();
 
         }
@@ -317,10 +331,10 @@ public class UserManager {
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
-            System.out.println("bruger er oprettet i users. usermanager");
+            
             return "Brugeren er blevet oprettet";
         } else {
-            System.out.println("brugeren findes allerede i users");
+            
             return "Brugernavnet er optaget";
         }
 
@@ -342,7 +356,7 @@ public class UserManager {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        System.out.println("bruger er oprettet i residents. usermanager");
+        
         return "Brugeren er blevet oprettet";
 
     }
@@ -391,6 +405,40 @@ public class UserManager {
             pre.setInt(1, socialworkerID);
             pre.setInt(2, careworkerID);
             pre.setInt(3, userID);
+
+            pre.executeUpdate();
+            pre.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+
+        }
+
+    }
+
+    public static void updateSocialWorkerOnResident(int userID, int socialworkerID) {
+        String SQL = "update residents set social_worker_id =? where resident_id =?";
+        try {
+            pre = Connector.getCon().prepareStatement(SQL);
+            pre.setInt(1, socialworkerID);
+            pre.setInt(2, userID);
+
+            pre.executeUpdate();
+            pre.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
+    public static void updateCareWorkerOnResident(int userID, int careworkerID) {
+        String SQL = "update residents set care_worker_id =? where resident_id =?";
+        try {
+            pre = Connector.getCon().prepareStatement(SQL);
+
+            pre.setInt(1, careworkerID);
+            pre.setInt(2, userID);
 
             pre.executeUpdate();
             pre.close();

@@ -3,6 +3,7 @@ package Domain.CalendarModule;
 import Domain.User.User;
 import Persistence.ActivityManager;
 import Persistence.UserManager;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,20 +24,16 @@ public class Calendar {
     public static Calendar getCurrentCalendar() {
         return currentCalendar;
     }
-    
-    public static void enableCurrentCalendar(){
-         currentCalendar =  new Calendar(UserManager.getCurrentResident());
+
+    public static void enableCurrentCalendar() {
+        currentCalendar = new Calendar(UserManager.getCurrentResident());
     }
 
-    public void deleteActivity(Activity activity) {
-        calendar.remove(activity.getActivityID(), activity);
-    }
-
-    public void createActivity(String title, String creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry) {
+    public void createActivity(String title, String creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry) throws SQLException {
         Activity activity = new Activity(title, creator, place, startDate, endDate, description, type, shared, entry);
-        calendar.put(activity.getActivityID(), activity);
-        System.out.println(startDate.toString());
-        ActivityManager.storeActivity(activity);
+        int newID = ActivityManager.storeActivity(activity);
+        calendar.put(newID, activity);
+
     }
 
     public void putInCalendar(Activity activity) {

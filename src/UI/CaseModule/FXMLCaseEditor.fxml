@@ -31,32 +31,32 @@
             <Image url="@../../icons/logo.png" />
          </image>
       </ImageView>
-      <JFXTextArea fx:id="descriptionArea" layoutX="79.0" layoutY="158.0" prefHeight="362.0" prefWidth="580.0" />
+      <JFXTextArea fx:id="descriptionArea" layoutX="79.0" layoutY="158.0" prefHeight="362.0" prefWidth="580.0" wrapText="true" />
       <Line endX="470.5" layoutX="189.0" layoutY="148.0" startX="-110.0" />
       <Line endX="-154.0" endY="346.0" layoutX="233.0" layoutY="174.0" startX="-154.0" startY="-24.0" />
       <JFXTextField fx:id="serviceField" layoutX="696.0" layoutY="168.0" prefHeight="25.0" prefWidth="150.0" />
-      <Label layoutX="693.0" layoutY="150.0" prefHeight="17.0" prefWidth="45.0" text="Ydelser">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font></Label>
+      <Label layoutX="693.0" layoutY="150.0" prefHeight="17.0" prefWidth="45.0" text="Ydelser" />
       <JFXTextField fx:id="residentNameField" layoutX="696.0" layoutY="224.0" prefHeight="25.0" prefWidth="150.0" />
       <Label layoutX="696.0" layoutY="207.0" text="Beboer">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
       <Line endX="128.0" endY="-60.5" layoutX="531.0" layoutY="209.0" startX="128.0" startY="311.0" />
-      <JFXTextField fx:id="titleField" layoutX="93.0" layoutY="111.0" prefHeight="25.0" prefWidth="204.0" />
-      <Label layoutX="93.0" layoutY="105.0" text="Titel">
+      <JFXTextField fx:id="titleField" layoutX="80.0" layoutY="110.0" prefHeight="25.0" prefWidth="204.0" />
+      <Label layoutX="80.0" layoutY="105.0" text="Titel">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
-      <JFXButton fx:id="closeCaseBtn" layoutX="670.0" layoutY="496.0" onAction="#closeCaseAction" style="-fx-background-color: #2d2d2d;" text="Luk Sag" textFill="WHITE" />
-      <JFXButton fx:id="saveEditBtn" layoutX="757.0" layoutY="496.0" onAction="#saveCaseEditAction" style="-fx-background-color: #2d2d2d;" text="Gem Ændringer" textFill="WHITE" />
-      <JFXButton fx:id="attacheFileBtn" layoutX="690.0" layoutY="327.0" onAction="#attachFileAction" style="-fx-background-color: #2d2d2d;" text="Vedhæft Fil" textFill="WHITE" />
-      <Label fx:id="numberOfFiles" layoutX="694.0" layoutY="258.0" prefHeight="17.0" prefWidth="77.0" text="Antal filer: " />
-      <JFXButton fx:id="Backbtn" layoutX="32.0" layoutY="560.0" onAction="#backToCaseModule" style="-fx-background-color: #2d2d2d;" text="Tilbage" textFill="WHITE" />
+      <JFXButton fx:id="closeCaseBtn" layoutX="694.0" layoutY="496.0" onAction="#closeCaseAction" prefHeight="25.0" prefWidth="77.0" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Luk Sag" textFill="WHITE" />
+      <JFXButton fx:id="saveEditBtn" layoutX="788.0" layoutY="496.0" onAction="#saveCaseEditAction" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Gem Ændringer" textFill="WHITE" />
+      <JFXButton fx:id="attacheFileBtn" layoutX="694.0" layoutY="293.0" onAction="#attachFileAction" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Vedhæft Fil" textFill="WHITE" />
+      <Label fx:id="numberOfFiles" layoutX="694.0" layoutY="258.0" prefHeight="17.0" prefWidth="77.0" text="Antal filer: ">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <JFXButton fx:id="Backbtn" layoutX="833.0" layoutY="560.0" onAction="#backToCaseModule" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Tilbage" textFill="WHITE" />
       <Label fx:id="warningCreateLabel" layoutX="696.0" layoutY="463.0" opacity="0.0" prefHeight="17.0" prefWidth="150.0" text="Udfyld de nødvendige felter" textFill="RED" />
-      <JFXListView fx:id="fileView" layoutX="788.0" layoutY="306.0" prefHeight="155.0" prefWidth="117.0" stylesheets="@CaseUI.css" />
+      <JFXListView fx:id="fileView" layoutX="788.0" layoutY="293.0" prefHeight="155.0" prefWidth="117.0" stylesheets="@CaseUI.css" />
       <JFXTextField fx:id="closeReasonField" layoutX="80.0" layoutY="528.0" prefHeight="25.0" prefWidth="581.0" />
       <Label layoutX="337.0" layoutY="564.0" prefHeight="17.0" prefWidth="117.0" text="Grund for lukning:" />
    </children>

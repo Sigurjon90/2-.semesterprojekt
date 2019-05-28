@@ -1,9 +1,7 @@
 package UI.CaseModule;
 
 import Domain.CaseModule.Case;
-import Domain.User.Resident;
-import Domain.User.SocialWorker;
-import Domain.User.User;
+
 import Persistence.CaseRepository;
 import Persistence.UserManager;
 import UI.Vault;
@@ -30,14 +28,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class FXMLCaseController implements Initializable {
 
-    private static SocialWorker currentLoggedOn;
     private double xOffset = 0;
     private double yOffset = 0;
+    private ObservableList<Case> obsCaseList;
     private ArrayList<Case> tempCases;
+    
     @FXML
     private ImageView exitBtn;
     @FXML
@@ -50,13 +48,12 @@ public class FXMLCaseController implements Initializable {
     private JFXButton createCaseBtn;
     @FXML
     private JFXListView<Case> caseList;
-    private ObservableList<Case> obsCaseList;
     @FXML
     private JFXButton searchCaseBtn;
     @FXML
     private JFXTextField searchIDField;
     @FXML
-    private JFXButton resetBtn;
+    private ImageView resetBtn;
     @FXML
     private Label warningLabel;
     @FXML
@@ -64,24 +61,15 @@ public class FXMLCaseController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        tempCases = CaseRepository.getAllCasesByID(UserManager.getCurrentUser().getID());
+        try {
+            tempCases = CaseRepository.getAllCasesByID(UserManager.getCurrentUser().getID());
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
         obsCaseList = FXCollections.observableArrayList(tempCases);
         caseList.setItems(obsCaseList);
         makeStageDragable();
-
     }
-    
-//     void checkPermissions() {
-//        if (!UserManager.getCurrentUser().checkForPermission(1)) {
-//            btn_diary.setDisable(true);
-//        }
-//        if (!UserManager.getCurrentUser().checkForPermission(2)) {
-//            btn_calendar.setDisable(true);
-//        }
-//        if (!UserManager.getCurrentUser().checkForPermission(3)) {
-//            btn_case.setDisable(true);
-//        }
-//    }
 
     private void makeStageDragable() {
         caseModulePane.setOnMousePressed((event) -> {
@@ -108,7 +96,7 @@ public class FXMLCaseController implements Initializable {
 
     @FXML
     private void editCaseAction(ActionEvent event) throws IOException {
-        if (!caseList.getSelectionModel().isEmpty() && UserManager.getCurrentUser().checkForPermission(6)) {
+        if (!caseList.getSelectionModel().isEmpty() && UserManager.getCurrentUser().checkForPermission("edit_case")) {
 
             CaseRepository.setSelectedCase(caseList.getSelectionModel().getSelectedItem());
             if (!CaseRepository.getSelectedCase().isClosed()) {
@@ -116,13 +104,6 @@ public class FXMLCaseController implements Initializable {
                 Parent root = FXMLLoader.load(getClass().getResource("FXMLCaseEditor.fxml"));
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
-
-//                FXMLLoader createScene = new FXMLLoader(getClass().getResource("FXMLCaseEditor.fxml"));
-//                Parent createRoot = (Parent) createScene.load();
-//                Stage createStage = new Stage();
-//                createStage.setScene(new Scene(createRoot));
-//                createStage.initStyle(StageStyle.UNDECORATED);
-//                createStage.show();
                 warningLabel.setOpacity(0);
             } else {
                 warningLabel.setOpacity(1);
@@ -132,7 +113,6 @@ public class FXMLCaseController implements Initializable {
             warningLabel.setOpacity(1);
             warningLabel.setText("Ingen sag er valgt");
         }
-
     }
 
     @FXML
@@ -143,7 +123,7 @@ public class FXMLCaseController implements Initializable {
 
     @FXML
     private void createCaseAction(ActionEvent event) throws IOException {
-        if (UserManager.getCurrentUser().checkForPermission(10)) {
+        if (UserManager.getCurrentUser().checkForPermission("create_case")) {
             Parent root = FXMLLoader.load(getClass().getResource("FXMLCaseCreator.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -151,28 +131,28 @@ public class FXMLCaseController implements Initializable {
     }
 
     @FXML
-    private void searchCaseAction(ActionEvent event) {
-        //     CaseRepository.closeCase(2);
-//
-//        if (!searchIDField.getText().isEmpty() && searchIDField.getText().matches("\\d+")) {
-//            Integer idSearch = Integer.parseInt(searchIDField.getText());
-//            if (obsCaseList.contains(currentLoggedOn.getCases().get(idSearch))) {
-//                obsCaseList.clear();
-//                obsCaseList.add(currentLoggedOn.getCases().get(idSearch));
-//                warningLabel.setOpacity(0);
-//            } else {
-//                obsCaseList.clear();
-//            }
-//        } else {
-//            warningLabel.setOpacity(1);
-//        }
-
+    private void searchCaseAction(ActionEvent event) throws SQLException {
+        if (!searchIDField.getText().isEmpty() && searchIDField.getText().matches("\\d+")) {
+            if (CaseRepository.getCaseByID(Integer.parseInt(searchIDField.getText())) != null) {
+                tempCases = CaseRepository.getCaseByID(Integer.parseInt(searchIDField.getText()));
+                obsCaseList = FXCollections.observableArrayList(tempCases);
+                caseList.setItems(obsCaseList);
+                warningLabel.setOpacity(0);
+            } else {
+                obsCaseList.clear();
+            }
+        } else {
+            warningLabel.setOpacity(1);
+        }
     }
 
     @FXML
-    private void resetListAction(ActionEvent event) {
+    private void resetListAction(MouseEvent event) throws SQLException {
         obsCaseList.clear();
-        //   caseHandler(currentLoggedOn.getCases());
+        tempCases = CaseRepository.getAllCasesByID(UserManager.getCurrentUser().getID());
+        obsCaseList = FXCollections.observableArrayList(tempCases);
+        caseList.setItems(obsCaseList);
+
         if (!caseList.isExpanded()) {
             caseList.setExpanded(true);
             caseList.depthProperty().set(1);
@@ -193,10 +173,6 @@ public class FXMLCaseController implements Initializable {
         }
     }
 
-    public static SocialWorker getSocialWorker() {
-        return currentLoggedOn;
-    }
-
     @FXML
     private void backToMenuAction(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/UI/FXMLVault.fxml"));
@@ -204,5 +180,4 @@ public class FXMLCaseController implements Initializable {
         stage.setScene(scene);
     }
 
-//
 }

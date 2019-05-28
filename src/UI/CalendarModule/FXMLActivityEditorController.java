@@ -1,14 +1,16 @@
 package UI.CalendarModule;
 
 import Domain.CalendarModule.Calendar;
+import Domain.DiaryModule.Entry;
+import Persistence.DiaryRepository;
 import Persistence.UserManager;
 import UI.Vault;
 import static UI.Vault.stage;
-import UI.CalendarModule.FXMLCalendarController;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTimePicker;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -27,6 +29,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
@@ -36,12 +39,12 @@ import javafx.stage.Stage;
 
 public class FXMLActivityEditorController implements Initializable {
 
-    ObservableList<String> typestatus = FXCollections.observableArrayList("Medicin", "Udendørsaktivitet", "Indendørsaktivitet");
-    ObservableList<String> typeComboBoxList = FXCollections.observableArrayList();
+    private ObservableList<String> typestatus = FXCollections.observableArrayList("Medicin", "Udendørsaktivitet", "Indendørsaktivitet");
+    private ObservableList<String> typeComboBoxList = FXCollections.observableArrayList();
     private boolean newActivity;
-
     private double xOffset = 0;
     private double yOffset = 0;
+
     @FXML
     private AnchorPane calendarModulePane;
     @FXML
@@ -53,7 +56,7 @@ public class FXMLActivityEditorController implements Initializable {
     @FXML
     private TextField placeTextField;
     @FXML
-    private TextField descriptionTextField;
+    private TextArea descriptionTextField;
     @FXML
     private RadioButton sharedYes;
     @FXML
@@ -75,14 +78,42 @@ public class FXMLActivityEditorController implements Initializable {
     @FXML
     private Label errorLabel;
 
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        typeComboBox.setItems(typestatus);
+        startTimeField.set24HourView(true);
+        endTimeField.set24HourView(true);
+        if (Vault.currentActivity != null && !Vault.newAction) {
+            saveActivityBtn.setDisable(true);
+            updateActivityBtn.setDisable(false);
+            titleTextField.setText(Vault.currentActivity.getTitle());
+            startTextField.setValue(Vault.currentActivity.getStartDate());
+            endTextField.setValue(Vault.currentActivity.getEndDate());
+            startTimeField.setValue(Vault.currentActivity.getStartTime());
+            endTimeField.setValue(Vault.currentActivity.getEndTime());
+            placeTextField.setText(Vault.currentActivity.getPlace());
+            sharedYes.setSelected(Vault.currentActivity.getShared());
+            entryYes.setSelected(Vault.currentActivity.getEntry());
+            descriptionTextField.setText(Vault.currentActivity.getDescription());
+            typeComboBox.setValue(Vault.currentActivity.getType());
+
+        } else {
+            saveActivityBtn.setDisable(false);
+            updateActivityBtn.setDisable(true);
+        }
+
+        makeStageDragable();
+        errorLabel.setOpacity(0);
+    }
+
     @FXML
-    public void comboAction(ActionEvent event) {
+    private void comboAction(ActionEvent event) {
         String imageToGet = typeComboBox.getValue();
         pictoView.setImage(new Image("/icons/" + imageToGet + ".png"));
     }
 
     @FXML
-    public void saveActivity(ActionEvent event) throws IOException {
+    private void saveActivity(ActionEvent event) throws IOException, SQLException {
         if (!titleTextField.getText().isEmpty() && startTextField.getValue() != null && endTextField.getValue() != null && !placeTextField.getText().isEmpty() && !descriptionTextField.getText().isEmpty() && !typeComboBox.getValue().isEmpty() && startTimeField.getValue() != null && endTimeField.getValue() != null) {
             LocalDateTime startDate, endDate;
 
@@ -96,7 +127,22 @@ public class FXMLActivityEditorController implements Initializable {
                 startDate = startTextField.getValue().atTime(startTimeField.getValue());
                 endDate = startTextField.getValue().atTime(endTimeField.getValue());
 
-                Calendar.getCurrentCalendar().createActivity(titleTextField.getText(), UserManager.getCurrentUser().getFullName(), placeTextField.getText(), startDate, endDate, descriptionTextField.getText(), typeComboBox.getValue(), sharedYes.isSelected(), entryYes.isSelected());
+                Calendar.getCurrentCalendar().createActivity(titleTextField.getText(),
+                        UserManager.getCurrentUser().getFullName(), placeTextField.getText(), startDate, endDate,
+                        descriptionTextField.getText(), typeComboBox.getValue(), sharedYes.isSelected(), entryYes.isSelected());
+
+                if (entryYes.isSelected()) {
+                    String shared;
+                    if (sharedYes.isSelected()) {
+                        shared = "Er en fællesaktivitet";
+                    } else {
+                        shared = "Er ikke en fællesaktivitet";
+                    }
+                    String entryString = "Titel: " + titleTextField.getText() + "\n\n" + "Startdato: " + startDate + "\n\n" + "Slutdato: " + endDate + "\n\n" + shared + "\n\n"
+                            + "Type: " + typeComboBox.getValue() + "\n\n" + "Sted: " + placeTextField.getText() + "\n\n\n" + descriptionTextField.getText();
+                    DiaryRepository.storeEntry(new Entry(startDate.toLocalDate(), entryString));
+                }
+
                 Parent root = FXMLLoader.load(getClass().getResource("FXMLCalendar.fxml"));
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
@@ -107,7 +153,8 @@ public class FXMLActivityEditorController implements Initializable {
         }
     }
 
-    public void updateActivity(ActionEvent event) throws IOException {
+    @FXML
+    private void updateActivity(ActionEvent event) throws IOException, SQLException {
 
         LocalDateTime startDate, endDate;
 
@@ -131,7 +178,7 @@ public class FXMLActivityEditorController implements Initializable {
     }
 
     @FXML
-    public void annullerActivity(ActionEvent event) throws IOException {
+    private void cancelActivity(ActionEvent event) throws IOException {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Bekræftigelse");
         alert.setHeaderText(null);
@@ -143,34 +190,6 @@ public class FXMLActivityEditorController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
         }
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        typeComboBox.setItems(typestatus);
-        startTimeField.set24HourView(true);
-        endTimeField.set24HourView(true);
-        if (Vault.currentActivity != null && !Vault.newAction) {
-            //newActivity = false;
-            saveActivityBtn.setDisable(true);
-            updateActivityBtn.setDisable(false);
-            titleTextField.setText(Vault.currentActivity.getTitle());
-            startTextField.setValue(Vault.currentActivity.getStartDate());
-            endTextField.setValue(Vault.currentActivity.getEndDate());
-            startTimeField.setValue(Vault.currentActivity.getStartTime());
-            endTimeField.setValue(Vault.currentActivity.getEndTime());
-            placeTextField.setText(Vault.currentActivity.getPlace());
-            sharedYes.setSelected(Vault.currentActivity.getShared());
-            entryYes.setSelected(Vault.currentActivity.getEntry());
-            descriptionTextField.setText(Vault.currentActivity.getDescription());
-
-        } else {
-            saveActivityBtn.setDisable(false);
-            updateActivityBtn.setDisable(true);
-        }
-
-        makeStageDragable();
-        errorLabel.setOpacity(0);
     }
 
     @FXML

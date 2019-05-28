@@ -1,6 +1,5 @@
 package Domain.User;
 
-import Domain.CalendarModule.Calendar;
 import Domain.DiaryModule.Diary;
 
 public class User {
@@ -22,10 +21,22 @@ public class User {
         this.lastName = lastName;
         this.username = username;
 
-        this.password = null;
+        this.password = "initial";
         this.roleid = 4;
 
         role = new Role(4, "resident");
+    }
+
+    public User(String firstName, String lastName, String username, String password, String roleName, int id) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.residentDiary = new Diary();
+        this.username = username;
+        this.password = password;
+        this.id = id;
+
+        role = new Role(roleName);
+
     }
 
     public User(String firstName, String lastName, String username, String password, int roleid, String roleName, int id) {
@@ -35,6 +46,7 @@ public class User {
 
         this.username = username;
         this.password = password;
+        this.roleid = roleid;
         this.id = id;
         role = new Role(roleid, roleName);
     }
@@ -68,7 +80,7 @@ public class User {
     }
 
     public String getFullName() {
-        return firstName + lastName;
+        return firstName +" "+ lastName;
     }
 
     public String getFirstName() {
@@ -103,13 +115,16 @@ public class User {
         this.password = password;
     }
 
-    public boolean checkForPermission(int permissionID) {
-        System.out.println("check");
-        return role.checkForPermission(permissionID);
+    public boolean checkForPermission(String name) {
+        return role.checkForPermission(name);
     }
 
     public int getRoleID() {
         return role.getRoleID();
+    }
+
+    public String getRoleName() {
+        return role.getRoleName();
     }
 
     public int getID() {

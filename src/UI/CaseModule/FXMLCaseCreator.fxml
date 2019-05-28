@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="caseModulePane" prefHeight="611.0" prefWidth="832.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.CaseModule.FXMLCaseCreatorController">
+<AnchorPane id="AnchorPane" fx:id="caseModulePane" prefHeight="611.0" prefWidth="832.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.CaseModule.FXMLCaseCreatorController">
    <children>
       <AnchorPane prefHeight="46.0" prefWidth="929.0" style="-fx-background-color: #2d2d2d;">
          <children>
@@ -40,29 +37,39 @@
       <JFXTextArea fx:id="descriptionArea" layoutX="79.0" layoutY="158.0" prefHeight="362.0" prefWidth="580.0" />
       <Line endX="470.5" layoutX="189.0" layoutY="148.0" startX="-110.0" />
       <Line endX="-154.0" endY="346.0" layoutX="233.0" layoutY="174.0" startX="-154.0" startY="-24.0" />
-      <JFXTextField fx:id="serviceField" layoutX="445.0" layoutY="99.0" prefHeight="25.0" prefWidth="150.0" />
-      <Label layoutX="445.0" layoutY="57.0" prefHeight="17.0" prefWidth="45.0" text="Ydelser" />
-      <JFXTextField fx:id="residentFirstNameField" layoutX="682.0" layoutY="158.0" prefHeight="25.0" prefWidth="150.0" />
-      <Label layoutX="677.0" layoutY="141.0" text="Fornavn" />
+      <Label layoutX="675.0" layoutY="128.0" prefHeight="17.0" prefWidth="77.0" text="Vælg Ydelse">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <JFXTextField fx:id="residentFirstNameField" layoutX="682.0" layoutY="285.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label fx:id="FirstnameLb" layoutX="682.0" layoutY="275.0" text="Fornavn">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
       <Line endX="128.0" endY="-60.5" layoutX="531.0" layoutY="209.0" startX="128.0" startY="311.0" />
       <JFXTextField fx:id="titleField" layoutX="93.0" layoutY="111.0" prefHeight="25.0" prefWidth="204.0" />
       <Label layoutX="93.0" layoutY="105.0" text="Titel" />
-      <JFXButton fx:id="createCase" layoutX="670.0" layoutY="560.0" onAction="#createCase" style="-fx-background-color: #2d2d2d;" text="Opret Sag" textFill="WHITE" />
-      <JFXButton layoutX="757.0" layoutY="560.0" style="-fx-background-color: #2d2d2d;" text="Gem Ændringer" textFill="WHITE" />
-      <JFXButton fx:id="attacheFileBtn" layoutX="303.0" layoutY="560.0" onAction="#attachFileAction" style="-fx-background-color: #2d2d2d;" text="Vedhæft Fil" textFill="WHITE" />
-      <Label fx:id="numberOfFiles" layoutX="324.0" layoutY="535.0" prefHeight="17.0" prefWidth="77.0" text="Antal filer: " />
-      <ChoiceBox fx:id="serviceBox" layoutX="445.0" layoutY="73.0" prefWidth="150.0" />
-      <ImageView fx:id="refreshBtn" fitHeight="25.0" fitWidth="32.0" layoutX="605.0" layoutY="53.0" onMouseClicked="#refreshType" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../icons/refresh.png" />
-         </image>
-      </ImageView>
-      <JFXButton fx:id="Backbtn" layoutX="32.0" layoutY="560.0" onAction="#backToCaseModule" style="-fx-background-color: #2d2d2d;" text="Tilbage" textFill="WHITE" />
+      <JFXButton fx:id="createCase" layoutX="771.0" layoutY="496.0" onAction="#createCase" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Opret Sag" textFill="WHITE" />
+      <JFXButton fx:id="attacheFileBtn" layoutX="671.0" layoutY="496.0" onAction="#attachFileAction" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Vedhæft Fil" textFill="WHITE" />
+      <JFXButton fx:id="Backbtn" layoutX="32.0" layoutY="560.0" onAction="#backToCaseModule" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Tilbage" textFill="WHITE" />
       <Label fx:id="warningCreateLabel" layoutX="696.0" layoutY="463.0" opacity="0.0" prefHeight="17.0" prefWidth="150.0" text="Udfyld de nødvendige felter" textFill="RED" />
-      <JFXListView fx:id="fileView" layoutX="387.0" layoutY="541.0" prefHeight="38.0" prefWidth="117.0" stylesheets="@CaseUI.css" />
-      <JFXTextField fx:id="residentLastNameField" layoutX="682.0" layoutY="206.0" prefHeight="25.0" prefWidth="150.0" />
-      <JFXTextField fx:id="residentUsernameField" layoutX="682.0" layoutY="255.0" prefHeight="25.0" prefWidth="150.0" />
-      <Label layoutX="677.0" layoutY="189.0" text="Efternavn" />
-      <Label layoutX="677.0" layoutY="238.0" text="Brugernavn" />
+      <JFXListView fx:id="fileView" layoutX="670.0" layoutY="535.0" prefHeight="38.0" prefWidth="117.0" stylesheets="@CaseUI.css" />
+      <JFXTextField fx:id="residentLastNameField" layoutX="685.0" layoutY="339.0" prefHeight="25.0" prefWidth="150.0" />
+      <JFXTextField fx:id="residentUsernameField" layoutX="685.0" layoutY="386.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label fx:id="LastnameLb" layoutX="682.0" layoutY="320.0" text="Efternavn">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="UsernameLb" layoutX="683.0" layoutY="369.0" text="Brugernavn">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <JFXComboBox fx:id="serviceComboBox" layoutX="680.0" layoutY="150.0" prefHeight="25.0" prefWidth="161.0" />
+      <JFXRadioButton fx:id="ExistingUserBtn" layoutX="680.0" layoutY="207.0" onAction="#residentRadioHandler" text="Eksisterende beboer">
+         <toggleGroup>
+            <ToggleGroup fx:id="userToggleGroup" />
+         </toggleGroup></JFXRadioButton>
+      <JFXRadioButton fx:id="NewUserBtn" layoutX="680.0" layoutY="233.0" onAction="#residentRadioHandler" selected="true" text="Ny beboer" toggleGroup="$userToggleGroup" />
+      <JFXComboBox fx:id="residentComboBox" layoutX="677.0" layoutY="273.0" prefHeight="25.0" prefWidth="161.0" visible="false" />
    </children>
 </AnchorPane>

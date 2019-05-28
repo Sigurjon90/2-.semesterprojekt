@@ -1,8 +1,6 @@
 package UI;
 
 import Domain.DiaryModule.Entry;
-import Domain.User.CareWorker;
-import Domain.User.Resident;
 import Domain.User.User;
 import Persistence.UserManager;
 import static UI.Vault.stage;
@@ -26,6 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
 
@@ -33,29 +32,22 @@ public class FXMLVaultController implements Initializable {
 
     private double xOffset = 0;
     private double yOffset = 0;
+    private ObservableList<User> residentsObs;
+    private ArrayList<User> tempResidents;
+    private ListProperty<Entry> listProperty = new SimpleListProperty<>();
+
     @FXML
     private Label lb_residents;
-
     @FXML
     private Button btn_calendar;
-
     @FXML
     private Button btn_logout;
-
     @FXML
     private JFXListView<User> listview_residents;
-
     @FXML
     private AnchorPane vaultPane;
-
     @FXML
     private Label errorLabel;
-
-    private ObservableList<User> residentsObs;
-
-    private ArrayList<User> tempResidents;
-
-    private ListProperty<Entry> listProperty = new SimpleListProperty<>();
     @FXML
     private ImageView exitBtn;
     @FXML
@@ -68,62 +60,71 @@ public class FXMLVaultController implements Initializable {
     private Button btn_admin;
     @FXML
     private Line lastLine;
+    @FXML
+    private TextField text_info;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         makeStageDragable();
 
-        if (UserManager.getCurrentUser().checkForPermission(16)) {
+        if (UserManager.getCurrentUser().checkForPermission("view_residents")) {
             listview_residents.setVisible(true);
             tempResidents = UserManager.getResidents(UserManager.getCurrentUser().getID());
             residentsObs = FXCollections.observableArrayList(tempResidents);
             listview_residents.setItems(residentsObs);
 
-        } else if (UserManager.getCurrentUser().checkForPermission(14) || UserManager.getCurrentUser().checkForPermission(11)) {
-            btn_diary.setDisable(true);
-            btn_calendar.setDisable(true);
-            btn_case.setDisable(true);
-            btn_admin.setVisible(true);
-            btn_admin.setDisable(false);
-            lastLine.setVisible(true);
-
         } else {
             listview_residents.setVisible(false);
             lb_residents.setVisible(false);
         }
+        
+        if(UserManager.getCurrentUser().getRoleName().equals("resident")){
+            UserManager.setCurrentResident(UserManager.getCurrentUser());
+        }
 
         checkPermissions();
 
+        
+        text_info.setText("Du er logget ind som: " + "\n" + UserManager.getCurrentUser().getFirstName() + " \n " + UserManager.getCurrentUser().getLastName() + " \n " + UserManager.getCurrentUser().getRoleName() );
+        
     }
 
-    void checkPermissions() {
-        if (!UserManager.getCurrentUser().checkForPermission(1)) {
+    private void checkPermissions() {
+        if (!UserManager.getCurrentUser().checkForPermission("view_diary")) {
             btn_diary.setDisable(true);
         }
-        if (!UserManager.getCurrentUser().checkForPermission(2)) {
+        if (!UserManager.getCurrentUser().checkForPermission("view_calendar")) {
             btn_calendar.setDisable(true);
         }
-        if (!UserManager.getCurrentUser().checkForPermission(3)) {
+        if (!UserManager.getCurrentUser().checkForPermission("view_case")) {
             btn_case.setDisable(true);
+        }
+        if (UserManager.getCurrentUser().checkForPermission("delete_user") || UserManager.getCurrentUser().checkForPermission("create_user")) {
+
+            btn_admin.setVisible(true);
+            btn_admin.setDisable(false);
+            lastLine.setVisible(true);
+
         }
     }
 
     @FXML
-    void setCurrentResident() {
+    private void setCurrentResident() {
         User tempUser = listview_residents.getSelectionModel().getSelectedItem();
         UserManager.setCurrentResident(tempUser);
-        System.out.println(UserManager.getCurrentResident());
+
     }
 
     @FXML
-    void logoutHandler(ActionEvent event) throws IOException {
+    private void logoutHandler(ActionEvent event) throws IOException {
+        UserManager.currentResident = null;
         Parent root = FXMLLoader.load(getClass().getResource("/UI/FXMLLogin.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
 
     @FXML
-    void diaryHandler(ActionEvent event) throws IOException {
+    private void diaryHandler(ActionEvent event) throws IOException {
         if (UserManager.getCurrentResident() != null) {
             Parent root = FXMLLoader.load(getClass().getResource("/UI/DiaryModule/FXMLDiary.fxml"));
             Scene scene = new Scene(root);
@@ -135,7 +136,7 @@ public class FXMLVaultController implements Initializable {
     }
 
     @FXML
-    void calendarHandler(ActionEvent event) throws IOException {
+    private void calendarHandler(ActionEvent event) throws IOException {
         if (UserManager.getCurrentResident() != null) {
             Parent root = FXMLLoader.load(getClass().getResource("/UI/CalendarModule/FXMLCalendar.fxml"));
             Scene scene = new Scene(root);
@@ -147,15 +148,12 @@ public class FXMLVaultController implements Initializable {
     }
 
     @FXML
-    void caseHandler(ActionEvent event) throws IOException {
-        if (UserManager.getCurrentResident() != null) {
-            Parent root = FXMLLoader.load(getClass().getResource("/UI/CaseModule/FXMLCase.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-        } else {
-            errorLabel.setText("Du har ikke valgt en beboer");
-            errorLabel.setOpacity(1);
-        }
+    private void caseHandler(ActionEvent event) throws IOException {
+
+        Parent root = FXMLLoader.load(getClass().getResource("/UI/CaseModule/FXMLCase.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+
     }
 
     @FXML

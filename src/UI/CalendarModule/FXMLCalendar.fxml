@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.scene.control.Accordion?>
@@ -17,8 +18,9 @@
 
 <AnchorPane id="AnchorPane" fx:id="calendarModulePane" prefHeight="611.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.CalendarModule.FXMLCalendarController">
     <children>
-        <JFXButton fx:id="btn_back" buttonType="RAISED" layoutX="860.0" layoutY="608.0" onAction="#backToMenu" style="-fx-background-color: #3a7077;" text="Tilbage" textFill="WHITE" />
-        <JFXButton fx:id="planBtn" buttonType="RAISED" disable="true" layoutX="685.0" layoutY="99.0" mnemonicParsing="false" onAction="#planAction" style="-fx-background-color: #3a7077;" text="Planlæg Aktivitet" textFill="WHITE" />
+        <JFXButton fx:id="btn_back" buttonType="RAISED" layoutX="860.0" layoutY="608.0" onAction="#backToMenu" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Tilbage" textFill="WHITE" />
+        <JFXButton fx:id="planBtn" buttonType="RAISED" disable="true" layoutX="685.0" layoutY="99.0" mnemonicParsing="false" onAction="#planAction" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Planlæg Aktivitet" textFill="WHITE" />
+        <JFXButton fx:id="editBtn" buttonType="RAISED" disable="true" layoutX="685.0" layoutY="185.0" mnemonicParsing="false" onAction="#editActivity" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Rediger Aktivitet" textFill="WHITE" />
         <SplitPane dividerPositions="0.3872113676731794" layoutY="46.0" prefHeight="601.0" prefWidth="677.0">
             <items>
                 <AnchorPane layoutY="46.0" minHeight="0.0" minWidth="0.0" prefHeight="628.0" prefWidth="257.0">
@@ -104,23 +106,23 @@
                         <Label fx:id="placeLabel" layoutX="20.0" layoutY="270.0" prefHeight="17.0" prefWidth="87.0" text="Sted" />
                         <Label fx:id="descriptionLabel" layoutX="20.0" layoutY="313.0" prefHeight="17.0" prefWidth="87.0" text="Beskrivelse" />
                         <ImageView fitHeight="150.0" fitWidth="260.0" layoutX="170.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true" />
-                        <JFXDatePicker fx:id="startTextField" layoutX="22.0" layoutY="85.0" />
-                        <JFXDatePicker fx:id="endTextField" layoutX="22.0" layoutY="124.0" />
-                        <JFXTimePicker fx:id="endTimeField" layoutX="193.0" layoutY="124.0" />
-                        <JFXTimePicker fx:id="startTimeField" layoutX="193.0" layoutY="85.0" />
+                        <JFXDatePicker fx:id="startTextField" layoutX="22.0" layoutY="85.0" styleClass="jfx-hand" stylesheets="@CaseUI.css" />
+                        <JFXDatePicker fx:id="endTextField" layoutX="22.0" layoutY="124.0" styleClass="jfx-hand" stylesheets="@CaseUI.css" />
+                        <JFXTimePicker fx:id="endTimeField" layoutX="193.0" layoutY="124.0" styleClass="jfx-hand" stylesheets="@CaseUI.css" />
+                        <JFXTimePicker fx:id="startTimeField" layoutX="193.0" layoutY="85.0" styleClass="jfx-hand" stylesheets="@CaseUI.css" />
                         <ImageView fx:id="pictoView" fitHeight="150.0" fitWidth="150.0" layoutX="200.0" layoutY="158.0" pickOnBounds="false" preserveRatio="false" />
                   <JFXTextField fx:id="titleTextField" editable="false" layoutX="21.0" layoutY="44.0" />
                   <JFXTextField fx:id="typeComboBox" editable="false" layoutX="22.0" layoutY="245.0" />
                   <JFXTextField fx:id="placeTextField" editable="false" layoutX="22.0" layoutY="285.0" />
-                  <JFXTextField fx:id="descriptionTextField" alignment="TOP_LEFT" editable="false" layoutX="21.0" layoutY="334.0" prefHeight="248.0" prefWidth="395.0" />
                   <JFXRadioButton fx:id="entryYes" disable="true" layoutX="22.0" layoutY="207.0" prefHeight="17.0" prefWidth="53.0" text="Ja" />
                   <JFXRadioButton fx:id="sharedYes" disable="true" layoutX="22.0" layoutY="167.0" prefHeight="17.0" prefWidth="53.0" text="Ja" />
+                  <JFXTextArea fx:id="descriptionTextField" editable="false" layoutX="20.0" layoutY="332.0" prefHeight="224.0" prefWidth="382.0" wrapText="true" />
                     </children>
                 </AnchorPane>
             </items>
         </SplitPane>
         <Label fx:id="userLabel" alignment="CENTER" layoutX="685.0" layoutY="53.0" prefHeight="33.0" prefWidth="91.0" text="User" textAlignment="CENTER" />
-        <JFXButton fx:id="deleteBtn" buttonType="RAISED" disable="true" layoutX="685.0" layoutY="142.0" mnemonicParsing="false" onAction="#deleteActivity" prefHeight="25.0" prefWidth="106.0" style="-fx-background-color: #3a7077;" text="Slet aktivitet" textFill="WHITE" />
+        <JFXButton fx:id="deleteBtn" buttonType="RAISED" disable="true" layoutX="685.0" layoutY="142.0" mnemonicParsing="false" onAction="#deleteActivity" prefHeight="25.0" prefWidth="106.0" style="-fx-background-color: #3a7077;" styleClass="jfx-hand" stylesheets="@CaseUI.css" text="Slet aktivitet" textFill="WHITE" />
         <AnchorPane prefHeight="46.0" prefWidth="929.0" style="-fx-background-color: #2d2d2d;">
             <children>
                 <ImageView fx:id="exitBtn" fitHeight="32.0" fitWidth="46.0" layoutX="883.0" layoutY="7.0" onMouseClicked="#exitAction" pickOnBounds="true" preserveRatio="true">

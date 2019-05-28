@@ -1,26 +1,37 @@
 package Domain.CalendarModule;
 
-import Domain.User.User;
 import Persistence.ActivityManager;
-import java.awt.Image;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import UI.Vault;
+import java.sql.SQLException;
 
 public class Activity {
 
     private String place;
     private String description;
     private String type;
-    private Image pictogram = null;
     private LocalDateTime endDate;
     private LocalDateTime startDate;
     private Boolean shared;
     private String creator;
     private Boolean entry;
     private String title;
-    private static int idCounter = 1;
     private int activityID;
+
+    public Activity(String title, String creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry, int activityID) {
+        this.title = title;
+        this.creator = creator;
+        this.place = place;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.description = description;
+        this.type = type;
+        this.shared = shared;
+        this.activityID = activityID;
+        this.entry = entry;
+    }
 
     public Activity(String title, String creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry) {
         this.title = title;
@@ -31,12 +42,10 @@ public class Activity {
         this.description = description;
         this.type = type;
         this.shared = shared;
-        this.activityID = idCounter;
         this.entry = entry;
-        idCounter++;
     }
 
-    public void updateActivity(String title, String creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry) {
+    public void updateActivity(String title, String creator, String place, LocalDateTime startDate, LocalDateTime endDate, String description, String type, Boolean shared, Boolean entry) throws SQLException {
         this.title = title;
         this.creator = creator;
         this.place = place;
@@ -46,6 +55,8 @@ public class Activity {
         this.type = type;
         this.shared = shared;
         this.entry = entry;
+        ActivityManager.deleteActivity(Vault.currentActivity.getActivityID());
+        ActivityManager.storeActivity(this);
     }
 
     public String getCreator() {
@@ -63,13 +74,15 @@ public class Activity {
     public String getType() {
         return type;
     }
-    public String getStartTimeAndDate(){
+
+    public String getStartTimeAndDate() {
         return startDate.toString();
     }
-    public String getEndTimeAndDate(){
-        return endDate.toString();        
+
+    public String getEndTimeAndDate() {
+        return endDate.toString();
     }
-    
+
     public LocalDate getEndDate() {
         return endDate.toLocalDate();
     }

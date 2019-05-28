@@ -2,18 +2,18 @@ package UI.CaseModule;
 
 import Persistence.CaseRepository;
 import Persistence.UserManager;
-import UI.Vault;
 import static UI.Vault.stage;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,9 +33,13 @@ import javafx.stage.Stage;
 
 public class FXMLCaseEditorController implements Initializable {
 
-    private File attachedFile = null;
+    private String attachedFile = null;
     private FileChooser chooser = new FileChooser();
-    private List<File> attachedFiles;
+    private ArrayList<String> attachedFiles;
+    private ObservableList<String> obsFileList = FXCollections.observableArrayList();
+    
+    @FXML
+    private JFXListView<String> fileView;
     @FXML
     private AnchorPane caseModulePane;
     @FXML
@@ -59,9 +63,6 @@ public class FXMLCaseEditorController implements Initializable {
     @FXML
     private Label warningCreateLabel;
     @FXML
-    private JFXListView<String> fileView;
-    private ObservableList<String> obsFileList;
-    @FXML
     private JFXButton closeCaseBtn;
     @FXML
     private JFXButton saveEditBtn;
@@ -70,19 +71,35 @@ public class FXMLCaseEditorController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Date date = new Date();
-        obsFileList = FXCollections.observableArrayList();
-        fileView.setItems(obsFileList);
-        attachedFiles = new ArrayList<>();
-        attachedFiles = CaseRepository.getSelectedCase().getAttachedFiles();
-        chooser.setInitialDirectory(new File("."));
-        residentNameField.setEditable(false);
-        serviceField.setEditable(false);
-        titleField.setEditable(false);
-        titleField.setText(CaseRepository.getSelectedCase().getTitle());
-        serviceField.setText(CaseRepository.getSelectedCase().getCaseType());
-        residentNameField.setText(UserManager.getUser(CaseRepository.getSelectedCase().getResidentID()).getFirstName());
-        descriptionArea.setText(CaseRepository.getSelectedCase().getDescription() + "\nNy redigering:" + date.toGMTString() + "\n");
+
+        if (CaseRepository.getSelectedCase().getAttachedFiles() != null) {
+            Date date = new Date();
+            obsFileList = FXCollections.observableArrayList(CaseRepository.getSelectedCase().getAttachedFiles());
+            residentNameField.setEditable(false);
+            serviceField.setEditable(false);
+            titleField.setEditable(false);
+            titleField.setText(CaseRepository.getSelectedCase().getTitle());
+            serviceField.setText(CaseRepository.getSelectedCase().getCaseType());
+            residentNameField.setText(UserManager.getUser(CaseRepository.getSelectedCase().getResidentID()).getFirstName());
+            descriptionArea.setText(CaseRepository.getSelectedCase().getDescription() + "\nNy redigering:" + date.toGMTString() + "\n");
+            fileView.setItems(obsFileList);
+
+        } else {
+            Date date = new Date();
+            serviceField.setEditable(false);
+            titleField.setEditable(false);
+            titleField.setText(CaseRepository.getSelectedCase().getTitle());
+            serviceField.setText(CaseRepository.getSelectedCase().getCaseType());
+            residentNameField.setText(UserManager.getUser(CaseRepository.getSelectedCase().getResidentID()).getFirstName());
+            descriptionArea.setText(CaseRepository.getSelectedCase().getDescription() + "\nNy redigering:" + date.toGMTString() + "\n");
+            fileView.setItems(obsFileList);
+            attachedFiles = new ArrayList<>();
+
+            obsFileList = FXCollections.observableArrayList();
+            fileView.setItems(obsFileList);
+            chooser.setInitialDirectory(new File("."));
+            attachedFiles = new ArrayList<>();
+        }
 
     }
 
@@ -102,10 +119,9 @@ public class FXMLCaseEditorController implements Initializable {
     @FXML
     private void attachFileAction(ActionEvent event) {
         chooser.setTitle("Vedhæft Fil");
-        attachedFile = chooser.showOpenDialog(new Stage());
+        attachedFile = chooser.showOpenDialog(new Stage()).getName();
         attachedFiles.add(attachedFile);
-        obsFileList.add(attachedFile.getName());
-
+        obsFileList.add(attachedFile);
     }
 
     @FXML
@@ -116,8 +132,8 @@ public class FXMLCaseEditorController implements Initializable {
     }
 
     @FXML
-    private void closeCaseAction(ActionEvent event) throws IOException {
-        if (!closeReasonField.getText().isEmpty() && UserManager.getCurrentUser().checkForPermission(15)) {
+    private void closeCaseAction(ActionEvent event) throws IOException, SQLException {
+        if (!closeReasonField.getText().isEmpty() && UserManager.getCurrentUser().checkForPermission("close_case")) {
 
             CaseRepository.closeCase(CaseRepository.getSelectedCase().getCaseID());
             Parent root = FXMLLoader.load(getClass().getResource("FXMLCase.fxml"));
@@ -130,11 +146,12 @@ public class FXMLCaseEditorController implements Initializable {
     }
 
     @FXML
-    private void saveCaseEditAction(ActionEvent event) throws IOException {
-        if (UserManager.getCurrentUser().checkForPermission(6)) {
+    private void saveCaseEditAction(ActionEvent event) throws IOException, FileNotFoundException, SQLException {
+        if (UserManager.getCurrentUser().checkForPermission("edit_case")) {
+            CaseRepository.attachFilesToCase(attachedFile, CaseRepository.getSelectedCase().getCaseID());
             CaseRepository.updateCaseInDB(descriptionArea.getText(), CaseRepository.getSelectedCase().getCaseID());
-//            CaseRepository.getSelectedCase().setDescription(descriptionArea.getText());
-//            CaseRepository.getSelectedCase().setAttachedFiles(attachedFiles);
+            CaseRepository.getSelectedCase().setDescription(descriptionArea.getText());
+            CaseRepository.getSelectedCase().setAttachedFiles(attachedFiles);
             Parent root = FXMLLoader.load(getClass().getResource("FXMLCase.fxml"));
             Scene scene = new Scene(root);
             stage.setScene(scene);

@@ -8,9 +8,12 @@
     -fx-rippler-fill:BLUE;
 }
 .jfx-list-cell:hover{
-    -fx-background-color:  #4a9da8
+    -fx-background-color: #4a9da8
+        
 }
-
+.jfx-hand:hover{
+    -fx-cursor: hand;
+}
 .jfx-list-view{
     -fx-background-insets: 0;
     -fx-cell-vertical-margin: 10.0;

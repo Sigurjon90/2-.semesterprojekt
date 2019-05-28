@@ -3,7 +3,6 @@ package UI;
 import Domain.User.User;
 import Persistence.UserManager;
 import static UI.Vault.stage;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
@@ -16,8 +15,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,11 +25,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -42,11 +36,6 @@ public class FXMLAdministrationController implements Initializable {
 
     private double xOffset = 0;
     private double yOffset = 0;
-    private AnchorPane vaultPane;
-
-    @FXML
-    private JFXListView<User> listview_users;
-
     private ObservableList<User> usersObs;
     private ArrayList<User> tempUsers;
     private ObservableList<User> careworkersObs;
@@ -54,7 +43,14 @@ public class FXMLAdministrationController implements Initializable {
     private ObservableList<User> socialworkersObs;
     private ArrayList<User> tempSocialworkers;
     private User selectedUser = null;
-
+    private String password = "initial";
+    private AnchorPane passwordAnchor;
+    private Label passwordErrorLabel;
+    private int careworkerID;
+    private int socialworkerID;
+    
+    @FXML
+    private JFXListView<User> listview_users;
     @FXML
     private ImageView exitBtn;
     @FXML
@@ -73,7 +69,6 @@ public class FXMLAdministrationController implements Initializable {
     private JFXButton createUserBtn;
     @FXML
     private JFXTextField userNameField;
-    private JFXTextField passwordField;
     @FXML
     private JFXRadioButton residentRadioBtn;
     @FXML
@@ -98,16 +93,12 @@ public class FXMLAdministrationController implements Initializable {
     private JFXComboBox<User> comboBoxSocialworker;
     @FXML
     private JFXButton updateInfoDB;
-
-    private String password = "initial";
-    private AnchorPane passwordAnchor;
     @FXML
     private JFXButton setPasswordBtn;
     @FXML
     private JFXPasswordField password1;
     @FXML
     private JFXPasswordField password2;
-    private Label passwordErrorLabel;
     @FXML
     private JFXButton savePasswordBtn;
     @FXML
@@ -116,6 +107,14 @@ public class FXMLAdministrationController implements Initializable {
     private Label pas1;
     @FXML
     private Label pas2;
+    @FXML
+    private JFXButton newSocialBtn;
+    @FXML
+    private JFXButton newCareBtn;
+    @FXML
+    private JFXButton saveCareBtn;
+    @FXML
+    private JFXButton saceSocialBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -129,11 +128,17 @@ public class FXMLAdministrationController implements Initializable {
         NewUserBtn.setVisible(true);
         createUserBtn.setVisible(false);
 
+        careWorker_Lb.setVisible(false);
+
+        socialWorker_Lb.setVisible(false);
+
         makeStageDragable();
-        tempUsers = UserManager.getAllUsers();
+        tempUsers = UserManager.getAllUsersWithOutRoleID();
         usersObs = FXCollections.observableArrayList(tempUsers);
         listview_users.setItems(usersObs);
 
+        newSocialBtn.setVisible(false);
+        newCareBtn.setVisible(false);
         //Laver en arrayliste med brugere af typen careworker og ligger den ind i listen under choiceboxen careworker_pricker
         tempCareworkers = UserManager.getAllUsersWithRoleID(1);
         careworkersObs = FXCollections.observableArrayList(tempCareworkers);
@@ -144,6 +149,7 @@ public class FXMLAdministrationController implements Initializable {
         socialworkersObs = FXCollections.observableArrayList(tempSocialworkers);
         comboBoxSocialworker.setItems(socialworkersObs);
 
+        deleteUserBtn.setVisible(false);
     }
 
     private void makeStageDragable() {
@@ -171,7 +177,7 @@ public class FXMLAdministrationController implements Initializable {
 
     @FXML
     private void minimizeAction(MouseEvent event) {
-        Stage stage = (Stage) vaultPane.getScene().getWindow();
+        Stage stage = (Stage) administrationPane.getScene().getWindow();
         stage.setIconified(true);
     }
 
@@ -191,6 +197,8 @@ public class FXMLAdministrationController implements Initializable {
         if (selectedUser != null) {
             comboBoxCareworker.setVisible(false);
             comboBoxSocialworker.setVisible(false);
+            newSocialBtn.setVisible(false);
+            newCareBtn.setVisible(false);
             infoFillOut();
             NewUserBtn.setVisible(true);
             createUserBtn.setVisible(false);
@@ -198,12 +206,24 @@ public class FXMLAdministrationController implements Initializable {
             careWorker_Lb.setVisible(false);
             socialWorker_Lb.setVisible(false);
             setPasswordBtn.setVisible(true);
+            deleteUserBtn.setVisible(true);
+            saveCareBtn.setVisible(false);
+            saceSocialBtn.setVisible(false);
 
-            if (selectedUser.getRoleID() == 4) {
-                comboBoxCareworker.setVisible(true);
-                comboBoxSocialworker.setVisible(true);
+            if (selectedUser.getRoleName().equals("resident")) {
+
+                careWorker_Lb.setText("Pædagog: " + " " + UserManager.getCareworkerFromResidents(selectedUser.getID()).getFullName());
+                socialWorker_Lb.setText("Sagsudreder: " + " " + UserManager.getSocialworkerFromResidents(selectedUser.getID()).getFullName());
+
+                newSocialBtn.setVisible(true);
+                newCareBtn.setVisible(true);
+
                 comboBoxCareworker.setPromptText(UserManager.getCareworkerFromResidents(selectedUser.getID()).toString());
+                careworkerID = UserManager.getCareworkerFromResidents(selectedUser.getID()).getID();
+
                 comboBoxSocialworker.setPromptText(UserManager.getSocialworkerFromResidents(selectedUser.getID()).toString());
+                socialworkerID = UserManager.getSocialworkerFromResidents(selectedUser.getID()).getID();
+
                 careWorker_Lb.setVisible(true);
                 socialWorker_Lb.setVisible(true);
 
@@ -211,34 +231,35 @@ public class FXMLAdministrationController implements Initializable {
         }
     }
 
-    public void infoFillOut() {
+    private void infoFillOut() {
         adminRadioBtn.setSelected(false);
         firstNameField.setText(selectedUser.getFirstName());
         lastNameField.setText(selectedUser.getLastName());
         userNameField.setText(selectedUser.getUsername());
 
-        //    passwordField.setText("Ingen information");
-        switch (selectedUser.getRoleID()) {
-            case 1:
+        switch (selectedUser.getRoleName()) {
+            case "careworker":
                 careWorkerRadioBtn.setSelected(true);
                 break;
-            case 2:
+            case "socialworker":
                 socialWorkerRadioBtn.setSelected(true);
                 break;
-            case 4:
+            case "resident":
                 residentRadioBtn.setSelected(true);
                 break;
 
-            case 5:
+            case "admin":
                 adminRadioBtn.setSelected(true);
+                socialWorkerRadioBtn.setSelected(false);
+                careWorkerRadioBtn.setSelected(false);
                 break;
 
-            case 6:
+            case "careworker_admin":
                 careWorkerRadioBtn.setSelected(true);
                 adminRadioBtn.setSelected(true);
                 break;
 
-            case 7:
+            case "socialworker_admin":
                 socialWorkerRadioBtn.setSelected(true);
                 adminRadioBtn.setSelected(true);
                 break;
@@ -262,12 +283,12 @@ public class FXMLAdministrationController implements Initializable {
                 UserManager.deleteUserFromResidents(selectedUser.getID());
                 UserManager.deleteUserFromUsers(selectedUser.getID());
                 clearFields();
-                tempUsers = UserManager.getAllUsers();
+                tempUsers = UserManager.getAllUsersWithOutRoleID();
                 usersObs = FXCollections.observableArrayList(tempUsers);
                 listview_users.setItems(usersObs);
             }
         } else {
-            System.out.println("Please select a user");
+            //indsæt label
         }
 
     }
@@ -299,6 +320,8 @@ public class FXMLAdministrationController implements Initializable {
             User user = new User(firstNameField.getText(), lastNameField.getText(), userNameField.getText(), password, roleid);
             //Opret
             UserManager.createUserInUsers(user);
+            
+            updateInfoDB.setVisible(true);
 
             //Hvis der er tale om en beboer, skal den også oprettes i resident-table i databasen.
             if (roleid == 4) {
@@ -309,7 +332,7 @@ public class FXMLAdministrationController implements Initializable {
 
             clearFields();
 
-            tempUsers = UserManager.getAllUsers();
+            tempUsers = UserManager.getAllUsersWithOutRoleID();
             usersObs = FXCollections.observableArrayList(tempUsers);
             listview_users.setItems(usersObs);
 
@@ -336,6 +359,12 @@ public class FXMLAdministrationController implements Initializable {
         comboBoxCareworker.setVisible(false);
         comboBoxSocialworker.setVisible(false);
         setPasswordBtn.setVisible(false);
+        deleteUserBtn.setVisible(false);
+        updateInfoDB.setVisible(false);
+        newCareBtn.setVisible(false);
+        newSocialBtn.setVisible(false);
+        saveCareBtn.setVisible(false);
+        saceSocialBtn.setVisible(false);
     }
 
     private void clearFields() {
@@ -343,7 +372,6 @@ public class FXMLAdministrationController implements Initializable {
         firstNameField.setText("");
         lastNameField.setText("");
         userNameField.setText("");
-        //passwordField.setText("");
         adminRadioBtn.setSelected(false);
         careWorkerRadioBtn.setSelected(false);
         socialWorkerRadioBtn.setSelected(false);
@@ -357,11 +385,11 @@ public class FXMLAdministrationController implements Initializable {
                 || lastNameField.getText().isEmpty()
                 || userNameField.getText().isEmpty()
                 || isRadiobuttonsFilledOut() == false) {
-            System.out.println("returned false");
+            
             return false;
 
         } else {
-            System.out.println("returned true");
+            
             return true;
         }
 
@@ -414,22 +442,23 @@ public class FXMLAdministrationController implements Initializable {
     private void updateInfoAction(ActionEvent event) {
         if (selectedUser != null) {
             //Hvis alle bruger undtaget beboere sættes til en anden rolle undtaget beboer-rollen, opdateres det i databasen
-            if (selectedUser.getRoleID() != 4 && checkUserType() != 4) {
+            if (!selectedUser.getRoleName().equals("resident") && checkUserType() != 4) {
                 UserManager.updateUserInUsers(firstNameField.getText(), lastNameField.getText(), userNameField.getText(), checkUserType(), selectedUser.getID());
 
-                tempUsers = UserManager.getAllUsers();
+                tempUsers = UserManager.getAllUsersWithOutRoleID();
                 usersObs = FXCollections.observableArrayList(tempUsers);
                 listview_users.setItems(usersObs);
-                //Hvis der prøves at ændre rolletypen på en beboer kommer der en fejlmeddelelse    
-            } else if (selectedUser.getRoleID() == 4 && checkUserType() != 4) {
-                System.out.println("Det kan du ikke:");
+                //Hvis der prøves at ændre rolletypen på en beboer kommer der en fejlmeddelelse
+            } else if (selectedUser.getRoleName().equals("resident") && checkUserType() != 4) {
+                //INDSÆT LABEL/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             }//Hvis en beboers rolletype ikke er ændret, opdateres de gemte oplysninger
-            else if (selectedUser.getRoleID() == 4 && checkUserType() == 4) {
+            else if (selectedUser.getRoleName().equals("resident") && checkUserType() == 4) {
                 UserManager.updateUserInUsers(firstNameField.getText(), lastNameField.getText(), userNameField.getText(), checkUserType(), selectedUser.getID());
-                UserManager.updateUserInResidents(selectedUser.getID(), comboBoxCareworker.getSelectionModel().getSelectedItem().getID(), comboBoxSocialworker.getSelectionModel().getSelectedItem().getID());
-                tempUsers = UserManager.getAllUsers();
+
+                tempUsers = UserManager.getAllUsersWithOutRoleID();
                 usersObs = FXCollections.observableArrayList(tempUsers);
                 listview_users.setItems(usersObs);
+
             }
         }
     }
@@ -476,6 +505,44 @@ public class FXMLAdministrationController implements Initializable {
 
         }
 
+    }
+
+    @FXML
+    private void newSocialworkerAction(ActionEvent event) {
+        comboBoxSocialworker.setVisible(true);
+        saceSocialBtn.setVisible(true);
+        newSocialBtn.setVisible(false);
+
+    }
+
+    @FXML
+    private void newCareworkerAction(ActionEvent event) {
+        comboBoxCareworker.setVisible(true);
+        saveCareBtn.setVisible(true);
+        newCareBtn.setVisible(false);
+
+    }
+
+    @FXML
+    private void saveNewCareAction(ActionEvent event) {
+        if (selectedUser != null) {
+            careworkerID = comboBoxCareworker.getSelectionModel().getSelectedItem().getID();
+            UserManager.updateCareWorkerOnResident(selectedUser.getID(), comboBoxCareworker.getSelectionModel().getSelectedItem().getID());
+            comboBoxCareworker.setVisible(false);
+            saveCareBtn.setVisible(false);
+            newCareBtn.setVisible(true);
+        }
+    }
+
+    @FXML
+    private void saveNewSocialAction(ActionEvent event) {
+        if (selectedUser != null) {
+            socialworkerID = comboBoxSocialworker.getSelectionModel().getSelectedItem().getID();
+            UserManager.updateSocialWorkerOnResident(selectedUser.getID(), comboBoxSocialworker.getSelectionModel().getSelectedItem().getID());
+            comboBoxSocialworker.setVisible(false);
+            saceSocialBtn.setVisible(false);
+            newSocialBtn.setVisible(true);
+        }
     }
 
 }

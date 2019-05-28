@@ -1,115 +1,45 @@
 package Domain.CaseModule;
 
-import Domain.User.Resident;
 import Persistence.UserManager;
-import java.io.File;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.sql.Date;
-import java.util.List;
 
 public class Case {
 
-    //private static int numberOfCases = 0;
     private int caseID;
     private Date date;
     private String description;
     private String caseType;
-    private List<File> attachedFiles;
+    private ArrayList<String> attachedFiles;
     private boolean closed;
-    private Resident caseResident;
     private String title;
     private int residentID;
 
-//    public Case(String title, String description, String caseType) {
-//        this.title = title;
-//        this.date = new LocalDate();
-//        this.description = description;
-//        this.caseType = caseType;
-//        attachedFiles = new ArrayList<>();
-//        this.caseResident = new Resident();
-//        numberOfCases++;
-//        this.caseID = numberOfCases;
-//    }
-//
-//    public Case(String title, String description, String caseType, Resident resident) {
-//        this.title = title;
-//        this.date = new Date();
-//        this.description = description;
-//        this.caseType = caseType;
-//        attachedFiles = new ArrayList<>();
-//        this.caseResident = resident;
-//        numberOfCases++;
-//        this.caseID = numberOfCases;
-//    }
-//    public Case(String title, String description, String caseType, List<File> attachedFiles) {
-//        this.title = title;
-//        this.date = new Date();
-//        this.description = description;
-//        this.caseType = caseType;
-//        this.attachedFiles = attachedFiles;
-//        this.caseResident = new Resident();
-//        numberOfCases++;
-//        this.caseID = numberOfCases;
-//    }
-//    public Case(String title, String description, String caseType, List<File> attachedFiles, Resident resident) {
-//        this.title = title;
-//        this.date = new Date();
-//        this.description = description;
-//        this.caseType = caseType;
-//        this.attachedFiles = attachedFiles;
-//        this.caseResident = resident;
-//        numberOfCases++;
-//        this.caseID = numberOfCases;
-//    }
-//////////////////////////////////////////////////////////////////////////////////////////////
-//    public Case(String title, String description, String caseType, String date, Boolean isClosed, int residentID) {
-//        this.title = title;
-//
-//        this.date = new LocalDate(date);
-//        this.description = description;
-//        this.caseType = caseType;
-//        numberOfCases++;
-//        this.caseID = numberOfCases;
-//
-//        this.closed = isClosed;
-//
-//    }
-    public Case(String title, String description, String caseType, Date date, Boolean isClosed, int residentID, int id) {
+    public Case(String title, String description, String caseType, Date date, Boolean isClosed, int residentID, int id, ArrayList<String> fileList) {
         this.title = title;
-
+        this.attachedFiles = fileList;
         this.date = date;
         this.description = description;
         this.caseType = caseType;
-        //numberOfCases++;
+
         this.caseID = id;
         this.residentID = residentID;
 
         this.closed = isClosed;
     }
 
-    public Resident getCaseResident() {
-        return caseResident;
-    }
-
-    public Case(String title, String description, String caseType, Date date, Boolean isClosed, int residentID) {
+    public Case(String title, String description, String caseType, Date date, Boolean isClosed, int residentID, ArrayList<String> fileList) {
         this.title = title;
-
+        this.attachedFiles = fileList;
         this.date = date;
         this.description = description;
         this.caseType = caseType;
-        //numberOfCases++;
+
         this.caseID = 0;
         this.residentID = residentID;
 
         this.closed = isClosed;
 
-    }
-
-    public void attachFile(File file) {
-        if (!this.closed) {
-            attachedFiles.add(file);
-        }
     }
 
     public int getResidentID() {
@@ -126,20 +56,13 @@ public class Case {
                 + "\n" + "Titel: " + this.title
                 + "\n" + "Sag ID: " + this.caseID
                 + "\n" + "Sagstype: " + this.caseType
-                //   + "\n" + "Vedhæftet filer: " + fileNames()
+                + "\n" + "Filer tilknyttet " + this.getAttachedFiles()
                 + "\n" + "Tilknyttet beboer: " + UserManager.getUser(this.residentID).getFirstName()
                 + " " + UserManager.getUser(this.residentID).getLastName()
                 + "\n" + "Sagen omhandler: "
                 + "\n" + this.getDescription();
     }
 
-//    private String fileNames() {
-//        String result = "";
-//        for (File f : this.attachedFiles) {
-//            result += f.getName() + ", ";
-//        }
-//        return result;
-//    }
     public boolean isClosed() {
         return this.closed;
     }
@@ -150,10 +73,6 @@ public class Case {
 
     public Date getDate() {
         return this.date;
-    }
-
-    public Resident getResident() {
-        return this.caseResident;
     }
 
     public String getDescription() {
@@ -174,16 +93,20 @@ public class Case {
         return caseType;
     }
 
-    public List<File> getAttachedFiles() {
+    public ArrayList<String> getAttachedFiles() {
         return attachedFiles;
     }
 
-    public void setAttachedFiles(List<File> attachedFiles) {
+    public void setAttachedFiles(ArrayList<String> attachedFiles) {
         this.attachedFiles = attachedFiles;
     }
 
     @Override
     public String toString() {
-        return "Sag ID: " + this.caseID + "\n";
+        if (!this.isClosed()) {
+            return "Sag ID: " + this.caseID + "\n";
+        } else {
+            return "Sag ID: " + this.caseID + " " + "SAGEN ER LUKKET" + "\n";
+        }
     }
 }
