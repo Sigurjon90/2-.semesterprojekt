@@ -77,6 +77,10 @@ public class FXMLVaultController implements Initializable {
             listview_residents.setVisible(false);
             lb_residents.setVisible(false);
         }
+        
+        if(UserManager.getCurrentUser().getRoleName().equals("resident")){
+            UserManager.setCurrentResident(UserManager.getCurrentUser());
+        }
 
         checkPermissions();
 

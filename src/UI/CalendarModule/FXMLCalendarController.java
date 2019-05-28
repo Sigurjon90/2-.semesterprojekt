@@ -118,11 +118,8 @@ public class FXMLCalendarController implements Initializable {
         enableCurrentCalendar();
         //Opdaterer kalenderen med beboerens aktiviteter.
         try {
-            if (UserManager.getCurrentUser().checkForPermission("view_residents")) {
-                ActivityManager.getActivities(UserManager.getCurrentResident().getID());
-            } else {
-                ActivityManager.getActivities(UserManager.getCurrentUser().getID());
-            }
+             ActivityManager.getActivities(UserManager.getCurrentResident().getID());
+            
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
