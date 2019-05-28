@@ -107,13 +107,13 @@ public class FXMLActivityEditorController implements Initializable {
     }
 
     @FXML
-    public void comboAction(ActionEvent event) {
+    private void comboAction(ActionEvent event) {
         String imageToGet = typeComboBox.getValue();
         pictoView.setImage(new Image("/icons/" + imageToGet + ".png"));
     }
 
     @FXML
-    public void saveActivity(ActionEvent event) throws IOException, SQLException {
+    private void saveActivity(ActionEvent event) throws IOException, SQLException {
         if (!titleTextField.getText().isEmpty() && startTextField.getValue() != null && endTextField.getValue() != null && !placeTextField.getText().isEmpty() && !descriptionTextField.getText().isEmpty() && !typeComboBox.getValue().isEmpty() && startTimeField.getValue() != null && endTimeField.getValue() != null) {
             LocalDateTime startDate, endDate;
 
@@ -153,7 +153,8 @@ public class FXMLActivityEditorController implements Initializable {
         }
     }
 
-    public void updateActivity(ActionEvent event) throws IOException, SQLException {
+    @FXML
+    private void updateActivity(ActionEvent event) throws IOException, SQLException {
 
         LocalDateTime startDate, endDate;
 
@@ -177,7 +178,7 @@ public class FXMLActivityEditorController implements Initializable {
     }
 
     @FXML
-    public void cancelActivity(ActionEvent event) throws IOException {
+    private void cancelActivity(ActionEvent event) throws IOException {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Bekræftigelse");
         alert.setHeaderText(null);

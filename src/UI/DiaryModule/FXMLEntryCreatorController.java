@@ -79,7 +79,6 @@ public class FXMLEntryCreatorController implements Initializable {
                 entry = new Entry(dp_date.getValue(), textarea_des.getText(), file);
             }
             DiaryRepository.storeEntry(entry);
-//            DiaryRepository.storeEntryFile(entry);
 
             Parent root = FXMLLoader.load(getClass().getResource("FXMLDiary.fxml"));
             Scene scene = new Scene(root);

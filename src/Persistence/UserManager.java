@@ -279,9 +279,7 @@ public class UserManager {
         return null;
     }
 
-    public static void createUser() {
 
-    }
 
     public static String deleteUserFromResidents(int user_id) {
         String sql = "Delete from residents where resident_id = " + user_id;

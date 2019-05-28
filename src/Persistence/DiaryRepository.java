@@ -1,7 +1,6 @@
 package Persistence;
 
 import Domain.DiaryModule.Entry;
-import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,8 +9,6 @@ import java.util.ArrayList;
 
 public class DiaryRepository {
 
-    private static String dato;
-    private static String desription;
     private static int residentID;
     private static PreparedStatement pre;
 
@@ -108,7 +105,6 @@ public class DiaryRepository {
 
             while (result.next()) {
                 myEntry = new Entry(LocalDate.parse(result.getString("dato")), result.getString("description"), result.getInt("id"));
-                //UserManager.getCurrentUser().getResidentDiary().getMap().put(result.getInt("entryid"), myEntry);
                 myList.add(myEntry);
 
             }

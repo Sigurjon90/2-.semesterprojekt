@@ -14,8 +14,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -36,8 +34,8 @@ public class FXMLDiaryController implements Initializable {
     private double xOffset = 0;
     private double yOffset = 0;
     public static Entry selectedEntryForEdit;
-    public ObservableList<Entry> obsEntryList;
-    public ObservableList<Entry> tempList;
+    private ObservableList<Entry> obsEntryList;
+    private ObservableList<Entry> tempList;
     private ArrayList<Entry> tempEntries;
 
     @FXML
@@ -135,7 +133,7 @@ public class FXMLDiaryController implements Initializable {
     }
 
     @FXML
-    void displayEntryEditor(ActionEvent event) throws IOException {
+    private void displayEntryEditor(ActionEvent event) throws IOException {
         if (selectedEntryForEdit != null) {
             selectedEntryForEdit = list_entrys.getSelectionModel().getSelectedItem();
 

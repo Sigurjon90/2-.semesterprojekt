@@ -1,6 +1,5 @@
 package Domain.User;
 
-import Domain.CalendarModule.Calendar;
 import Domain.DiaryModule.Diary;
 
 public class User {
